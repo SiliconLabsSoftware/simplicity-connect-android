@@ -187,6 +187,12 @@ class IOPTestActivity : AppCompatActivity() {
     private var shareMenuItem: MenuItem? = null
     private lateinit var binding: ActivityIopTestBinding
 
+    /** Prevents showing the post-run bonding dialog more than once per test run. */
+    private var bondingRemovedDialogShownThisRun = false
+
+    /** User must acknowledge the Security-step briefing before the IOP Security flow runs. */
+    private var iopSecurityIntroAcknowledged = false
+
     private var isInAppOTA = false
     private var ota_alreadyIn_Progress = false
 
@@ -325,6 +331,25 @@ class IOPTestActivity : AppCompatActivity() {
      * Start test by item
      */
     private fun startItemTest(item: Int) {
+        if (item == POSITION_TEST_IOP3_SECURITY && !iopSecurityIntroAcknowledged) {
+            // finishItemTest may call this from a GATT binder thread; dialogs require a main Looper.
+            runOnUiThread {
+                if (isFinishing) return@runOnUiThread
+                mListener?.scrollViewToPosition(item)
+                AlertDialog.Builder(this@IOPTestActivity)
+                    .setTitle(R.string.iop_test_security_pairing_info_title)
+                    .setMessage(R.string.iop_test_security_pairing_info_message)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.button_ok) { dialog, _ ->
+                        dialog.dismiss()
+                        iopSecurityIntroAcknowledged = true
+                        startItemTest(POSITION_TEST_IOP3_SECURITY)
+                    }
+                    .show()
+            }
+            return
+        }
+
         lifecycleScope.launch {
             withContext(Dispatchers.Main) {
                 mListener?.scrollViewToPosition(item)
@@ -824,8 +849,10 @@ class IOPTestActivity : AppCompatActivity() {
                 override fun onBound(service: BluetoothService?) {
                     mBluetoothService = service
                     service?.isNotificationEnabled = false
-                    service?.connectGatt(bluetoothDevice!!, false, gattCallback)
-                    mBluetoothGatt = service?.connectedGatt!!
+                    if(!isTestFinished){
+                        service?.connectGatt(bluetoothDevice!!, false, gattCallback)
+                        mBluetoothGatt = service?.connectedGatt!!
+                    }
                 }
             }
             mBluetoothBinding?.bind()
@@ -864,8 +891,15 @@ class IOPTestActivity : AppCompatActivity() {
     private fun startTest() {
         isTestRunning = true
         isTestFinished = false
+        bondingRemovedDialogShownThisRun = false
+
+        // Drop pending work from any previous run (delays, retries, scan timeout).
+        handler?.removeCallbacksAndMessages(null)
+        reconnectTimer?.cancel()
+        reconnectTimer = Timer()
 
         resetFunctionTest()
+        removeBondIfBondedForDeviceUnderTest()
         startItemTest(POSITION_TEST_SCANNER)
 
         updateUIFooter(isTestRunning)
@@ -889,6 +923,8 @@ class IOPTestActivity : AppCompatActivity() {
             if (isTestFinished) {
                 shareMenuItem?.isVisible = true
                 mBluetoothDevice?.let { removeBond(it) }
+                releaseIopBluetoothResources()
+                showBondingRemovedDialogIfNeeded()
             }
         } else {
             binding.btnStartAndStopTest?.apply {
@@ -913,6 +949,39 @@ class IOPTestActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Clears an existing pairing so the IOP run can perform a fresh bonding flow.
+     * Uses the last known device and, if set, the address in the system bonded list.
+     */
+    private fun removeBondIfBondedForDeviceUnderTest() {
+        removeBondIfBonded(mBluetoothDevice)
+        mDeviceAddress?.let { addr ->
+            bluetoothAdapter.bondedDevices
+                .find { it.address.equals(addr, ignoreCase = true) }
+                ?.let { removeBondIfBonded(it) }
+        }
+    }
+
+    private fun removeBondIfBonded(device: BluetoothDevice?): Boolean {
+        if (device == null || device.bondState != BluetoothDevice.BOND_BONDED) {
+            return false
+        }
+        val invoked = removeBond(device)
+        Log.d(TAG, "removeBondIfBonded: invoked=$invoked address=${device.address}")
+        return invoked
+    }
+
+    private fun showBondingRemovedDialogIfNeeded() {
+        if (bondingRemovedDialogShownThisRun || isFinishing) {
+            return
+        }
+        bondingRemovedDialogShownThisRun = true
+        AlertDialog.Builder(this)
+            .setMessage(R.string.iop_test_bonding_removed_dialog_message)
+            .setPositiveButton(R.string.button_done) { dialog, _ -> dialog.dismiss() }
+            .setCancelable(false)
+            .show()
+    }
 
     /**
      * Show information device test and progress test item
@@ -943,22 +1012,86 @@ class IOPTestActivity : AppCompatActivity() {
      * Reset list item test and start over
      */
     private fun resetFunctionTest() {
+        if (isScanning) {
+            scanLeDevice(false)
+        }
+
         reliable = true
         testCaseCount = 0
         mIndexRunning = -1
+        mIndexStartChildrenTest = -1
+        countReTest = 0
+        iopPhase3IndexStartChildrenTest = -1
+        iopPhase3BondingStep = 2
+        iopSecurityIntroAcknowledged = false
+        iopPhase3ExtraDescriptor = null
+        iopPhase3DatabaseHash = null
+
         readScannerStartTime = true
         mStartTimeScanner = 0
         mStartTimeConnection = 0
+        mStartTimeDiscover = 0
+        mEndTimeDiscover = 0
+        mStartTimeThroughput = 0
+        mEndTimeThroughput = 0
         mByteNumReceived = 0
+        mPDULength = 0
+        mByteSpeed = 0
+        mEndThroughputNotification = false
+
+        read_CCCD_value = ByteArray(1)
+        isCCCDPass = true
+
+        mListCharacteristics.clear()
+        characteristicsPhase3Security.clear()
+
+        testParametersService = null
+        characteristicIOPPhase3Control = null
+        characteristicIOPPhase3Throughput = null
+        characteristicIOPPhase3ClientSupportedFeatures = null
+        characteristicIOPPhase3DatabaseHash = null
+        characteristicIOPPhase3IOPTestCaching = null
+        characteristicIOPPhase3IOPTestServiceChangedIndication = null
+        characteristicIOPPhase3ServiceChanged = null
+        characteristicIOPPhase3DeviceName = null
+        kitDescriptor = null
+
+        boolOTAbegin = false
+        discoverTimeout = true
+        ota_mode = false
+        otaProcess = false
+        disconnectGatt = false
+        homekit = false
+        otaMode = false
+        isInAppOTA = false
+        ota_alreadyIn_Progress = false
+        otaTime = 0
+        pack = 0
+
+        mtu = 247
+        currentRxPhy = null
+        mtuDivisible = 0
+        isServiceChangedIndication = 1
+        isConnecting = false
+
+        isDisabled = false
+
+        onConnectionSuccess = null
+        onConnectionFailure = null
+
         if (isConnected) {
             isConnected = false
             mBluetoothGatt?.disconnect()
         }
         resetData()
+
+        // Same labels/progress baseline as when the screen first loads.
+        showDetailInformationTest(POSITION_TEST_SCANNER, true)
     }
 
     private fun resetData() {
-        createDataTest(getSiliconLabsTestInfo().fwName)
+        val info = getSiliconLabsTestInfo()
+        createDataTest(info.fwName, info.deviceMacAddress)
         mListener?.updateUi()
     }
 
@@ -977,6 +1110,7 @@ class IOPTestActivity : AppCompatActivity() {
         mBluetoothService?.clearConnectedGatt()
         mBluetoothService?.isNotificationEnabled = true
         unregisterBroadcastReceivers()
+        releaseIopBluetoothResources()
     }
 
     private fun unregisterBroadcastReceivers() {
@@ -3213,7 +3347,9 @@ class IOPTestActivity : AppCompatActivity() {
                             if (status == 133) {
                                 handler?.postDelayed({
                                     Log.d(TAG, "onConnectionStateChange OTA status: $status")
-                                    retryIOP3Failed(mIndexRunning, countReTest++)
+                                    if(!isTestFinished) {
+                                        retryIOP3Failed(mIndexRunning, countReTest++)
+                                    }
                                 }, 30000)
                             }
                         }
@@ -3659,10 +3795,23 @@ class IOPTestActivity : AppCompatActivity() {
                         mBluetoothDevice = device
                         mDeviceAddress = device.address
                         scanLeDevice(false)
-                        finishItemTest(
-                            POSITION_TEST_SCANNER,
-                            getSiliconLabsTestInfo().listItemTest[POSITION_TEST_SCANNER]
-                        )
+                        if (device.bondState == BluetoothDevice.BOND_BONDED) {
+                            removeBond(device)
+                            handler?.postDelayed(
+                                {
+                                    finishItemTest(
+                                        POSITION_TEST_SCANNER,
+                                        getSiliconLabsTestInfo().listItemTest[POSITION_TEST_SCANNER]
+                                    )
+                                },
+                                BOND_REMOVE_DELAY_MS
+                            )
+                        } else {
+                            finishItemTest(
+                                POSITION_TEST_SCANNER,
+                                getSiliconLabsTestInfo().listItemTest[POSITION_TEST_SCANNER]
+                            )
+                        }
                     } else return
                 }
 
@@ -3730,6 +3879,8 @@ class IOPTestActivity : AppCompatActivity() {
         private const val POSITION_TEST_IOP3_OTA_WITHOUT_ACK = 5
 
         private const val SCAN_PERIOD: Long = 20000
+        /** Delay after [BluetoothDevice.removeBond] before continuing the test so bond clears. */
+        private const val BOND_REMOVE_DELAY_MS = 1500L
         private const val CONNECTION_PERIOD: Long = 10000
         private const val BLUETOOTH_SETTINGS_REQUEST_CODE = 100
 
@@ -3739,5 +3890,22 @@ class IOPTestActivity : AppCompatActivity() {
             val intent = Intent(context, IOPTestActivity::class.java)
             startActivity(context, intent, null)
         }
+    }
+
+    private fun releaseIopBluetoothResources() {
+        mBluetoothService?.unregisterGattCallback()
+        try {
+            mBluetoothGatt?.disconnect()
+        } catch (_: Exception) {
+        }
+        mBluetoothService?.clearConnectedGatt()
+        try {
+            mBluetoothGatt?.close()
+        } catch (_: Exception) {
+        }
+        mBluetoothGatt = null
+        isConnected = false
+        mBluetoothBinding?.unbind()
+        mBluetoothBinding = null
     }
 }

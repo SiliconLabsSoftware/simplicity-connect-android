@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.base.viewmodels.ScannerViewModel
 import com.siliconlabs.bledemo.bluetooth.ble.BluetoothDeviceInfo
-import com.siliconlabs.bledemo.bluetooth.ble.GattService
 import com.siliconlabs.bledemo.bluetooth.ble.ManufacturerDataFilter
 import com.siliconlabs.bledemo.bluetooth.ble.ScanResultCompat
 import com.siliconlabs.bledemo.bluetooth.services.BluetoothService
@@ -123,6 +122,21 @@ class SelectDeviceViewModel : ScannerViewModel() {
                 }
             }
 
+            if (connectType != null && connectType == BluetoothService.GattConnectType.IOP_TEST) {
+                if (deviceName != null) {
+                    if (context != null) {
+                        if (!deviceName.startsWith(
+                                "IOP",
+                                ignoreCase = true
+                            )
+                            && !matchesManufacturerData(result, manufacturerDataFilter)
+                        ) {
+                            shouldAddDevice = false
+                        }
+                    }
+                }
+            }
+
             if (connectType != null && connectType == BluetoothService.GattConnectType.MOTION) {
                 if (deviceName != null) {
                     val matchesDev = deviceName.startsWith("DEV", ignoreCase = true)
@@ -197,8 +211,14 @@ class SelectDeviceViewModel : ScannerViewModel() {
         _numberOfDevices.postValue(0)
     }
 
+    /**
+     * Sorted device list for the select-device UI. Refresh the list UI every
+     * [SCANNED_DEVICE_LIST_UI_INTERVAL_MS] while scanning.
+     */
     fun getScannedDevicesList(): List<BluetoothDeviceInfo> {
-        return _scannedDevices.value?.values?.toList() ?: listOf()
+        return _scannedDevices.value?.values
+            ?.sortedWith(compareByDescending<BluetoothDeviceInfo> { it.rssi }.thenByDescending { it.address })
+            ?: listOf()
     }
 
     fun matchesManufacturerData(result: ScanResultCompat, filter: ManufacturerDataFilter): Boolean {
@@ -206,4 +226,8 @@ class SelectDeviceViewModel : ScannerViewModel() {
         return manufacturerData != null && manufacturerData.contentEquals(filter.data)
     }
 
+    companion object {
+        /** How often the device list UI should reload from [getScannedDevicesList]. */
+        const val SCANNED_DEVICE_LIST_UI_INTERVAL_MS = 1000L
+    }
 }

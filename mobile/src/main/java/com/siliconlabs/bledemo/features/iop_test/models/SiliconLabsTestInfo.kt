@@ -7,7 +7,7 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SiliconLabsTestInfo(var fwName: String, val listItemTest: ArrayList<ItemTestCaseInfo>) {
+class SiliconLabsTestInfo(var fwName: String, var deviceMacAddress: String, val listItemTest: ArrayList<ItemTestCaseInfo>) {
     var connectionParameters: ConnectionParameters? = null
     var firmwareVersion: String = ""
     var firmwareAckVersion: String = ""

@@ -16,8 +16,8 @@ class IOPTest {
             return mSiliconLabsTestInfo.listItemTest[position].listChildrenItem
         }
 
-        fun createDataTest(fwName: String) {
-            mSiliconLabsTestInfo = DemoItemProvider.createDataSiliconLabsTest(fwName)
+        fun createDataTest(fwName: String, deviceMacAddress: String) {
+            mSiliconLabsTestInfo = DemoItemProvider.createDataSiliconLabsTest(fwName, deviceMacAddress)
         }
     }
 }

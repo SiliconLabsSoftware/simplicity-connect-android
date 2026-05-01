@@ -233,7 +233,7 @@ class SelectDeviceDialog(
 
             GattConnectType.IOP_TEST -> {
                 dismiss()
-                IOPTest.createDataTest(deviceInfo.name)
+                IOPTest.createDataTest(deviceInfo.name, deviceInfo.address)
                 getIntent(connectType)?.let {
                     activity?.startActivity(it)
                 }
@@ -297,7 +297,7 @@ class SelectDeviceDialog(
                 binding.devicesNumber.text = getString(R.string.DEVICE_LIST, it)
             }
             deviceToInsert.observe(viewLifecycleOwner) {
-                adapter.addNewDevice(it)
+                adapter.updateList(viewModel.getScannedDevicesList().toMutableList())
             }
         }
     }
@@ -423,7 +423,7 @@ class SelectDeviceDialog(
 
     private fun toggleRefreshInfoRunnable(isOn: Boolean) {
         handler.let {
-            if (isOn) it.postDelayed(updateScanInfoRunnable, SCAN_UPDATE_PERIOD)
+            if (isOn) it.postDelayed(updateScanInfoRunnable, SelectDeviceViewModel.SCANNED_DEVICE_LIST_UI_INTERVAL_MS)
             else it.removeCallbacks(updateScanInfoRunnable)
         }
     }
@@ -431,7 +431,7 @@ class SelectDeviceDialog(
     private val updateScanInfoRunnable = object : Runnable {
         override fun run() {
             adapter.updateList(viewModel.getScannedDevicesList().toMutableList())
-            handler.postDelayed(this, SCAN_UPDATE_PERIOD)
+            handler.postDelayed(this, SelectDeviceViewModel.SCANNED_DEVICE_LIST_UI_INTERVAL_MS)
         }
     }
 
@@ -649,7 +649,6 @@ class SelectDeviceDialog(
         const val MODEL_TYPE_EXTRA = "model_type"
         const val POWER_SOURCE_EXTRA = "power_source"
         const val DEVICE_ADDRESS_EXTRA = "device_address"
-        private const val SCAN_UPDATE_PERIOD = 10L //ms
 
         fun newDialog(
             connectType: GattConnectType?,

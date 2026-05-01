@@ -312,7 +312,6 @@
     </style>
 
     <style name="filter_fragment_setting_header">
-        <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/filter_header_bold_text_size</item>
         <item name="android:textColor">@color/silabs_primary_text</item>

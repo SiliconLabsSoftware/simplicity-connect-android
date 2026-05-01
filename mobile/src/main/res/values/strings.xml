@@ -561,6 +561,10 @@
     <string name="iop_test_label_device_name">Device Name: %1s</string>
     <string name="iop_test_label_progress_count_test" formatted="false">Total: %1s/%2s Test cases</string>
     <string name="iop_test_message_stop_test">Are you sure you want to stop the test?</string>
+    <string name="iop_test_bonding_removed_dialog_message">Pairing was removed from this phone automatically. Press the reset button on your peripheral before the next run.</string>
+    <string name="iop_test_security_pairing_info_title">Security test</string>
+    <string name="iop_test_security_pairing_info_message">On Android, you may see pairing or passkey prompts more than once.</string>
+    <string name="button_done">Ok</string>
     <string name="iop_test_toast_bluetooth_not_supported">Bluetooth is not supported</string>
     <string name="iop_test_n_percent">%d %%</string>
     <string name="iop_test_n_bytes" formatted="false">%d bytes</string>
