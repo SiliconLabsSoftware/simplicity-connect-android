@@ -52,7 +52,5 @@ object ApppUtil {
         window.statusBarColor = ContextCompat.getColor(context,R.color.blue_primary)
         window.navigationBarColor = ContextCompat.getColor(context,R.color.blue_primary)
     }
-
-
 }
 
