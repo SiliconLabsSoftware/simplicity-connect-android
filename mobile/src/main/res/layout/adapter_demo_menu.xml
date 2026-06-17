@@ -51,20 +51,15 @@
 
             <TextView
                 android:id="@+id/tv_menu_title"
+                style="@style/DemoMenuTileTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:ellipsize="end"
-                android:fontFamily="sans-serif"
-                android:maxLines="1"
-                android:text="@string/main_menu_title"
-                android:textColor="@color/silabs_primary_text"
-                android:textSize="@dimen/menu_tile_title_size"
-                android:textStyle="bold" />
+                android:text="@string/main_menu_title" />
 
             <TextView
                 android:id="@+id/tv_menu_description"
-                style="@style/list_item_card_view_text_info"
+                style="@style/DemoMenuTileBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

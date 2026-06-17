@@ -1,93 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:swipe="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/matter_scanned_list_item_height"
+    android:layout_marginHorizontal="@dimen/matter_scanned_item_horizontal_margin"
+    android:layout_marginVertical="@dimen/matter_scanned_item_vertical_margin"
     android:background="@drawable/matter_scanned_result_item_shape"
-    android:paddingStart="@dimen/matter_10dp"
-    android:paddingTop="@dimen/matter_18dp"
-    android:paddingEnd="@dimen/matter_5dp"
-    android:paddingBottom="@dimen/matter_18dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="0dp"
+    android:paddingTop="@dimen/matter_0dp"
+    android:paddingEnd="@dimen/matter_8dp"
+    android:paddingBottom="@dimen/matter_0dp"
     swipe:leftEdgeSwipeOffset="0dp"
     swipe:rightEdgeSwipeOffset="0dp">
 
-    <!-- Bottom wrapper that holds the delete icon -->
     <LinearLayout
         android:id="@+id/bottom_wrapper"
         android:layout_width="@dimen/matter_90dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical">
+        android:gravity="center">
 
-        <!-- Delete icon centered vertically and horizontally -->
         <ImageView
             android:id="@+id/img_delete"
-            android:layout_width="@dimen/matter_40dp"
-            android:layout_height="@dimen/matter_40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/matter_18dp"
-            android:layout_marginEnd="-10dp"
-            android:layout_marginBottom="@dimen/matter_18dp"
+            android:layout_width="@dimen/matter_36dp"
+            android:layout_height="@dimen/matter_36dp"
+            android:layout_gravity="center"
             android:background="?android:selectableItemBackgroundBorderless"
             android:clickable="true"
+            android:contentDescription="@string/matter_scanned_row_delete_a11y"
             android:src="@drawable/baseline_delete_24"
             android:visibility="visible" />
     </LinearLayout>
 
-    <!-- Main content of the RecyclerView item -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:padding="@dimen/matter_5dp">
+        android:layout_gravity="center"
+        android:outlineAmbientShadowColor="@color/matter_scanned_list_card_ambient_shadow"
+        android:outlineSpotShadowColor="@color/matter_scanned_list_card_spot_shadow"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/matter_scanned_card_corner"
+        app:cardElevation="@dimen/matter_scanned_list_item_card_elevation"
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:id="@+id/itemViewHolder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/matter_5dp">
+            android:paddingHorizontal="@dimen/matter_10dp"
+            android:paddingVertical="@dimen/matter_8dp">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="@dimen/matter_40dp"
-                android:layout_height="@dimen/matter_40dp"
-                android:layout_gravity="center"
+                android:layout_width="@dimen/matter_scanned_list_device_icon_size"
+                android:layout_height="@dimen/matter_scanned_list_device_icon_size"
+                android:layout_gravity="center_vertical"
+                android:importantForAccessibility="no"
                 android:scaleType="fitCenter" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/matter_10dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:gravity="center_vertical|start"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textViewHeader"
+                    style="@style/SilabsMatterDeviceTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/matter_10dp"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textViewHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/matter_10dp"
-                        android:layout_marginEnd="@dimen/matter_15dp"
-                        android:textSize="@dimen/text_size_L"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/stolzl_bold"
+                    android:gravity="start|center_vertical"
+                    android:lineHeight="16sp"
+                    android:maxLines="1"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/silabs_redtheme_iop_full_screen_txt_color"
+                    android:textFontWeight="700"
+                    android:textSize="@dimen/menu_tile_title_size"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/matterArrow"
-                    android:layout_width="24dp"
-                    android:layout_height="23dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/matter_arrow" />
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/matter_8dp"
+                    android:layout_marginEnd="@dimen/matter_8dp"
+                    android:background="@drawable/matter_arrow"
+                    android:contentDescription="open" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

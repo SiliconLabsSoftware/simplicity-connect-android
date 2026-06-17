@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/silabs_soft_black" />
-    <corners android:radius="8dp" />
+    <solid android:color="@color/mqtt_led_on_button" />
+    <corners android:radius="@dimen/silabs_btn_radius" />
 </shape>

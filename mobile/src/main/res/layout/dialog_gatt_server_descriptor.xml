@@ -45,7 +45,8 @@
                         style="@style/EditTextSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/gatt_configurator_hint_descriptor_name" />
+                        android:hint="@string/gatt_configurator_hint_descriptor_name"
+                        android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
 
                     <AutoCompleteTextView
                         android:id="@+id/actv_descriptor_uuid"
@@ -55,7 +56,8 @@
                         android:layout_marginTop="8dp"
                         android:digits="0123456789ABCDEFabcdef-"
                         android:hint="@string/gatt_configurator_hint_16_128_bit_uuid"
-                        android:maxLength="36" />
+                        android:maxLength="36"
+                        android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
                 </LinearLayout>
 
                 <include
@@ -111,7 +113,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dialog_margin_between_buttons"
                 android:enabled="false"
-                android:text="@string/button_save" />
+                android:text="@string/button_save"
+                android:textAllCaps="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -26,8 +26,9 @@
             android:layout_marginBottom="16dp"
             android:text="@string/iop_test_note_device_name_dialog" />
 
-        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_interoperability_test"
-            style="@style/button_external_link"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_interoperability_test"
+            style="@style/button_add_data_outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/iop_test_label_interoperability_test" />

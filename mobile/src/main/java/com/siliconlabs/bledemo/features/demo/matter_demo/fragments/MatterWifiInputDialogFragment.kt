@@ -1,10 +1,8 @@
 package com.siliconlabs.bledemo.features.demo.matter_demo.fragments
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,9 +13,9 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.DialogConfigureWifiMatterBinding
-import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterOTBRInputDialogFragment.Companion.WINDOW_SIZE
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.FragmentUtils
 import com.siliconlabs.bledemo.utils.CustomToastManager
+import com.siliconlabs.bledemo.utils.DisplayUtils
 
 class MatterWifiInputDialogFragment : DialogFragment() {
 
@@ -25,6 +23,8 @@ class MatterWifiInputDialogFragment : DialogFragment() {
     private var flag: Boolean = false
 
     companion object {
+         const val DIALOG_WIDTH_FRACTION = 0.9f
+
         fun newInstance(): MatterWifiInputDialogFragment = MatterWifiInputDialogFragment()
     }
 
@@ -51,7 +51,7 @@ class MatterWifiInputDialogFragment : DialogFragment() {
         if (dialog != null) {
             dialog.window!!
                 .setLayout(
-                    (getScreenWidth(requireActivity()) * WINDOW_SIZE).toInt(),
+                    (DisplayUtils.getScreenWidth(requireActivity()) * DIALOG_WIDTH_FRACTION).toInt(),
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
         }
@@ -67,21 +67,14 @@ class MatterWifiInputDialogFragment : DialogFragment() {
             val wifiSSID = binding.editNetworkSSID.text.toString().trim()
             val wifiPassword = binding.editWiFiPassword.text.toString().trim()
             if (wifiSSID.isBlank() || wifiPassword.isBlank()) {
-                /*Toast.makeText(
-                    requireContext(),
-                    getString(R.string.ssid_and_password_required), Toast.LENGTH_SHORT
-                )
-                    .show()*/
+
                 CustomToastManager.show(
                     requireContext(),getString(R.string.ssid_and_password_required),5000
                 )
                 return@setOnClickListener
             }
             if (!FragmentUtils.isPasswordValid(wifiPassword)) {
-                /*Toast.makeText(
-                    requireContext(),
-                    getString(R.string.password_must_be_min_8_characters), Toast.LENGTH_SHORT
-                ).show()*/
+
                 CustomToastManager.show(
                     requireContext(),getString(R.string.password_must_be_min_8_characters),5000
                 )
@@ -117,12 +110,6 @@ class MatterWifiInputDialogFragment : DialogFragment() {
 
     interface CallBackHandler {
         fun onBackHandler()
-    }
-
-    private fun getScreenWidth(activity: Activity): Int {
-        val size = Point()
-        activity.windowManager.defaultDisplay.getSize(size)
-        return size.x
     }
 
     fun stopDisplay() {

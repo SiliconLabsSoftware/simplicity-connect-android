@@ -8,19 +8,25 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     <FrameLayout
         android:id="@+id/esl_demo_fragment_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:background="@drawable/modal_bg"
         android:layout_height="match_parent">
 
     </FrameLayout>

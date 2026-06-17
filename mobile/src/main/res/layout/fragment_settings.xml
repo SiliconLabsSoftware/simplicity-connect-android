@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/modal_bg"
     android:orientation="vertical"
-    android:weightSum="1">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -19,26 +19,32 @@
             android:layout_marginStart="@dimen/settings_subtitle_margin"
             android:layout_marginTop="@dimen/settings_subtitle_margin"
             android:layout_marginBottom="16dp"
-            android:text="@string/device_subtitle" />
+            android:text="@string/device_subtitle"
+            android:textSize="@dimen/text_size_SM" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_device_info"
+            style="@style/settings_link_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/settings_subtitle_margin"
             android:text="@string/device_information"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_SM"
+            app:cornerRadius="@dimen/matter_12dp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+        android:background="?android:attr/listDivider"
+        android:layout_marginStart="@dimen/matter_10dp"
+        android:layout_marginEnd="@dimen/matter_10dp"
+        android:layout_marginTop="@dimen/matter_10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -48,7 +54,8 @@
             android:layout_marginStart="@dimen/settings_subtitle_margin"
             android:layout_marginTop="@dimen/settings_subtitle_margin"
             android:layout_marginBottom="16dp"
-            android:text="@string/configuration_subtitle" />
+            android:text="@string/configuration_subtitle"
+            android:textSize="@dimen/text_size_SM" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -63,8 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
+                android:textSize="@dimen/text_size_SM"
+                android:fontFamily="@font/stolzl_regular"
                 android:text="@string/scan_timeout"
-                android:textColor="@android:color/black" />
+                android:textColor="@color/silabs_redtheme_devkit_text_color" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/scan_timeout_help_icon"
@@ -82,23 +91,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:entries="@array/scan_timeout_options"
                 android:gravity="end|center_vertical" />
         </RelativeLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_report_issue"
+            style="@style/settings_link_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/settings_subtitle_margin"
             android:text="@string/report_issue"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/matter_12dp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+        android:background="?android:attr/listDivider"
+        android:layout_marginStart="@dimen/matter_10dp"
+        android:layout_marginEnd="@dimen/matter_10dp"
+        android:layout_marginTop="@dimen/matter_10dp"/>
 
 
     <TextView
@@ -107,12 +120,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/settings_subtitle_margin"
         android:layout_marginTop="@dimen/settings_subtitle_margin"
-        android:text="@string/links_subtitle" />
+        android:text="@string/links_subtitle"
+        android:textSize="@dimen/text_size_SM" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5">
+        android:layout_height="wrap_content"
+        >
 
         <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/useful_links_grid"
@@ -121,46 +135,53 @@
             app:flexWrap="wrap"
             app:justifyContent="center">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/silabs_products_wireless"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_more_information" />
+                android:text="@string/settings_link_more_information"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/silabs_support"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_support" />
+                android:text="@string/settings_link_support"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/github_siliconlabs_efrconnect"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_source_code" />
+                android:text="@string/settings_link_source_code"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/users_guide_efrconnect"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_users_guide" />
+                android:text="@string/settings_link_users_guide"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/docs_silabs_release_notes"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_release_notes" />
+                android:text="@string/settings_link_release_notes"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/docs_silabs_bluetooth_latest"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_additional_documentation" />
+                android:text="@string/settings_link_additional_documentation"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/help_text_playstore"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_other_silabs_apps" />
+                android:text="@string/settings_link_other_silabs_apps"
+                app:cornerRadius="@dimen/matter_12dp" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:visibility="gone"
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/log_text_share"
                 style="@style/settings_link_button"
-                android:text="@string/settings_link_export_logger" />
+                android:text="@string/settings_link_export_logger"
+                android:visibility="gone" />
         </com.google.android.flexbox.FlexboxLayout>
     </ScrollView>
 
@@ -169,11 +190,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
         android:layout_marginVertical="@dimen/settings_version_margin"
-        android:fontFamily="sans-serif"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/help_text_size"
+        android:fontFamily="@font/stolzl_medium"
+        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+        android:textSize="14sp"
         android:textStyle="bold"
         tools:text="Version X.X.X" />
 </LinearLayout>

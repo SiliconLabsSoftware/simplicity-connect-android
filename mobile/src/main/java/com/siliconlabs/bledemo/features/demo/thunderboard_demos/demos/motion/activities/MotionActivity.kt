@@ -12,9 +12,11 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.appbar.MaterialToolbar
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.bluetooth.ble.GattCharacteristic
@@ -51,16 +53,6 @@ class MotionActivity : ThunderboardActivity(), AndroidFragmentApplication.Callba
 
         val modelType = intent.getStringExtra(SelectDeviceDialog.MODEL_TYPE_EXTRA)
         initializeAnimation(modelType)
-
-        findViewById<View>(R.id.divider)?.let {
-            it.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    val parent = it.parent as View
-                    it.minimumHeight = parent.height
-                    it.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                }
-            })
-        }
     }
 
     private fun prepareToolBar() {
@@ -73,6 +65,7 @@ class MotionActivity : ThunderboardActivity(), AndroidFragmentApplication.Callba
             setDisplayHomeAsUpEnabled(true)
             setTitle(R.string.motion_demo_title)
         }
+        (binding.toolbar as? MaterialToolbar)?.isTitleCentered = false
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -142,13 +135,13 @@ class MotionActivity : ThunderboardActivity(), AndroidFragmentApplication.Callba
     }
 
     private fun popupCalibratingDialog() {
-        AlertDialog.Builder(this).apply {
+        calibratingDialog = AlertDialog.Builder(this).apply {
             setTitle(R.string.motion_calibrating)
             setCancelable(true)
             setMessage(R.string.motion_calibrating_message)
-            calibratingDialog = this.create()
-        }
+        }.create()
         calibratingDialog?.show()
+        calibratingDialog?.let { applyMotionAlertTypography(it) }
     }
 
     private fun closeCalibratingDialog() {
@@ -182,19 +175,34 @@ class MotionActivity : ThunderboardActivity(), AndroidFragmentApplication.Callba
 
     @SuppressLint("MissingPermission")
     private fun showBrokenSensorsMessage(brokenSensors: Set<ThunderboardSensor>) {
-        AlertDialog.Builder(this).apply {
-            setTitle(getString(R.string.sensor_malfunction_dialog_title))
-            setMessage(
-                getString(
-                    R.string.critical_sensor_malfunction_dialog_message,
-                    TextUtils.join(", ", brokenSensors)
+        runOnUiThread {
+            val dialog = AlertDialog.Builder(this).apply {
+                setTitle(getString(R.string.sensor_malfunction_dialog_title))
+                setMessage(
+                    getString(
+                        R.string.critical_sensor_malfunction_dialog_message,
+                        TextUtils.join(", ", brokenSensors)
+                    )
                 )
-            )
-            setPositiveButton(getString(R.string.button_ok)) { _, _ ->
-                gatt?.disconnect() ?: onDeviceDisconnected()
-            }
-            setCancelable(false)
-            runOnUiThread { show() }
+                setPositiveButton(getString(R.string.button_ok)) { _, _ ->
+                    gatt?.disconnect() ?: onDeviceDisconnected()
+                }
+                setCancelable(false)
+            }.show()
+            applyMotionAlertTypography(dialog)
+        }
+    }
+
+    private fun applyMotionAlertTypography(dialog: AlertDialog) {
+        val titleColor = getColor(R.color.silabs_redtheme_primary_color)
+        val messageColor = getColor(R.color.silabs_redtheme_scanner_body_text_color)
+        dialog.findViewById<TextView>(android.R.id.title)?.apply {
+            ResourcesCompat.getFont(this@MotionActivity, R.font.stolzl_medium)?.let { typeface = it }
+            setTextColor(titleColor)
+        }
+        dialog.findViewById<TextView>(android.R.id.message)?.apply {
+            ResourcesCompat.getFont(this@MotionActivity, R.font.helvetica_neue_medium)?.let { typeface = it }
+            setTextColor(messageColor)
         }
     }
 

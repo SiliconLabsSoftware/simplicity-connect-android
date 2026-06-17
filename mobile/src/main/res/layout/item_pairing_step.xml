@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!-- Step Icon -->
+    <FrameLayout
+        android:id="@+id/step_icon_container"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/circle_background_grey">
+
+        <TextView
+            android:id="@+id/step_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/silabs_subtle_text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="1" />
+
+        <ProgressBar
+            android:id="@+id/step_progress"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/white"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/step_check"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/reflector_pairing_step_complete"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@android:color/white" />
+
+    </FrameLayout>
+
+    <!-- Step Content -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:fontFamily="@font/stolzl_regular"
+            android:id="@+id/step_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/silabs_primary_text"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Device Found" />
+
+        <TextView
+            android:fontFamily="@font/stolzl_regular"
+            android:id="@+id/step_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/silabs_subtle_text"
+            android:textSize="12sp"
+            tools:text="Silabs Example detected" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -72,9 +73,10 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
     private lateinit var model: MatterScannedResultModel
     private lateinit var deviceList: ArrayList<MatterScannedResultModel>
     private lateinit var prefs: SharedPreferences
+    private var matterLightSwitchAdapter: MatterLightSwitchRVAdapter? = null
     private var nodeIDSwitch: Long = 0
     private var nodeIDLight: Long = 0
-    private var matterBindedItemName:String = ""
+    private var matterBindedItemName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,70 +151,162 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
 
         /*Load the UI Related to Select Device to Bind*/
         if (deviceList.isNotEmpty()) {
-            deviceList.forEach {
-                if (it.deviceType != 260) {
-                    binding.layoutNoDevice.visibility = View.GONE
-                    binding.layoutViewLightBind.container.visibility = View.VISIBLE
-                    val matterAdapter =
-                        MatterLightSwitchRVAdapter(deviceList, prefs, onItemClick = {selectedDevice ->
-                            bindSwitchViewModel.updateDeviceBindingState(selectedDevice.matterName, inProgress = true)
-                            bindSwitchViewModel.setBindingStatus("Binding in progress...")
-
-                            matterBindedItemName = selectedDevice.matterName
-                            prefs.edit().apply {
-                                putString(MATTER_BIND_ITEM_NAME, matterBindedItemName)
-                                apply() // Save changes asynchronously
-                            }
-                            scope.launch {
-                                showMatterProgressDialog("Binding...")
-                                getACLClusterForDevice()
-                                performLightAndLightSwitchBinding(selectedDevice.isLightAndLightSwitchItemSelected)
-                            }
-                        }, onUnbindClick = {selectedDevice ->
-                            val deviceName = selectedDevice.matterName
-                            showMatterProgressDialog("Unbinding...")
-                            // Start progress
-                            bindSwitchViewModel.setUnbindingState(deviceName, inProgress = true)
-                            //START unbind operation
-                            scope.launch {
-                                unbindDeviceBinding(requireContext(),nodeIDSwitch,nodeIDLight, deviceName = deviceName)
-                            }
-
-                        })
-                    binding.layoutViewLightBind.rvMatterList.apply {
-                        layoutManager = LinearLayoutManager(requireContext())
-                        adapter = matterAdapter
+            if (deviceList.any { it.deviceType != 260 }) {
+                binding.layoutNoDevice.visibility = View.GONE
+                binding.layoutViewLightBind.container.visibility = View.VISIBLE
+                matterLightSwitchAdapter = MatterLightSwitchRVAdapter(
+                    deviceList,
+                    selectedMatterName = null,
+                    onLightSelected = { device ->
+                        if (device.isBindingInProgress || device.isAclWriteInProgress) return@MatterLightSwitchRVAdapter
+                        bindSwitchViewModel.selectLightForBinding(device.matterName)
                     }
-                    bindSwitchViewModel.unbindEnableDeviceName.observe(viewLifecycleOwner) { deviceName ->
-                        (binding.layoutViewLightBind.rvMatterList.adapter as? MatterLightSwitchRVAdapter)
-                            ?.setUnbindEnabledFor(deviceName)
-                    }
-                    bindSwitchViewModel.deviceStates.observe(viewLifecycleOwner) { updatedDevices ->
-                        matterAdapter.updateList(updatedDevices)
-                    }
-                } else {
-                    binding.layoutNoDevice.visibility = View.VISIBLE
-
+                )
+                binding.layoutViewLightBind.rvMatterList.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    adapter = matterLightSwitchAdapter
                 }
+                bindSwitchViewModel.selectedLightNameForBinding.observe(viewLifecycleOwner) { name ->
+                    matterLightSwitchAdapter?.setSelectedMatterName(name)
+                }
+                bindSwitchViewModel.deviceStates.observe(viewLifecycleOwner) { updatedDevices ->
+                    matterLightSwitchAdapter?.updateList(updatedDevices)
+                    refreshBindStripUi()
+                    maybeAutoSelectSingleBindableLight(updatedDevices)
+                }
+            } else {
+                binding.layoutNoDevice.visibility = View.VISIBLE
             }
         }
         (activity as MatterDemoActivity).hideQRScanner()
 
 
         bindSwitchViewModel.bindingStatusText.observe(viewLifecycleOwner) { status ->
+            val params = binding.tvShowBindInfo.layoutParams
+            params.width = 150
+            params.height = 100
+            binding.tvShowBindInfo.layoutParams = params
+            binding.tvShowBindInfo.gravity = Gravity.CENTER
             binding.tvShowBindInfo.background = ContextCompat.getDrawable(
                 requireContext(),
-                R.drawable.button_background_grey_box
+                R.drawable.channel_sounding_distance_value_box_bg
             )
-            binding.tvShowBindInfo.setTextColor(resources.getColor(R.color.silabs_white))
+            binding.tvShowBindInfo.setTextColor(resources.getColor(R.color.silabs_inactive_light))
             binding.tvShowBindInfo.text = status
+            refreshBindStripUi()
+        }
+
+        binding.unBindLightBtn.setOnClickListener {
+            startUnbindForBoundDevice()
+        }
+
+        binding.tvShowBindInfo.setOnClickListener {
+            if (binding.tvShowBindInfo.visibility != View.VISIBLE) return@setOnClickListener
+            val idleText = getString(R.string.binded_to_nothing)
+            if (binding.tvShowBindInfo.text?.toString() != idleText) return@setOnClickListener
+
+            val devices = bindSwitchViewModel.deviceStates.value.orEmpty()
+            val selectedName = bindSwitchViewModel.selectedLightNameForBinding.value
+            val selected = selectedName?.let { name ->
+                devices.firstOrNull { it.matterName == name }
+            }?.takeIf { isBindableLightForSwitchUi(it) }
+
+            if (selected == null) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.matter_select_light_to_bind),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            if (selected.isBindingInProgress || selected.isAclWriteInProgress) return@setOnClickListener
+            startBindingFlow(selected)
         }
 
         bindSwitchViewModel.aclWriteError.observe(viewLifecycleOwner) {
-            showErrorAndExit("Binding failed due to resource exhaustion.Communication may still work temporarily,but binding is not secure.Hence please reset the " +
-                    "boards(Light & Light Switch (Both)) as well as delete the matter commissioned devices(Light & Light Switch(Both) from the MatterList Screen)and " +
-                    "then start binding again.")
+            showErrorAndExit(
+                "Binding failed due to resource exhaustion.Communication may still work temporarily,but binding is not secure.Hence please reset the " +
+                        "boards(Light & Light Switch (Both)) as well as delete the matter commissioned devices(Light & Light Switch(Both) from the MatterList Screen)and " +
+                        "then start binding again."
+            )
 
+        }
+
+        refreshBindStripUi()
+    }
+
+    private fun isBindableLightForSwitchUi(device: MatterScannedResultModel): Boolean {
+        if (device.deviceType == DIMMER_SWITCH) return false
+        return when (device.deviceType) {
+            DIMMABLE_Light_TYPE,
+            ENHANCED_COLOR_LIGHT_TYPE,
+            ON_OFF_LIGHT_TYPE,
+            COLOR_TEMPERATURE_LIGHT_TYPE -> true
+            else -> false
+        }
+    }
+
+    private fun maybeAutoSelectSingleBindableLight(devices: List<MatterScannedResultModel>) {
+        val lights = devices.filter { isBindableLightForSwitchUi(it) }
+        if (lights.size == 1) {
+            bindSwitchViewModel.selectLightForBinding(lights.first().matterName)
+        }
+    }
+
+    private fun startBindingFlow(selectedDevice: MatterScannedResultModel) {
+        bindSwitchViewModel.updateDeviceBindingState(
+            selectedDevice.matterName,
+            inProgress = true
+        )
+        bindSwitchViewModel.setBindingStatus("Binding in progress...")
+
+        matterBindedItemName = selectedDevice.matterName
+        prefs.edit().apply {
+            putString(MATTER_BIND_ITEM_NAME, matterBindedItemName)
+            apply()
+        }
+        scope.launch {
+            showMatterProgressDialog("Binding...")
+            getACLClusterForDevice()
+            performLightAndLightSwitchBinding(selectedDevice.isLightAndLightSwitchItemSelected)
+        }
+    }
+
+    /**
+     * Header row: show Unbind only when a light row is successfully bound and not mid-unbind.
+     */
+    private fun refreshBindStripUi() {
+        if (!this::binding.isInitialized) return
+        val devices = bindSwitchViewModel.deviceStates.value.orEmpty()
+        val showUnbind =
+            devices.any { it.isBindingSuccessful && !it.isUnbindingInProgress }
+        binding.tvShowBindInfo.visibility = if (showUnbind) View.GONE else View.VISIBLE
+        binding.unBindLightBtn.visibility = if (showUnbind) View.VISIBLE else View.GONE
+        binding.unBindLightBtn.isEnabled = showUnbind
+    }
+
+    private fun startUnbindForBoundDevice() {
+        val deviceName = prefs.getString("binded_device_name", null)
+            ?: bindSwitchViewModel.unbindEnableDeviceName.value
+            ?: bindSwitchViewModel.deviceStates.value
+                ?.firstOrNull { it.isBindingSuccessful }?.matterName
+        if (deviceName.isNullOrBlank()) {
+            Toast.makeText(
+                requireContext(),
+                "No bound light to unbind.",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        showMatterProgressDialog("Unbinding...")
+        bindSwitchViewModel.setUnbindingState(deviceName, inProgress = true)
+        scope.launch {
+            unbindDeviceBinding(
+                requireContext(),
+                nodeIDSwitch,
+                nodeIDLight,
+                deviceName = deviceName
+            )
         }
     }
 
@@ -310,7 +404,7 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
         println("----------------------------------")
         scope.launch {
             //sendAccessControl(value, GROUPID, 3)
-            sendSafeAccessControl(requireContext(),nodeIDLight,nodeIDSwitch,value, GROUPID,3)
+            sendSafeAccessControl(requireContext(), nodeIDLight, nodeIDSwitch, value, GROUPID, 3)
         }
     }
 
@@ -346,8 +440,8 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
             accessControl,
             2,
             arrayListOf(nodeIDSwitch),
-            null,
-            deviceController.fabricIndex.toUInt().toInt()
+            null, Optional.of(deviceController.fabricIndex.toInt()),
+            deviceController.fabricIndex.toUInt().toInt(),
         )
         println("====================================")
         println("MATTER :newEntry$newEntry")
@@ -371,15 +465,20 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                     removeProgress()
                     bindSwitchViewModel.enableUnbindForDevice(matterBindedItemName)
                     bindSwitchViewModel.updateAclWriteProgress(matterBindedItemName, false)
-                    bindSwitchViewModel.updateDeviceBindingState(matterBindedItemName, inProgress = false, success = true)
+                    bindSwitchViewModel.updateDeviceBindingState(
+                        matterBindedItemName,
+                        inProgress = false,
+                        success = true
+                    )
 
 
                     // Persist final state
                     val cleanList = bindSwitchViewModel.deviceStates.value?.map {
                         it.copy(isBindingInProgress = false, isAclWriteInProgress = false)
-                    }?: emptyList()
+                    } ?: emptyList()
 
-                    SharedPrefsUtils.saveDevicesToPref(prefs,
+                    SharedPrefsUtils.saveDevicesToPref(
+                        prefs,
                         cleanList as ArrayList<MatterScannedResultModel>
                     )
                     bindSwitchViewModel.setBindingStatus("Binded to $matterBindedItemName")
@@ -389,17 +488,20 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
         )
     }
 
-    suspend fun sendSafeAccessControl(context: Context, lightNodeId: Long, switchNodeId: Long,
-                                      value: List<AccessControlClusterAccessControlEntryStruct>,
-                                      groupID: Int,
-                                      accessControl: Int) {
+    suspend fun sendSafeAccessControl(
+        context: Context, lightNodeId: Long, switchNodeId: Long,
+        value: List<AccessControlClusterAccessControlEntryStruct>,
+        groupID: Int,
+        accessControl: Int
+    ) {
         try {
             val devicePtr = ChipClient.getConnectedDevicePointer(context, lightNodeId)
             val aclCluster =
                 ChipClusters.AccessControlCluster(devicePtr, 0) // Endpoint 0 for ACL Cluster
 
             // Step 1: Read existing ACLs
-            aclCluster.readAclAttribute(object : ChipClusters.AccessControlCluster.AclAttributeCallback {
+            aclCluster.readAclAttribute(object :
+                ChipClusters.AccessControlCluster.AclAttributeCallback {
                 override fun onSuccess(list: MutableList<AccessControlClusterAccessControlEntryStruct>?) {
                     val switchAlreadyAuthorized = list?.any { entry ->
                         entry.subjects?.any { it.toLong() == switchNodeId } == true
@@ -408,22 +510,37 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                     if (switchAlreadyAuthorized) {
                         Timber.d("Switch already has ACL permission. Skipping ACL write.")
                         scope.launch {
-                            withContext(Dispatchers.Main){
-                                Toast.makeText(context, "Already authorized. Skipping binding!", Toast.LENGTH_SHORT).show()
+                            withContext(Dispatchers.Main) {
+                                Toast.makeText(
+                                    context,
+                                    "Already authorized. Skipping binding!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 Timber.tag(TAG).d("onResponse")
                                 showMessage("Binding Success")
                                 removeProgress()
                                 bindSwitchViewModel.enableUnbindForDevice(matterBindedItemName)
-                                bindSwitchViewModel.updateAclWriteProgress(matterBindedItemName, false)
-                                bindSwitchViewModel.updateDeviceBindingState(matterBindedItemName, inProgress = false, success = true)
+                                bindSwitchViewModel.updateAclWriteProgress(
+                                    matterBindedItemName,
+                                    false
+                                )
+                                bindSwitchViewModel.updateDeviceBindingState(
+                                    matterBindedItemName,
+                                    inProgress = false,
+                                    success = true
+                                )
 
 
                                 // Persist final state
                                 val cleanList = bindSwitchViewModel.deviceStates.value?.map {
-                                    it.copy(isBindingInProgress = false, isAclWriteInProgress = false)
-                                }?: emptyList()
+                                    it.copy(
+                                        isBindingInProgress = false,
+                                        isAclWriteInProgress = false
+                                    )
+                                } ?: emptyList()
 
-                                SharedPrefsUtils.saveDevicesToPref(prefs,
+                                SharedPrefsUtils.saveDevicesToPref(
+                                    prefs,
                                     cleanList as ArrayList<MatterScannedResultModel>
                                 )
                                 bindSwitchViewModel.setBindingStatus("Binded to $matterBindedItemName")
@@ -450,12 +567,12 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                         }
 
 
-
                         val newEntry = AccessControlClusterAccessControlEntryStruct(
                             accessControl,
                             2,
                             arrayListOf(nodeIDSwitch),
                             null,
+                            Optional.of(deviceController.fabricIndex.toUInt().toInt()),
                             deviceController.fabricIndex.toUInt().toInt()
                         )
                         println("====================================")
@@ -479,16 +596,27 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                                     showMessage("Binding Success")
                                     removeProgress()
                                     bindSwitchViewModel.enableUnbindForDevice(matterBindedItemName)
-                                    bindSwitchViewModel.updateAclWriteProgress(matterBindedItemName, false)
-                                    bindSwitchViewModel.updateDeviceBindingState(matterBindedItemName, inProgress = false, success = true)
+                                    bindSwitchViewModel.updateAclWriteProgress(
+                                        matterBindedItemName,
+                                        false
+                                    )
+                                    bindSwitchViewModel.updateDeviceBindingState(
+                                        matterBindedItemName,
+                                        inProgress = false,
+                                        success = true
+                                    )
 
 
                                     // Persist final state
                                     val cleanList = bindSwitchViewModel.deviceStates.value?.map {
-                                        it.copy(isBindingInProgress = false, isAclWriteInProgress = false)
-                                    }?: emptyList()
+                                        it.copy(
+                                            isBindingInProgress = false,
+                                            isAclWriteInProgress = false
+                                        )
+                                    } ?: emptyList()
 
-                                    SharedPrefsUtils.saveDevicesToPref(prefs,
+                                    SharedPrefsUtils.saveDevicesToPref(
+                                        prefs,
                                         cleanList as ArrayList<MatterScannedResultModel>
                                     )
                                     bindSwitchViewModel.setBindingStatus("Binded to $matterBindedItemName")
@@ -502,16 +630,27 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                                 showMessage("Binding Success")
                                 removeProgress()
                                 bindSwitchViewModel.enableUnbindForDevice(matterBindedItemName)
-                                bindSwitchViewModel.updateAclWriteProgress(matterBindedItemName, false)
-                                bindSwitchViewModel.updateDeviceBindingState(matterBindedItemName, inProgress = false, success = true)
+                                bindSwitchViewModel.updateAclWriteProgress(
+                                    matterBindedItemName,
+                                    false
+                                )
+                                bindSwitchViewModel.updateDeviceBindingState(
+                                    matterBindedItemName,
+                                    inProgress = false,
+                                    success = true
+                                )
 
 
                                 // Persist final state
                                 val cleanList = bindSwitchViewModel.deviceStates.value?.map {
-                                    it.copy(isBindingInProgress = false, isAclWriteInProgress = false)
-                                }?: emptyList()
+                                    it.copy(
+                                        isBindingInProgress = false,
+                                        isAclWriteInProgress = false
+                                    )
+                                } ?: emptyList()
 
-                                SharedPrefsUtils.saveDevicesToPref(prefs,
+                                SharedPrefsUtils.saveDevicesToPref(
+                                    prefs,
                                     cleanList as ArrayList<MatterScannedResultModel>
                                 )
                                 bindSwitchViewModel.setBindingStatus("Binded to $matterBindedItemName")
@@ -554,7 +693,7 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
         //requireActivity().runOnUiThread { binding.statusACLInfo.text = message }
         requireActivity().runOnUiThread {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-            if (message.equals("Binding Success",true)){
+            if (message.equals("Binding Success", true)) {
                 prefs.edit().apply {
                     putBoolean("is_bind_successful", true)
                     putString("binded_device_name", matterBindedItemName)
@@ -621,8 +760,6 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
 
 
     companion object {
-        //  const val ACL_END_POINT = 0
-        //  const val LIGHT_END_POINT = 0L
         const val SWITCH_END_POINT = 1
         const val GROUPID = 0
         const val MATTER_BIND_ITEM_NAME = "matter_binded_name"
@@ -642,7 +779,7 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
         targetNodeId: Long,         // Usually the Light
         targetEndpointId: Int = 1,  // Light's endpoint
         targetClusterId: Int = 6,
-        deviceName:String// OnOff or any bound cluster
+        deviceName: String// OnOff or any bound cluster
     ) {
         val bindingCluster = ChipClusters.BindingCluster(
             ChipClient.getConnectedDevicePointer(context, sourceNodeId),
@@ -655,6 +792,7 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                 if (bindings.isNullOrEmpty()) {
                     removeProgress()
                     Timber.d("No bindings to remove")
+                    bindSwitchViewModel.cancelUnbindingInProgress(deviceName)
                     return
                 }
 
@@ -666,7 +804,7 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                     nid == targetNodeId && eid == targetEndpointId && cid?.toInt() == targetClusterId
                 }
 
-                Log.e("unBinding ACL List:","${ArrayList(updatedBindings).toString()}")
+                Log.e("unBinding ACL List:", "${ArrayList(updatedBindings).toString()}")
 
                 // Write back the filtered list
                 bindingCluster.writeBindingAttribute(
@@ -675,7 +813,11 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                             removeProgress()
                             Timber.d("Unbinding success")
                             requireActivity().runOnUiThread {
-                                Toast.makeText(requireContext(),"Unbinding Success",Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Unbinding Success",
+                                    Toast.LENGTH_LONG
+                                ).show()
 
                                 // After unbind succeeds
                                 val editor = prefs.edit()
@@ -684,10 +826,15 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                                 editor.remove("binded_device_name")
                                 editor.remove("unbind_enabled_for")
                                 editor.apply()
-                                bindSwitchViewModel.setUnbindingState(deviceName, inProgress = false)
+                                bindSwitchViewModel.setUnbindingState(
+                                    deviceName,
+                                    inProgress = false
+                                )
 
                                 // Reset binding status text and UI
-                                bindSwitchViewModel.setBindingStatus("Binded to nothing")
+                                bindSwitchViewModel.setBindingStatus(
+                                    getString(R.string.binded_to_nothing)
+                                )
                                 bindSwitchViewModel.enableUnbindForDevice("")
                             }
 
@@ -696,8 +843,13 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
                         override fun onError(e: Exception?) {
                             removeProgress()
                             Timber.e("Unbinding write failed: $e")
+                            bindSwitchViewModel.cancelUnbindingInProgress(deviceName)
                             requireActivity().runOnUiThread {
-                                Toast.makeText(requireContext(),"Unbinding write failed",Toast.LENGTH_LONG).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Unbinding write failed",
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
                     },
@@ -707,8 +859,11 @@ class MatterLightControlSwitchFragment : Fragment(), (MatterScannedResultModel) 
 
             override fun onError(error: Exception?) {
                 Timber.e("Error reading binding attribute: $error")
+                removeProgress()
+                bindSwitchViewModel.cancelUnbindingInProgress(deviceName)
                 requireActivity().runOnUiThread {
-                    Toast.makeText(requireContext(),"Unbinding write failed",Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Unbinding write failed", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         })

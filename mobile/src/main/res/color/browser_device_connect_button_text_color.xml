@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Same as background tint: explicit is_action_on row for ActionButton state resolution. -->
+    <!-- Connected (Disconnect): same red label as Connect — not white on white. -->
+    <item
+        android:state_enabled="true"
+        app:is_action_on="true"
+        android:color="@color/silabs_redtheme_button_text_color" />
+    <item
+        android:state_enabled="true"
+        android:color="@color/silabs_redtheme_button_text_color" />
+    <item android:color="@color/btn_disabled" />
+</selector>

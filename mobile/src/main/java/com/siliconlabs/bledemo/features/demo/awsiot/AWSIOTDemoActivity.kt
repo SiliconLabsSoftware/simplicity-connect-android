@@ -23,6 +23,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -40,9 +41,9 @@ import com.siliconlabs.bledemo.features.demo.awsiot.model.GridItem
 import com.siliconlabs.bledemo.features.demo.awsiot.repository.ConnectionResult
 import com.siliconlabs.bledemo.features.demo.awsiot.viewmodel.MqttViewModel
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.CustomProgressDialog
-import com.siliconlabs.bledemo.utils.ApppUtil
 import com.siliconlabs.bledemo.features.demo.smartlock.dialogs.SmartLockConfigurationDialog
 import com.siliconlabs.bledemo.features.demo.smartlock.dialogs.SmartLockConfigurationDialog.Companion.PICK_P12_FILE_REQUEST_CODE
+import com.siliconlabs.bledemo.utils.AppUtil
 import com.siliconlabs.bledemo.utils.CustomToastManager
 import org.json.JSONException
 import org.json.JSONObject
@@ -79,6 +80,26 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
     private var isBlueOn = false
     private var awsConfigDialog: SmartLockConfigurationDialog? = null
 
+    /** True while waiting for the first successful [updateGrid] after connect; drives red toolbar ProgressBar. */
+    private var pendingInitialAwsGrid = false
+
+    private val mqttMessagesObserver = Observer<String> { payload ->
+        if (payload.isBlank()) return@Observer
+
+        timeoutRunnable?.let { runnable -> handler.removeCallbacks(runnable) }
+
+        if (!isValidJsonObject(payload)) {
+            return@Observer
+        }
+
+        removeProgress()
+        Log.e("AWS DEMO ACTIVITY", "AWS IOT MESSAGES$payload")
+
+        runOnUiThread {
+            updateGrid(JSONObject(payload))
+        }
+    }
+
 
     companion object {
         private const val PREFS_NAME = "MqttPrefs"
@@ -99,13 +120,15 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityAwsDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ApppUtil.setEdgeToEdge(window, this)
+        AppUtil.setEdgeToEdge(window, this)
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar
         actionBar!!.setHomeAsUpIndicator(R.drawable.matter_back)
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar?.title = getString(R.string.aws_dashboard)
-        actionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#0F62FE")))
+        actionBar?.setBackgroundDrawable(
+            ColorDrawable(ContextCompat.getColor(this, R.color.aws_iot_demo_toolbar))
+        )
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
 
         initUI()
@@ -131,17 +154,28 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
     }
 
+    private fun startAwsInitialLoadProgress() {
+        pendingInitialAwsGrid = true
+        binding.awsIotLoadProgress.visibility = View.VISIBLE
+    }
+
+    private fun cancelAwsInitialLoadProgress() {
+        pendingInitialAwsGrid = false
+        binding.awsIotLoadProgress.visibility = View.GONE
+    }
+
     private fun initObservers() {
 
 
         mqttViewModel.connectionResult.observe(this, Observer { result ->
             when (result) {
                 is ConnectionResult.Connecting -> {
+                    startAwsInitialLoadProgress()
                     showProgressDialog(getString(R.string.connecting_to_aws))
                 }
 
                 is ConnectionResult.Connected -> {
-
+                    startAwsInitialLoadProgress()
                     removeProgress()
                     runOnUiThread {
                         CustomToastManager.show(
@@ -155,6 +189,8 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
                 }
 
                 is ConnectionResult.Error -> {
+                    cancelAwsInitialLoadProgress()
+                    mqttViewModel.mqttMessages.removeObserver(mqttMessagesObserver)
                     // Handle the error
                     println("Connection Error: ${result.message}")
                     result.throwable?.printStackTrace() // Print the stack trace for debugging
@@ -183,27 +219,11 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
                 ConnectionResult.SubscribeConnected -> {
                     binding.placeholder.visibility = View.GONE
                     showProgressDialog(getString(R.string.loading_data))
-                    // Start timeout timer
                     startMessageTimeout()
 
-                    mqttViewModel.mqttMessages.observe(this, Observer {
-                        // Cancel timeout if message received
-                        handler.removeCallbacks(timeoutRunnable!!)
-                        removeProgress()
-                        Log.e("AWS DEMO ACTIVITY", "AWS IOT MESSAGES" + it.toString())
-
-                        val jsonString = it.toString() // Replace with real JSON source
-                        if (isValidJsonObject(jsonString)){
-                            runOnUiThread {
-                                updateGrid(JSONObject(jsonString))
-                            }
-
-                        }else{
-                            // do not do anything
-                        }
-
-
-                    })
+                    mqttViewModel.prepareMqttObservationForNewSubscription()
+                    mqttViewModel.mqttMessages.removeObserver(mqttMessagesObserver)
+                    mqttViewModel.mqttMessages.observe(this, mqttMessagesObserver)
                 }
 
                 ConnectionResult.SubscribeConnecting -> {
@@ -211,6 +231,8 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
                 }
 
                 ConnectionResult.Disconnected -> {
+                    cancelAwsInitialLoadProgress()
+                    mqttViewModel.mqttMessages.removeObserver(mqttMessagesObserver)
                     removeProgress()
                     //this.finish()
                 }
@@ -220,6 +242,8 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
                 }
 
                 ConnectionResult.DisconnectionError -> {
+                    cancelAwsInitialLoadProgress()
+                    mqttViewModel.mqttMessages.removeObserver(mqttMessagesObserver)
                     this.finish()
                 }
             }
@@ -228,7 +252,9 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
 
     // Function to start the timeout
     private fun startMessageTimeout() {
+        timeoutRunnable?.let { handler.removeCallbacks(it) }
         timeoutRunnable = Runnable {
+            cancelAwsInitialLoadProgress()
             removeProgress()
             showAlertDialogForRetry()
         }
@@ -290,7 +316,7 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
             motionItem = GridItem(
                 "Motion",
                 motionData,
-                R.drawable.icon_dks_917_motion
+                R.drawable.ic_motion_container
             )
         }
         // Process other keys according to ordered key
@@ -354,7 +380,7 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
         if (motionItem != null) {
             // Ensure there are at least 5 items by adding placeholders if needed
             while (newItems.size < 4) {
-                newItems.add(GridItem("", "", R.drawable.icon_dks_917_motion))//placeholder icon
+                newItems.add(GridItem("", "", R.drawable.ic_motion_container))//placeholder icon
             }
             newItems.add(motionItem)
         }
@@ -364,6 +390,14 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
 
         // Update the adapter
         adapter.updateData(newItems)
+        if (pendingInitialAwsGrid) {
+            binding.mqttRv.post {
+                if (pendingInitialAwsGrid) {
+                    pendingInitialAwsGrid = false
+                    binding.awsIotLoadProgress.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun getIconForKey(key: String): Int {
@@ -372,7 +406,7 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
             getString(R.string.aws_humidity) -> R.drawable.icon_environment
             getString(R.string.aws_ambient_light) -> R.drawable.icon_light
             getString(R.string.aws_white_light) -> R.drawable.icon_light
-            getString(R.string.motion_demo_title) -> R.drawable.icon_dks_917_motion
+            getString(R.string.motion_demo_title) -> R.drawable.ic_motion_container
 
             else -> R.drawable.background_grey_box
         }
@@ -551,13 +585,14 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
                 println("SSLContext ${sslContext.toString()}")
                 if(isNetworkAvailable(this)) {
                     runOnUiThread {
+                        startAwsInitialLoadProgress()
                         DynamicToast.makeSuccess(
                             this,
                             getString(R.string.smart_lock_device_connected),
                             5000
                         )
+                        mqttViewModel.connect(subscribeTopic, endPoint, sslContext)
                     }
-                    mqttViewModel.connect(subscribeTopic, endPoint, sslContext)
                     sslContext
                 }else{
                     runOnUiThread {
@@ -791,6 +826,9 @@ class AWSIOTDemoActivity : AppCompatActivity(), OnMqttGridItemClickListener {
     }
 
     override fun onDestroy() {
+        timeoutRunnable?.let { handler.removeCallbacks(it) }
+        mqttViewModel.mqttMessages.removeObserver(mqttMessagesObserver)
+        cancelAwsInitialLoadProgress()
         backPressedCallback.remove()
         stopMqttForegroundService()
         cancelNotification()

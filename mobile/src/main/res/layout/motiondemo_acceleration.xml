@@ -1,63 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/match"
-    android:orientation="vertical"
-    android:layout_marginTop="@dimen/space_S">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <TextView
         style="@style/tb_robo_medium_14dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
+        android:maxLines="1"
         android:text="@string/motion_acceleration"
-        android:maxLines="1" />
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_XS">
+        android:layout_gravity="start"
+        android:layout_marginTop="@dimen/space_XS"
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/tb_robo_regular_12dp_grey"
+            style="@style/tb_robo_regular_14dp_grey"
             android:text="@string/motion_x"
-            android:textStyle="bold"/>
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:textStyle="normal" />
 
         <TextView
-            android:layout_marginStart="@dimen/space_S"
-            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_x"
-            android:fontFamily="sans-serif-light" />
+            style="@style/tb_robo_regular_12dp"
+            android:layout_marginStart="@dimen/space_XS"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:text="0.13 g" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/tb_robo_regular_12dp_grey"
+            style="@style/tb_robo_regular_14dp_grey"
             android:text="@string/motion_y"
-            android:textStyle="bold"/>
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:textStyle="normal" />
 
         <TextView
-            android:layout_marginStart="@dimen/space_S"
-            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_y"
-            android:fontFamily="sans-serif-light" />
+            style="@style/tb_robo_regular_12dp"
+            android:layout_marginStart="@dimen/space_XS"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:text="0.02 g" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:orientation="horizontal">
 
         <TextView
-            style="@style/tb_robo_regular_12dp_grey"
+            style="@style/tb_robo_regular_14dp_grey"
             android:text="@string/motion_z"
-            android:textStyle="bold"/>
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:textStyle="normal" />
 
         <TextView
-            android:layout_marginStart="@dimen/space_S"
-            style="@style/tb_robo_regular_12dp"
             android:id="@+id/acceleration_z"
-            android:fontFamily="sans-serif-light" />
+            style="@style/tb_robo_regular_12dp"
+            android:layout_marginStart="@dimen/space_XS"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:text="-1.01 g" />
     </LinearLayout>
 
 </LinearLayout>

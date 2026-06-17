@@ -1,135 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/silabs_white"
     android:orientation="vertical">
 
-
-    <!-- Fake status bar: gets real height at runtime and paints blue -->
     <View
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="#ffff"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIconTint="@color/silabs_white"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.ToolbarTitle"
+        app:titleTextColor="@color/silabs_white"
+        tools:title="@string/title_Health_Thermometer" />
 
-
-    <TextView
-        android:id="@+id/connection_bar_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bar_with_additional_info"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:background="@color/silabs_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        android:text="@string/demo_connected_to"
-        android:textColor="@color/blue_primary" />
+        android:paddingVertical="14dp">
+
+        <TextView
+            android:id="@+id/connection_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/stolzl_regular"
+            android:text="@string/health_thermo_connected_prefix"
+            android:textAllCaps="true"
+            android:textColor="@color/silabs_redtheme_body_text_color"
+            android:textSize="@dimen/text_size_SM" />
+
+        <TextView
+            android:id="@+id/connection_device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/stolzl_regular"
+            android:maxLines="1"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:textSize="@dimen/text_size_SM"
+            tools:text="Thermometer Example" />
+    </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/list_item_card_view_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_view_margin_vertical">
+        android:layout_marginHorizontal="@dimen/thermo_card_margin_horizontal"
+        android:layout_marginVertical="@dimen/thermo_card_margin_vertical"
+        app:cardBackgroundColor="@color/silabs_white"
+        app:cardCornerRadius="@dimen/thermo_card_corner_radius"
+        app:cardElevation="@dimen/thermo_card_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                style="@style/list_item_card_view_container_margins"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_view_margin_vertical"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/content_desc_demo_item_icon"
-                    android:src="@drawable/redesign_ic_demo_health_thermometer" />
+                    android:layout_weight="0.65"
+                    android:fontFamily="@font/stolzl_regular"
+                    android:text="@string/temperature"
+                    android:textAllCaps="true"
+                    android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_weight="0.75"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/list_item_card_view_title"
+                    <LinearLayout
+                        android:id="@+id/thermo_unit_f_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@string/temperature" />
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingTop="4dp">
 
-                    <TextView
-                        android:id="@+id/thermo_type_value"
-                        style="@style/list_item_card_view_text_info"
+                        <TextView
+                            android:id="@+id/thermo_unit_f_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:layout_gravity="start"
+                            android:text="@string/f_symbol"
+                            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                            android:textSize="@dimen/text_size_M" />
+
+                        <View
+                            android:id="@+id/thermo_unit_f_underline"
+                            android:layout_width="80dp"
+                            android:layout_height="@dimen/thermo_tab_underline_selected"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/silabs_redtheme_primary_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/thermo_unit_c_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/temperature_type" />
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal|end"
+                        android:orientation="vertical"
+                        android:paddingTop="4dp">
 
+                        <TextView
+                            android:id="@+id/thermo_unit_c_label"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:layout_gravity="start"
+                            android:text="@string/c_symbol"
+                            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                            android:textSize="@dimen/text_size_M" />
+
+                        <View
+                            android:id="@+id/thermo_unit_c_underline"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/thermo_tab_underline_unselected"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/silabs_divider" />
+                    </LinearLayout>
                 </LinearLayout>
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/type_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:checked="true"
-                    android:textOff="@string/c_symbol"
-                    android:textOn="@string/f_symbol"
-                    android:thumb="@drawable/sw_color_thumb"
-                    app:showText="true"
-                    app:switchTextAppearance="@style/SwitchText"
-                    app:track="@drawable/track" />
-
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginHorizontal="20dp"
                 android:background="@color/silabs_divider" />
 
             <LinearLayout
-                style="@style/list_item_card_view_container_margins"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_view_margin_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp">
 
                 <com.siliconlabs.bledemo.features.demo.health_thermometer.views.TemperatureDisplay
                     android:id="@+id/thermo_large_temperature"
                     android:layout_width="0dp"
+                    android:padding="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     app:large_text_size="@dimen/thermo_large_temp_primary_text_size"
                     app:small_text_size="@dimen/thermo_large_temp_secondary_text_size" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="16dp"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:gravity="start"
                     android:orientation="vertical">
 
                     <TextView
@@ -137,29 +202,32 @@
                         style="@style/ThermoValueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/loading_ellipsis" />
+                        android:fontFamily="@font/stolzl_medium"
+                        android:hint="@string/loading_ellipsis"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color" />
 
                     <TextView
-                        android:id="@+id/thermo_humidity_label"
-                        style="@style/ThermoLabelText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/type" />
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:text="@string/health_thermo_type_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/silabs_redtheme_body_text_color"
+                        android:textSize="@dimen/thermo_label_text_size" />
 
                     <TextView
                         android:id="@+id/thermo_type_value_text"
                         style="@style/ThermoValueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/loading_ellipsis" />
-
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:hint="@string/loading_ellipsis"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

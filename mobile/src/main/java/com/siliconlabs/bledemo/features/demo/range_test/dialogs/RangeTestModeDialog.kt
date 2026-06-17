@@ -99,7 +99,7 @@ class RangeTestModeDialog : BaseDialogFragment(
     }
 
     override fun showModelNumber(number: String?, running: Boolean?) {
-        binding.tvDeviceNumber .text = number
+        binding.tvDeviceNumber.text = number
     }
 
     override fun showTxPower(power: TxPower?, values: List<TxPower>) {

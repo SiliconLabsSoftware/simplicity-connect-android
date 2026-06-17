@@ -6,27 +6,32 @@
 
     <item android:id="@+id/demoFragment"
         android:icon="@drawable/redesign_ic_main_navigation_demo"
+        android:fontFamily="@font/helvetica_neue_medium"
         android:menuCategory="secondary"
         android:title="@string/main_navigation_demo_title" />
 
     <item android:id="@+id/testFragment"
         android:icon="@drawable/redesign_ic_main_navigation_iop"
+        android:fontFamily="@font/helvetica_neue_medium"
         android:menuCategory="secondary"
         android:title="@string/main_navigation_test_title" />
 
     <item android:id="@+id/scanFragment"
         android:icon="@drawable/redesign_ic_main_navigation_scan"
+        android:fontFamily="@font/helvetica_neue_medium"
         android:menuCategory="secondary"
         android:title="@string/main_navigation_scan_title" />
 
     <item android:id="@+id/configureFragment"
         android:icon="@drawable/redesign_ic_main_navigation_configure"
+        android:fontFamily="@font/helvetica_neue_medium"
         android:menuCategory="secondary"
         android:title="@string/main_navigation_configure_title" />
 
     <item android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:menuCategory="secondary"
+        android:fontFamily="@font/helvetica_neue_medium"
         android:title="@string/action_settings" />
 
 </menu>

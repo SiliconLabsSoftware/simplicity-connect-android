@@ -66,7 +66,10 @@ class SelectDeviceViewModel : ScannerViewModel() {
             }
             if (connectType != null && connectType == BluetoothService.GattConnectType.CHANNEL_SOUNDING_DEMO) {
                 if (deviceName != null && context != null) {
-                    if (!deviceName.startsWith("CS RFLCT", ignoreCase = true)
+                    // Accept both "CS RFLCT" devices (Initiator mode) and "Silabs Example" devices (Reflector mode)
+                    val matchesCSReflector = deviceName.startsWith("CS RFLCT", ignoreCase = true)
+                    val matchesSilabsExample = deviceName.startsWith("Silabs Example", ignoreCase = true)
+                    if (!matchesCSReflector && !matchesSilabsExample
                         && !matchesManufacturerData(result, manufacturerDataFilter)
                     ) {
                         shouldAddDevice = false
@@ -153,6 +156,17 @@ class SelectDeviceViewModel : ScannerViewModel() {
                 }
             }
 
+            if (connectType != null && connectType == BluetoothService.GattConnectType.IOP_TEST) {
+                if (deviceName != null) {
+                    if (context != null) {
+                        if (!deviceName.startsWith("IOP", ignoreCase = true)
+                            && !matchesManufacturerData(result, manufacturerDataFilter)
+                        ) {
+                            shouldAddDevice = false
+                        }
+                    }
+                }
+            }
 
 
             if (connectType != null && connectType == BluetoothService.GattConnectType.AWS_DEMO) {

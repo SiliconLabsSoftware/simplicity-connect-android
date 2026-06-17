@@ -34,6 +34,14 @@ class DialogDeviceInfoFragment : DialogFragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        val dlg = dialog ?: return
+        val window = dlg.window ?: return
+        val widthPx = (resources.displayMetrics.widthPixels * DIALOG_WIDTH_FRACTION).toInt()
+        window.setLayout(widthPx, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -93,5 +101,9 @@ class DialogDeviceInfoFragment : DialogFragment() {
 
     fun isShowing(): Boolean {
         return dialogShowing
+    }
+
+    companion object {
+        private const val DIALOG_WIDTH_FRACTION = 0.85f
     }
 }

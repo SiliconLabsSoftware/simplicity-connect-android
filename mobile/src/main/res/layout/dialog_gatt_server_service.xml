@@ -39,7 +39,8 @@
                     style="@style/EditTextSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/gatt_configurator_hint_service_name" />
+                    android:hint="@string/gatt_configurator_hint_service_name"
+                    android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
 
                 <AutoCompleteTextView
                     android:id="@+id/actv_service_uuid"
@@ -49,15 +50,20 @@
                     android:layout_marginTop="8dp"
                     android:digits="0123456789ABCDEFabcdef-"
                     android:hint="@string/gatt_configurator_hint_16_128_bit_uuid"
-                    android:maxLength="36" />
+                    android:maxLength="36"
+                    android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/cb_mandatory_requirements"
+                    style="@style/full_line_checkbox_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:layoutDirection="inherit"
                     android:enabled="false"
-                    android:text="@string/gatt_configurator_label_add_mandatory_service_requirements" />
+                    android:textStyle="normal"
+                    android:text="@string/gatt_configurator_label_add_mandatory_service_requirements"
+                    app:buttonTint="@color/filter_fragment_checkbox_button_tint" />
 
                 <Spinner
                     android:id="@+id/sp_service_type"
@@ -82,12 +88,13 @@
                     android:text="@string/gatt_configurator_note_full_list_of_16bit_services"
                     android:textColor="@color/silabs_dark_gray_text" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_bluetooth_gatt_services"
-                    style="@style/button_external_link"
+                    style="@style/button_add_data_outlined"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="@dimen/matter_12dp"
                     android:text="@string/button_bluetooth_sig" />
             </LinearLayout>
         </ScrollView>
@@ -99,35 +106,42 @@
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/dialog_button_margin_top">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_clear"
-                style="@style/dialog_button_negative_action"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/button_clear" />
+                android:text="@string/button_clear"
+                app:cornerRadius="@dimen/matter_12dp"/>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
-                style="@style/dialog_button_negative_action"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/btn_clear"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:text="@string/button_cancel"
+                app:cornerRadius="@dimen/matter_12dp"/>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
-                style="@style/dialog_button_positive_action"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/btn_cancel"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dialog_margin_between_buttons"
                 android:enabled="false"
-                android:text="@string/button_save" />
+                android:text="@string/button_save"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                app:backgroundTint="@color/gatt_configurator_save_button_background_tint"
+                app:cornerRadius="@dimen/matter_12dp"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textAllCaps="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

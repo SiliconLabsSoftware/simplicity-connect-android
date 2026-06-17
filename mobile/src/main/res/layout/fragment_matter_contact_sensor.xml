@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/matter_20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,6 +25,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/matter_5dp"
                 android:gravity="center"
+                android:fontFamily="@font/stolzl_regular"
+                android:textColor="@color/silabs_redtheme_scanner_header_text_color"
                 android:text="@string/matter_contact_sensor_cluster"
                 android:textSize="@dimen/text_size_XL"
                 android:textStyle="bold" />
@@ -69,6 +74,8 @@
 
                <TextView
                    android:textSize="@dimen/text_size_ML"
+                   android:fontFamily="@font/helvetica_neue_regular"
+                   android:textColor="@color/silabs_redtheme_checkbox_text_color"
                    android:text="@string/matter_contact_sensor_action"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"/>

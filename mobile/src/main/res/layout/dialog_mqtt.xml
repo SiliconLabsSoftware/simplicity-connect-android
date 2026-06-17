@@ -1,207 +1,379 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/dialog_card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/transparent"
-    android:padding="16dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/smart_lock_operate_width"
+    android:layout_height="535dp"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="@color/silabs_white"
+    app:cardCornerRadius="@dimen/smart_lock_operate_top_corner_radius"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="4dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
-        android:layout_margin="7dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/smart_lock_operate_padding_horizontal"
+        android:paddingTop="@dimen/smart_lock_operate_padding_top"
+        android:paddingRight="@dimen/smart_lock_operate_padding_horizontal"
+        android:paddingBottom="@dimen/smart_lock_operate_padding_bottom">
 
-        <TextView
-            android:id="@+id/mqttDialogTitle"
-            style="@style/dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/matter_15dp"
-            android:text="@string/smart_lock_alert_config_title"
-            android:textColor="@color/silabs_black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical"
-                android:text="@string/select_file"
-                android:textSize="@dimen/text_size_M" />
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/select_p12_file_btn"
-                style="@style/button_external_link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|left"
-                android:text="@string/smart_lock_select_p12_file"
-                android:textAllCaps="false"
-                android:textSize="@dimen/text_size_M" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:orientation="vertical">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end|center"
-                app:boxStrokeColor="@color/splash_screen_start_gradient"
-                app:boxStrokeWidth="@dimen/matter_2dp"
-                app:cursorColor="@color/splash_screen_start_gradient"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/splash_screen_start_gradient"
-                app:passwordToggleDrawable="@drawable/baseline_remove_red_eye_24"
-                app:passwordToggleEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editPassword"
+                <TextView
+                    android:id="@+id/mqttDialogTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="center|left"
-                    android:hint="@string/smart_lock_password_title"
-                    android:inputType="textPassword"
-                    android:lines="1"
-                    android:textSize="@dimen/text_size_M" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_marginBottom="23dp"
+                    android:fontFamily="@font/stolzl_medium"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="0"
+                    android:lineHeight="20sp"
+                    android:text="@string/smart_lock_alert_config_title"
+                    android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                    android:textFontWeight="500"
+                    android:textSize="14sp"
+                    tools:text="Configure Smart Lock" />
 
+                <LinearLayout
+                    android:layout_width="@dimen/smart_lock_aws_command_row_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="23dp"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="16sp"
+                        android:text="@string/smart_lock_dialog_label_certificate_p12"
+                        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/subTopicTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:gravity="end|center"
-            app:boxStrokeColor="@color/splash_screen_start_gradient"
-            app:boxStrokeWidth="@dimen/matter_2dp"
-            app:cursorColor="@color/splash_screen_start_gradient"
-            app:hintEnabled="true"
-            app:hintTextColor="@color/splash_screen_start_gradient">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/select_p12_file_btn"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="center_vertical|start"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:letterSpacing="0"
+                        android:minHeight="48dp"
+                        android:paddingStart="@dimen/matter_10dp"
+                        android:paddingEnd="@dimen/matter_10dp"
+                        android:text="@string/smart_lock_select_p12_file"
+                        android:textAllCaps="false"
+                        android:textColor="@color/silabs_redtheme_filer_hint_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp"
+                        android:stateListAnimator="@null"
+                        app:backgroundTint="@color/silabs_white"
+                        app:cornerRadius="@dimen/smart_lock_aws_input_corner_radius"
+                        app:strokeColor="@color/silabs_inactive_light"
+                        app:strokeWidth="1dp" />
+                </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editSubTopic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center|left"
-                android:hint="@string/smart_lock_subscriber_topic"
-                android:inputType="text"
-                android:lines="1"
-                android:textSize="@dimen/text_size_M" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/smart_lock_aws_command_row_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="23dp"
+                    android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pubTopicTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="end|center"
-            app:boxStrokeColor="@color/splash_screen_start_gradient"
-            app:boxStrokeWidth="@dimen/matter_2dp"
-            app:cursorColor="@color/splash_screen_start_gradient"
-            app:hintEnabled="true"
-            app:hintTextColor="@color/splash_screen_start_gradient">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="16sp"
+                        android:text="@string/smart_lock_dialog_label_certificate_password"
+                        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editPubTopic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center|start"
-                android:hint="@string/smart_lock_publisher_topic"
-                android:inputType="text"
-                android:lines="1"
-                android:textSize="@dimen/text_size_M" />
-        </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxStrokeColor="@color/silabs_inactive_light"
+                        app:boxStrokeWidth="1dp"
+                        app:cursorColor="@color/silabs_redtheme_primary_color"
+                        app:hintEnabled="false"
+                        app:passwordToggleDrawable="@drawable/baseline_remove_red_eye_24"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="@color/silabs_redtheme_checkbox_text_color">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/endPointTextInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:gravity="end|center"
-            app:boxStrokeColor="@color/splash_screen_start_gradient"
-            app:boxStrokeWidth="@dimen/matter_2dp"
-            app:cursorColor="@color/splash_screen_start_gradient"
-            app:hintEnabled="true"
-            app:hintTextColor="@color/splash_screen_start_gradient">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/smart_lock_dialog_hint_certificate_password"
+                            android:includeFontPadding="true"
+                            android:inputType="textPassword"
+                            android:minHeight="48dp"
+                            android:letterSpacing="0"
+                            android:lineHeight="16sp"
+                            android:maxLines="1"
+                            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                            android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editEndPoint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center|left"
-                android:hint="@string/smart_lock_end_point_url"
-                android:inputType="textMultiLine"
-                android:maxLines="2"
-                android:lines="2"
-                android:singleLine="false"
-                android:textSize="@dimen/text_size_M" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/smart_lock_aws_command_row_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="23dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="16sp"
+                        android:text="@string/smart_lock_dialog_label_subscribe"
+                        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/subTopicTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxStrokeColor="@color/silabs_inactive_light"
+                        app:boxStrokeWidth="1dp"
+                        app:cursorColor="@color/silabs_redtheme_primary_color"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editSubTopic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/smart_lock_dialog_hint_subscriber_topic"
+                            android:includeFontPadding="true"
+                            android:inputType="text"
+                            android:minHeight="48dp"
+                            android:letterSpacing="0"
+                            android:lineHeight="16sp"
+                            android:maxLines="1"
+                            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                            android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/smart_lock_aws_command_row_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="23dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="16sp"
+                        android:text="@string/smart_lock_dialog_label_publish"
+                        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/pubTopicTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxStrokeColor="@color/silabs_inactive_light"
+                        app:boxStrokeWidth="1dp"
+                        app:cursorColor="@color/silabs_redtheme_primary_color"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editPubTopic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/smart_lock_dialog_hint_publish_topic"
+                            android:includeFontPadding="true"
+                            android:inputType="text"
+                            android:minHeight="48dp"
+                            android:letterSpacing="0"
+                            android:lineHeight="16sp"
+                            android:maxLines="1"
+                            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                            android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/smart_lock_aws_command_row_width"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="0"
+                        android:lineHeight="16sp"
+                        android:text="@string/smart_lock_dialog_label_endpoint"
+                        android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                        android:textFontWeight="400"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/endPointTextInputLayout"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:boxCornerRadiusBottomEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusBottomStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopEnd="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxCornerRadiusTopStart="@dimen/smart_lock_aws_input_corner_radius"
+                        app:boxStrokeColor="@color/silabs_inactive_light"
+                        app:boxStrokeWidth="1dp"
+                        app:cursorColor="@color/silabs_redtheme_primary_color"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editEndPoint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:gravity="center_vertical|start"
+                            android:hint="@string/smart_lock_dialog_hint_endpoint"
+                            android:includeFontPadding="true"
+                            android:inputType="textMultiLine"
+                            android:letterSpacing="0"
+                            android:lineHeight="16sp"
+                            android:maxLines="2"
+                            android:minHeight="56dp"
+                            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                            android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                            android:textFontWeight="400"
+                            android:textSize="12sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/smart_lock_aws_command_row_width"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal|center"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="@dimen/matter_20dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="23dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
+                android:layout_marginStart="@dimen/matter_15dp"
                 android:id="@+id/submitMqttCancelButton"
-                style="@style/SwitchText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingHorizontal="@dimen/matter_20dp"
+                android:layout_width="@dimen/matter_window_cover_action_button_width"
+                android:layout_height="@dimen/matter_window_cover_action_button_height"
+                android:layout_marginEnd="@dimen/smart_lock_aws_command_gap"
+                android:background="@drawable/matter_window_cover_outline_button_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/stolzl_regular"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="16sp"
+                android:minWidth="@dimen/matter_window_cover_action_button_min_width"
+                android:minHeight="@dimen/matter_window_cover_action_button_height"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="@color/btn_action_on" />
+                android:textColor="@color/silabs_redtheme_primary_color"
+                android:textFontWeight="400"
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/submitMqttButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/silabs_dark_blue"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="@dimen/matter_window_cover_action_button_width"
+                android:layout_height="@dimen/matter_window_cover_action_button_height"
+                android:fontFamily="@font/stolzl_regular"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:letterSpacing="0"
+                android:minWidth="@dimen/matter_window_cover_action_button_min_width"
+                android:minHeight="@dimen/matter_window_cover_action_button_height"
+                android:paddingLeft="@dimen/matter_window_cover_action_button_padding_horizontal"
+                android:paddingRight="@dimen/matter_window_cover_action_button_padding_horizontal"
                 android:text="@string/button_connect"
                 android:textAllCaps="false"
-                android:textSize="15sp"
-                app:cornerRadius="24dp"
-                app:rippleColor="@color/silabs_dark_blue" />
+                android:textColor="@color/silabs_white"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                app:backgroundTint="@color/silabs_redtheme_primary_color"
+                app:cornerRadius="@dimen/smart_lock_aws_send_corner_radius"
+                app:rippleColor="@color/silabs_white"
+                app:strokeColor="@android:color/transparent"
+                app:strokeWidth="0dp" />
         </LinearLayout>
-
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

@@ -76,6 +76,7 @@ class EVFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
         fitsSystemWindows = true
+        setBackgroundColor(android.graphics.Color.TRANSPARENT)
         mPrefs = requireContext().getSharedPreferences(
             MatterDemoActivity.MATTER_PREF,
             AppCompatActivity.MODE_PRIVATE

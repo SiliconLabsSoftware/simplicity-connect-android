@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/matter_20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,6 +17,8 @@
             android:orientation="vertical">
 
             <TextView
+                android:textColor="#525252"
+                android:fontFamily="@font/stolzl_bold"
                 android:id="@+id/txt_cluster_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,8 +26,7 @@
                 android:layout_margin="@dimen/matter_5dp"
                 android:gravity="center"
                 android:text="@string/matter_plug_title"
-                android:textSize="@dimen/text_size_XL"
-                android:textStyle="bold" />
+                android:textSize="17sp" />
 
             <ImageButton
                 android:id="@+id/btn_matter_device_state"
@@ -43,21 +46,23 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_on"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="match_parent"
+                    style="@style/button_add_data_outlined"
+                    android:layout_width="@dimen/matter_100dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/matter_20dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    app:cornerRadius="@dimen/matter_10dp" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_off"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="match_parent"
+                    style="@style/button_add_data_outlined"
+                    android:layout_width="@dimen/matter_100dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/matter_20dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    app:cornerRadius="@dimen/matter_10dp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

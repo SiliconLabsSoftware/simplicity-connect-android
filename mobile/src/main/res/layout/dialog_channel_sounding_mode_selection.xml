@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dialog_channel_sounding_card"
+        style="@style/dialog_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.9">
+
+    <LinearLayout
+        style="@style/dialog_margins"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/matter_10dp">
+
+        <!-- Dialog Title -->
+        <TextView
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/stolzl_regular"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:id="@+id/dialog_title"
+            style="@style/dialog_title"
+            android:textSize="@dimen/text_size_M"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/channel_sounding_select_mode_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/silabs_inactive_light"
+            android:layout_height="1dp">
+
+        </View>
+
+        <!-- Info Banner -->
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#ECECEC"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+
+                android:backgroundTint="@color/silabs_primary_color"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ad_info"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:fontFamily="@font/stolzl_regular"
+                android:id="@+id/info_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/channel_sounding_select_mode_description"
+                android:textSize="13sp"
+                android:textColor="@color/silabs_redtheme_subheader_text_color" />
+        </LinearLayout>
+
+        <!-- Initiator Mode Option -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_initiator_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_channel_sound"
+                    app:tint="@color/silabs_primary_color" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:fontFamily="@font/stolzl_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/channel_sounding_mode_initiator"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/silabs_primary_text" />
+
+                    <TextView
+                        android:fontFamily="@font/stolzl_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/channel_sounding_mode_initiator_desc"
+                        android:textSize="13sp"
+                        android:textColor="@color/silabs_rebranding_2373_matter_list_disable_color" />
+                </LinearLayout>
+
+                <View
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="20dp"
+                    android:layout_height="5dp">
+
+                </View>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/matter_arrow" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Reflector Mode Option -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_reflector_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/door_lock"
+                    app:tint="@color/silabs_redtheme_button_fill_color" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/channel_sounding_mode_reflector"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/silabs_primary_text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/channel_sounding_mode_reflector_desc"
+                        android:textSize="13sp"
+                        android:textColor="@color/silabs_subtle_text" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/matter_arrow" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Cancel Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            android:layout_gravity="center_horizontal|center"
+            android:text="@string/button_cancel"
+            style="@style/button_add_data_outlined"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:layout_marginVertical="@dimen/space_S"
+            android:textSize="@dimen/text_size_SM"
+            app:cornerRadius="@dimen/silabs_btn_radius"/>
+
+    </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

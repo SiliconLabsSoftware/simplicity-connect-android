@@ -97,7 +97,7 @@ class ConnectedLightingFragment : Fragment(), ConnectedLightingPresenter.View {
         if (!isAdded || isRemoving || isDetached) return
         if (gattService?.name == "TheDMP" && source == TriggerSource.ZIGBEE) {
             binding.ivLightChangeSourceLogo.visibility = View.VISIBLE
-            binding.ivLightChangeSourceLogo.setImageResource(R.mipmap.ic_aws_iot_icon)
+            binding.ivLightChangeSourceLogo.setImageResource(R.drawable.ic_aws_iot_icon)
             binding.tvLightChangeSourceName.text = getString(R.string.smart_lock_demo_dialog_btn_aws)
         }
     }
@@ -111,7 +111,7 @@ class ConnectedLightingFragment : Fragment(), ConnectedLightingPresenter.View {
             }
             if (source == TriggerSource.UNKNOWN && gattService?.name == "TheDMP") {
                 binding.ivLightChangeSourceLogo.visibility = View.VISIBLE
-                binding.ivLightChangeSourceLogo.setImageResource(R.mipmap.ic_aws_iot_icon)
+                binding.ivLightChangeSourceLogo.setImageResource(R.drawable.ic_aws_iot_icon)
                 binding.tvLightChangeSourceName.text = getString(R.string.smart_lock_demo_dialog_btn_aws)
             }
 

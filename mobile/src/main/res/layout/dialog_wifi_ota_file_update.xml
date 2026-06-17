@@ -1,142 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/dialog_card" >
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/matter_12dp"
+    app:cardElevation="8dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
-        style="@style/dialog_margins"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/matter_20dp">
 
         <TextView
-            style="@style/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dialog_margin_between_buttons"
-            android:layout_marginTop="@dimen/dialog_margin_between_buttons"
-            android:text="@string/configure_wi_fi_ota_server" />
+            android:fontFamily="@font/stolzl_bold"
+            android:text="@string/configure_wi_fi_ota_server"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            android:textSize="@dimen/text_size_SM"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dialog_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dialog_margin_between_buttons"
-            android:text="@string/ota_demo_desc" />
-
+            android:layout_marginTop="@dimen/matter_12dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/ota_demo_desc"
+            android:textColor="@color/silabs_redtheme_scanner_body_text_color"
+            android:textSize="@dimen/text_size_S" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_16dp"
+            android:baselineAligned="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/wifi_ip_address_label"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:gravity="center_vertical"
-                android:fontFamily="sans-serif"
-                android:text="@string/ip" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.38"
+                android:fontFamily="@font/stolzl_medium"
+                android:gravity="end|center_vertical"
+                android:labelFor="@id/wifi_ip_address"
+                android:text="@string/ip"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                android:textSize="@dimen/text_size_SM" />
 
             <TextView
                 android:id="@+id/wifi_ip_address"
-                style="@style/button_external_link"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_weight="0.7"
-                android:textSize="16sp"
-                android:text="190.202.20.101"
-                android:textAllCaps="false" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/matter_12dp"
+                android:layout_weight="0.62"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="start|center_vertical"
+                android:textAlignment="viewStart"
+                android:textColor="@color/silabs_redtheme_button_fill_color"
+                android:textSize="@dimen/text_size_SM"
+                tools:text="192.168.1.123" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_12dp"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/wifi_port_label"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.3"
-                android:gravity="center_vertical"
-                android:fontFamily="sans-serif"
-                android:text="@string/port" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.38"
+                android:fontFamily="@font/stolzl_medium"
+                android:gravity="end|center_vertical"
+                android:labelFor="@id/port_id"
+                android:text="@string/port"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                android:textSize="@dimen/text_size_SM" />
 
             <EditText
                 android:id="@+id/port_id"
-                android:background="@drawable/background_grey_box"
-                android:paddingLeft="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
                 android:layout_width="0dp"
-                android:maxLength="4"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/matter_12dp"
+                android:layout_weight="0.62"
+                android:background="@drawable/matter_add_device_name_input_bg"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center_vertical|start"
+                android:importantForAutofill="no"
                 android:inputType="number"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_weight="0.7"
-                android:textSize="16sp"
-                android:textColor="@color/blue_primary"
-                android:text="8080"
-                android:textAllCaps="false" />
+                android:maxLength="5"
+                android:minHeight="@dimen/matter_45dp"
+                android:paddingHorizontal="@dimen/matter_12dp"
+                android:paddingVertical="@dimen/matter_10dp"
+                android:text="5000"
+                android:textAlignment="viewStart"
+                android:textColor="@color/silabs_redtheme_button_fill_color"
+                android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                android:textSize="@dimen/text_size_SM" />
         </LinearLayout>
 
         <TextView
-            style="@style/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
-            android:layout_marginTop="@dimen/dialog_margin_between_buttons"
-            android:textSize="16sp"
-            android:text="@string/heading_ota_choose_file" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/select_file" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/select_app_file_btn"
-                    style="@style/button_external_link"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center|left"
-                    android:layout_weight="0.7"
-                    android:text="@string/select_rps_file"
-                    android:textAllCaps="false" />
-            </LinearLayout>
+            android:layout_marginTop="@dimen/matter_20dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:gravity="center"
+            android:text="@string/heading_ota_choose_file"
+            android:textAlignment="center"
+            android:textColor="@color/silabs_redtheme_scanner_body_text_color"
+            android:textSize="@dimen/text_size_S" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_S"
-            android:layout_marginHorizontal="@dimen/dialog_button_margin_end"
-            android:gravity="end">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_12dp"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/ota_cancel"
-                style="@style/dialog_button_negative_action"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/wifi_select_file_label"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:layout_weight="0.38"
+                android:fontFamily="@font/stolzl_medium"
+                android:gravity="end|center_vertical"
+                android:labelFor="@id/select_app_file_btn"
+                android:text="@string/select_file"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                android:textSize="@dimen/text_size_SM" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/ota_proceed"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/select_app_file_btn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:fontFamily="sans-serif-medium"
-                style="@style/dialog_button_positive_action"
-                android:text="@string/btn_update" />
+                android:layout_marginStart="@dimen/matter_12dp"
+                android:layout_weight="0.62"
+                android:background="@drawable/matter_add_device_name_input_bg"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:focusable="true"
+                android:fontFamily="@font/stolzl_regular"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical|start"
+                android:maxLines="2"
+                android:minHeight="@dimen/matter_45dp"
+                android:paddingHorizontal="@dimen/matter_12dp"
+                android:paddingVertical="@dimen/matter_10dp"
+                android:text="@string/select_rps_file"
+                android:textColor="@color/silabs_redtheme_button_fill_color"
+                android:textSize="@dimen/text_size_SM" />
         </LinearLayout>
 
-    </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_16dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_cancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stolzl_medium"
+                android:minWidth="@dimen/matter_100dp"
+                android:text="@string/button_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_button_fill_color"
+                android:textSize="@dimen/text_size_SM"
+                android:textStyle="bold"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:rippleColor="@color/sl_light_grey"
+                app:strokeColor="@color/silabs_redtheme_button_fill_color"
+                app:strokeWidth="1.5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_proceed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/matter_12dp"
+                android:enabled="false"
+                android:fontFamily="@font/stolzl_medium"
+                android:minWidth="@dimen/matter_100dp"
+                android:text="@string/btn_update"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textSize="@dimen/text_size_SM"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:rippleColor="@color/sl_light_grey" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

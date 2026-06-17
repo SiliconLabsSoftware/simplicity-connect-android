@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:color="@color/silabs_primary_color"
+        android:state_enabled="true" />
+    <item android:color="@color/silabs_inactive_light" />
+</selector>

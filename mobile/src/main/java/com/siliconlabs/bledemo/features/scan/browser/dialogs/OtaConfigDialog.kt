@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.siliconlabs.bledemo.base.fragments.BaseDialogFragment
 import com.siliconlabs.bledemo.features.scan.browser.models.OtaFileType
 import com.siliconlabs.bledemo.R
@@ -27,6 +28,10 @@ class OtaConfigDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.9f).toInt(),
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
 
         setupUiListeners()
         initRadioGroupState()
@@ -92,12 +97,13 @@ class OtaConfigDialog(
     }
 
     private fun areFullOtaFilesCorrect(): Boolean {
-        return _binding.selectAppFileBtn.text != getString(R.string.select_application_gbl_file) &&
-                _binding.selectApploaderFileBtn.text != getString(R.string.select_apploader_gbl_file)
+        val defaultLabel = getString(R.string.ota_config_choose_file)
+        return _binding.selectAppFileBtn.text.toString() != defaultLabel &&
+                _binding.selectApploaderFileBtn.text.toString() != defaultLabel
     }
 
     private fun arePartialOtaFilesCorrect(): Boolean {
-        return _binding.selectAppFileBtn.text != getString(R.string.select_application_gbl_file)
+        return _binding.selectAppFileBtn.text.toString() != getString(R.string.ota_config_choose_file)
     }
 
 

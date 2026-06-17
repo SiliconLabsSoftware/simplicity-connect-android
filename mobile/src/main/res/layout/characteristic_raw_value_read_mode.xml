@@ -23,6 +23,7 @@
         android:maxLines="1"
         android:singleLine="true"
         android:layout_marginEnd="@dimen/space_XS"
+        android:fontFamily="@font/stolzl_medium"
         android:textColor="@color/silabs_primary_text"
         android:textColorHint="@color/silabs_subtle_text"
         android:textSize="@dimen/filter_edit_search_text_size"
@@ -35,6 +36,6 @@
         android:src="@drawable/ic_copy"
         android:background="@drawable/btn_blue_ripple_effect"
         android:contentDescription="@string/content_desc_copy_icon"
-        app:tint="@color/silabs_blue" />
+         />
 
 </LinearLayout>

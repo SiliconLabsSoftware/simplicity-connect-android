@@ -35,7 +35,7 @@ class GattConfiguratorViewModel @Inject constructor(val gattConfiguratorStorage:
         _gattServers.value?.apply {
             gattServer?.let {
                  add(gattServer)
-            } ?: add(GattServer("New GATT server"))
+            } ?: add(GattServer("New GATT Server"))
             _insertedPosition.value = size - 1
         }
         areAnyGattServers()

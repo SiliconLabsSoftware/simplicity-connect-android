@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Unfilled track: light grey capsule -->
+    <item
+        android:id="@android:id/background"
+        android:height="6dp"
+        android:gravity="center_vertical|fill_horizontal">
+        <shape android:shape="rectangle">
+            <corners android:radius="3dp" />
+            <solid android:color="@color/silabs_inactive_light" />
+        </shape>
+    </item>
+    <item
+        android:id="@android:id/secondaryProgress"
+        android:height="6dp"
+        android:gravity="center_vertical|fill_horizontal">
+        <shape android:shape="rectangle">
+            <corners android:radius="3dp" />
+            <solid android:color="@color/silabs_inactive_light" />
+        </shape>
+    </item>
+    <!-- Thick red progress; clip width is zero at progress 0 (no sliver) -->
+    <item
+        android:id="@android:id/progress"
+        android:height="6dp"
+        android:gravity="center_vertical|fill_horizontal">
+        <clip
+            android:clipOrientation="horizontal"
+            android:gravity="start">
+            <shape android:shape="rectangle">
+                <corners
+                    android:bottomLeftRadius="3dp"
+                    android:bottomRightRadius="2dp"
+                    android:topLeftRadius="3dp"
+                    android:topRightRadius="2dp" />
+                <solid android:color="@color/silabs_red" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

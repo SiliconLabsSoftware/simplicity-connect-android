@@ -1,24 +1,29 @@
 package com.siliconlabs.bledemo.features.demo.wifi_throughput.activities
 
 import android.content.Context
-import android.net.InetAddresses
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.os.Bundle
-import android.util.Patterns
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,10 +32,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -42,9 +45,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -58,9 +65,7 @@ import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.ActivityWifiThroughputBinding
 import com.siliconlabs.bledemo.features.demo.wifi_throughput.fragments.WifiThroughPutDetailScreen
 import com.siliconlabs.bledemo.features.demo.wifi_throughput.utils.ThroughputUtils
-import com.siliconlabs.bledemo.features.iop_test.utils.Utils
 import com.siliconlabs.bledemo.utils.AppUtil
-import com.siliconlabs.bledemo.utils.ApppUtil
 import com.siliconlabs.bledemo.utils.CustomToastManager
 import java.net.InetAddress
 import java.nio.ByteBuffer
@@ -70,6 +75,8 @@ class WifiThroughputActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWifiThroughputBinding
     private val throughPutDemos = ThroughputUtils.WiFiThroughPutFeature.values()
+    private val wifiThroughputTileFontFamily = FontFamily(Font(R.font.stolzl_regular))
+    private val wifiThroughputDialogLabelFontFamily = FontFamily(Font(R.font.stolzl_bold))
     private lateinit var context: Context
     private var isConfirmCalled = mutableStateOf(false)
     var ipAddress by mutableStateOf("")
@@ -177,31 +184,40 @@ class WifiThroughputActivity : AppCompatActivity() {
         }
         val dialogHeaderTitle: MutableState<String> = remember { mutableStateOf("") }
         val dialogHeaderSubTitle: MutableState<String> = remember { mutableStateOf("") }
-        LazyVerticalGrid(columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(
-                start = 12.dp,
-                top = 16.dp,
-                end = 12.dp,
-                bottom = 16.dp
-            ),
-            content = {
-                items(throughPutDemos.size) {
-                    Card(
-                        backgroundColor = colorResource(R.color.silabs_white),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .size(150.dp)
-                            .fillMaxWidth(),
-                        elevation = 8.dp,
-                        onClick = {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(R.color.range_test_content_background))
+        ) {
+            Image(
+                painter = painterResource(R.drawable.modal_bg),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+            )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(16.dp),
+                content = {
+                    items(throughPutDemos.size) {
+                        Card(
+                            backgroundColor = colorResource(R.color.silabs_white),
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(120.dp),
+                            elevation = 4.dp,
+                            onClick = {
                             dialogState.value = true
                             if (ThroughputUtils.getTitle(
                                     it,
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_TCP_DOWNLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.tcp_server)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_tcp_server)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.tcp_download_sub_title)
                             } else if (ThroughputUtils.getTitle(
@@ -209,7 +225,7 @@ class WifiThroughputActivity : AppCompatActivity() {
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_TCP_UPLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.tcp_client)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_tcp_client)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.tcp_upload_sub_title)
                             } else if (ThroughputUtils.getTitle(
@@ -217,7 +233,7 @@ class WifiThroughputActivity : AppCompatActivity() {
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_UDP_DOWNLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.udp_server)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_udp_server)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.dialog_udp_download_sub_title)
                             } else if (ThroughputUtils.getTitle(
@@ -225,7 +241,7 @@ class WifiThroughputActivity : AppCompatActivity() {
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_UDP_UPLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.udp_client)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_udp_client)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.dialog_udp_upload_sub_title)
                             } else if (ThroughputUtils.getTitle(
@@ -233,7 +249,7 @@ class WifiThroughputActivity : AppCompatActivity() {
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_TLS_DOWNLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.tls_server)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_tls_server)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.dialog_tls_download_sub_title)
                             } else if (ThroughputUtils.getTitle(
@@ -241,7 +257,7 @@ class WifiThroughputActivity : AppCompatActivity() {
                                     context
                                 ) == ThroughputUtils.THROUGHPUT_TYPE_TLS_UPLOAD
                             ) {
-                                dialogHeaderTitle.value = getString(R.string.tls_server)
+                                dialogHeaderTitle.value = getString(R.string.wifi_throughput_configure_tls_client)
                                 dialogHeaderSubTitle.value =
                                     getString(R.string.dialog_sub_title_tls_upload)
                             }
@@ -249,9 +265,22 @@ class WifiThroughputActivity : AppCompatActivity() {
                             if (ThroughputUtils.isThroughPutTypeDownload(it)) {
                                 isDownload.value = false
                                 ipAddress = getLocalIpAddress(context)
+                                portNumber = ""
                             } else {
                                 isDownload.value = true
-                                ipAddress = ""
+                                ipAddress =
+                                    if (it == ThroughputUtils.WiFiThroughPutFeature.TLS_TX.ordinal) {
+                                        getLocalIpAddress(context)
+                                    } else {
+                                        ""
+                                    }
+                                val clientTitle = ThroughputUtils.getTitle(it, context)
+                                portNumber = when (clientTitle) {
+                                    ThroughputUtils.THROUGHPUT_TYPE_TCP_UPLOAD,
+                                    ThroughputUtils.THROUGHPUT_TYPE_UDP_UPLOAD,
+                                    ThroughputUtils.THROUGHPUT_TYPE_TLS_UPLOAD -> ""
+                                    else -> portNumber
+                                }
                             }
                         }
                     ) {
@@ -261,18 +290,20 @@ class WifiThroughputActivity : AppCompatActivity() {
                         ) {
                             Text(
                                 text = ThroughputUtils.getTitle(it, context),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
-                                fontFamily = FontFamily.SansSerif,
-                                color = colorResource(id = R.color.silabs_black),
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 16.sp,
+                                fontFamily = wifiThroughputTileFontFamily,
+                                color = colorResource(R.color.silabs_primary_text),
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                             )
                         }
 
                     }
                 }
-            })
+            }
+            )
+        }
 
         if (dialogState.value) {
             Dialog(
@@ -282,121 +313,235 @@ class WifiThroughputActivity : AppCompatActivity() {
                 }),
                 properties = DialogProperties(
                     dismissOnBackPress = true,
-                    dismissOnClickOutside = false
+                    dismissOnClickOutside = false,
+                    usePlatformDefaultWidth = false,
                 )
             ) {
-                Card(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp)
-                        .padding(16.dp),
-                    shape = RoundedCornerShape(16.dp),
+                        .fillMaxHeight(),
+                    contentAlignment = Alignment.Center,
                 ) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .wrapContentHeight(),
+                        shape = RoundedCornerShape(16.dp),
+                        backgroundColor = colorResource(R.color.silabs_white),
+                        elevation = 6.dp,
+                    ) {
+                    val valueTextStyle = TextStyle(
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(R.color.silabs_redtheme_primary_color),
+                        fontFamily = wifiThroughputTileFontFamily,
+                    )
+                    val fieldShape = RoundedCornerShape(8.dp)
+                    val throughputFieldDecoration = Modifier
+                        .heightIn(min = 44.dp)
+                        .background(
+                            colorResource(R.color.silabs_white),
+                            fieldShape,
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = colorResource(R.color.silabs_divider),
+                            shape = fieldShape,
+                        )
+                        .padding(horizontal = 12.dp, vertical = 10.dp)
+                    val resources = LocalContext.current.resources
+                    val hintTextSizeSp =
+                        resources.getDimension(R.dimen.text_size_S) /
+                            resources.displayMetrics.scaledDensity
+                    val hintTextStyle = TextStyle(
+                        fontSize = hintTextSizeSp.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = colorResource(R.color.silabs_dark_gray_text),
+                        fontFamily = wifiThroughputTileFontFamily,
+                    )
                     Column(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 20.dp),
+                        horizontalAlignment = Alignment.Start,
                     ) {
                         Text(
                             text = dialogHeaderTitle.value,
-                            fontWeight = FontWeight.Black,
-                            fontSize = 22.sp,
-                            fontFamily = FontFamily.SansSerif,
-                            color = colorResource(id = R.color.silabs_black),
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(16.dp),
+                            fontFamily = wifiThroughputDialogLabelFontFamily,
+                            fontSize = 20.sp,
+                            color = colorResource(R.color.silabs_black),
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.fillMaxWidth(),
                         )
                         Text(
                             text = dialogHeaderSubTitle.value,
-                            fontSize = 16.sp,
-                            fontFamily = FontFamily.SansSerif,
-                            fontWeight = FontWeight.Medium,
-                            color = colorResource(id = R.color.silabs_primary_text),
+                            fontFamily = wifiThroughputTileFontFamily,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp,
+                            color = colorResource(R.color.silabs_dark_gray_text),
+                            textAlign = TextAlign.Start,
                             modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .padding(top = 8.dp, bottom = 16.dp),
                         )
-                        TextField(
-                            textStyle = TextStyle(fontSize = 20.sp),
-                            modifier = Modifier.padding(16.dp),
-                            enabled = isDownload.value,
-                            value = ipAddress,
-                            onValueChange = {
-                                if (it.length <= 15) {
-                                    ipAddress = it
-                                }
 
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = { Text(stringResource(R.string.enter_ip_address)) },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedLabelColor = colorResource(R.color.silabs_black),
-                                focusedLabelColor = colorResource(R.color.silabs_dark_blue),
-                                textColor = colorResource(R.color.silabs_black),  // Text color
-                                backgroundColor = Color.LightGray,  // Background color
-                                placeholderColor = Color.Gray,  // Placeholder text color
-                                cursorColor = colorResource(R.color.silabs_dark_blue),  // Cursor color
-                                focusedIndicatorColor = colorResource(R.color.silabs_dark_blue),  // Focused indicator color
-                                unfocusedIndicatorColor = colorResource(id = R.color.silabs_dark_gray_text) // Unfocused indicator color
+                        val isServerReceiveMode =
+                            ThroughputUtils.isThroughPutTypeDownload(userSelectedFeature)
+                        val isTlsClientConfigure =
+                            userSelectedFeature ==
+                                ThroughputUtils.WiFiThroughPutFeature.TLS_TX.ordinal
+                        val ipFieldReadOnly =
+                            isServerReceiveMode || isTlsClientConfigure
+                        val ipHint = stringResource(R.string.wifi_throughput_hint_ip_address)
+                        val portHint = stringResource(R.string.wifi_throughput_hint_server_port)
+                        val showIpHint = ipAddress.isEmpty() && !ipFieldReadOnly
+                        val showPortHint = portNumber.isEmpty()
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.ip),
+                                fontFamily = wifiThroughputTileFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 16.sp,
+                                color = colorResource(R.color.silabs_primary_text),
+                                modifier = Modifier.width(124.dp),
                             )
-                        )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .then(throughputFieldDecoration),
+                            ) {
+                                BasicTextField(
+                                    value = ipAddress,
+                                    onValueChange = { v ->
+                                        if (v.length <= 15) {
+                                            ipAddress = v
+                                        }
+                                    },
+                                    readOnly = ipFieldReadOnly,
+                                    textStyle = valueTextStyle,
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(
+                                        keyboardType = KeyboardType.Decimal,
+                                    ),
+                                    modifier = Modifier.fillMaxWidth(),
+                                    decorationBox = { innerTextField ->
+                                        Box(modifier = Modifier.fillMaxWidth()) {
+                                            if (showIpHint) {
+                                                Text(
+                                                    text = ipHint,
+                                                    style = hintTextStyle,
+                                                )
+                                            }
+                                            innerTextField()
+                                        }
+                                    },
+                                )
+                            }
+                        }
 
                         val maxChar = 4
-                        TextField(
-                            textStyle = TextStyle(fontSize = 20.sp),
-                            modifier = Modifier.padding(16.dp),
-                            value = portNumber,
-                            onValueChange = {
-                                if (it.length <= maxChar)
-                                    portNumber = it
-                            },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            label = {
-                                Text(context.getString(R.string.enter_port_number))
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                unfocusedLabelColor = colorResource(R.color.silabs_black),
-                                focusedLabelColor = colorResource(R.color.silabs_dark_blue),
-                                textColor = colorResource(R.color.silabs_black),  // Text color
-                                backgroundColor = Color.LightGray,  // Background color
-                                placeholderColor = Color.Gray,  // Placeholder text color
-                                cursorColor = colorResource(R.color.silabs_dark_blue),  // Cursor color
-                                focusedIndicatorColor = colorResource(R.color.silabs_dark_blue),  // Focused indicator color
-                                unfocusedIndicatorColor = colorResource(id = R.color.silabs_dark_gray_text) // Unfocused indicator color
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = stringResource(R.string.port),
+                                fontFamily = wifiThroughputTileFontFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 16.sp,
+                                color = colorResource(R.color.silabs_primary_text),
+                                modifier = Modifier.width(124.dp),
                             )
-                        )
-
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .then(throughputFieldDecoration),
+                            ) {
+                                BasicTextField(
+                                    value = portNumber,
+                                    onValueChange = { v ->
+                                        if (v.length <= maxChar) {
+                                            portNumber = v
+                                        }
+                                    },
+                                    textStyle = valueTextStyle,
+                                    singleLine = true,
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    modifier = Modifier.fillMaxWidth(),
+                                    decorationBox = { innerTextField ->
+                                        Box(modifier = Modifier.fillMaxWidth()) {
+                                            if (showPortHint) {
+                                                Text(
+                                                    text = portHint,
+                                                    style = hintTextStyle,
+                                                )
+                                            }
+                                            innerTextField()
+                                        }
+                                    },
+                                )
+                            }
+                        }
 
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Center,
+                                .fillMaxWidth()
+                                .padding(top = 20.dp),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
                         ) {
-                            TextButton(
+                            OutlinedButton(
                                 onClick = {
                                     dialogState.value = false
                                     isConfirmCalled.value = false
                                 },
-                                modifier = Modifier.padding(8.dp),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(48.dp),
+                                shape = RoundedCornerShape(10.dp),
+                                border = BorderStroke(
+                                    1.dp,
+                                    colorResource(R.color.silabs_redtheme_primary_color),
+                                ),
+                                colors = ButtonDefaults.outlinedButtonColors(
+                                    contentColor = colorResource(R.color.silabs_redtheme_primary_color),
+                                    backgroundColor = Color.White,
+                                ),
                             ) {
                                 Text(
                                     text = context.getString(R.string.matter_cancel),
-                                    color = colorResource(id = R.color.silabs_dark_blue),
-                                    fontSize = 18.sp
+                                    fontFamily = wifiThroughputTileFontFamily,
+                                    fontSize = 16.sp,
                                 )
                             }
 
-                            var isValidIp = false
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                isValidIp = InetAddresses.isNumericAddress(ipAddress)
-                            } else {
-                                isValidIp = Patterns.IP_ADDRESS.matcher(ipAddress).matches()
-                            }
                             Button(
                                 onClick = {
-                                    if (/*isValidIp
-                                     && */portNumber.length >= maxChar) {
+                                    val isClientMode =
+                                        !ThroughputUtils.isThroughPutTypeDownload(
+                                            userSelectedFeature,
+                                        )
+                                    val isTlsClientTile =
+                                        userSelectedFeature ==
+                                            ThroughputUtils.WiFiThroughPutFeature.TLS_TX.ordinal
+                                    if (isClientMode && ipAddress.isBlank() && !isTlsClientTile) {
+                                        CustomToastManager.show(
+                                            context,
+                                            getString(R.string.enter_ip_address),
+                                            5000,
+                                        )
+                                        return@Button
+                                    }
+                                    if (portNumber.length >= maxChar) {
                                         dialogState.value = false
                                         showThroughputDetailScreen(
                                             userSelectedFeature,
@@ -405,27 +550,39 @@ class WifiThroughputActivity : AppCompatActivity() {
                                         )
                                         isConfirmCalled.value = true
                                     } else {
-                                        /*Toast.makeText(
+                                        CustomToastManager.show(
                                             context,
                                             getString(R.string.please_enter_valid_port_number),
-                                            Toast.LENGTH_LONG
-                                        ).show()*/
-                                        CustomToastManager.show(
-                                            context,getString(R.string.please_enter_valid_port_number),5000
+                                            5000
                                         )
                                     }
                                 },
-                                shape = RoundedCornerShape(8.dp), // Rounded corners with a 16 dp radius
-                                colors = ButtonDefaults.buttonColors(colorResource(R.color.silabs_dark_blue)),
-                                modifier = Modifier.padding(8.dp)
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    backgroundColor = colorResource(R.color.silabs_redtheme_primary_color),
+                                    contentColor = Color.White,
+                                ),
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(48.dp),
                             ) {
                                 Text(
-                                    text = context.getString(R.string.dialog_start_server),
+                                    text = if (
+                                        userSelectedFeature ==
+                                            ThroughputUtils.WiFiThroughPutFeature.TLS_TX.ordinal ||
+                                        !isDownload.value
+                                    ) {
+                                        context.getString(R.string.dialog_start_server)
+                                    } else {
+                                        context.getString(R.string.wifi_throughput_start_client)
+                                    },
+                                    fontFamily = wifiThroughputTileFontFamily,
+                                    fontSize = 16.sp,
                                     color = Color.White,
-                                    fontSize = 18.sp
                                 )
                             }
                         }
+                    }
                     }
                 }
             }

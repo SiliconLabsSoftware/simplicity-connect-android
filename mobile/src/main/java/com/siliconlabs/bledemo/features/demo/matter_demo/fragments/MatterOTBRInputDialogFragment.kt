@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +13,8 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.siliconlabs.bledemo.databinding.FragmentOtbrInputDialogBinding
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannerFragment.Companion.DIALOG_OTBR_INFO
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterWifiInputDialogFragment.Companion.DIALOG_WIDTH_FRACTION
+import com.siliconlabs.bledemo.utils.DisplayUtils
 
 class MatterOTBRInputDialogFragment : DialogFragment() {
 
@@ -45,7 +46,7 @@ class MatterOTBRInputDialogFragment : DialogFragment() {
         if (dialog != null) {
             dialog.window!!
                 .setLayout(
-                    (getScreenWidth(requireActivity()) * WINDOW_SIZE).toInt(),
+                    (DisplayUtils.getScreenWidth(requireActivity()) * DIALOG_WIDTH_FRACTION).toInt(),
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
         }
@@ -72,12 +73,5 @@ class MatterOTBRInputDialogFragment : DialogFragment() {
         binding.negativeBtn.setOnClickListener {
             dismiss()
         }
-    }
-
-
-    private fun getScreenWidth(activity: Activity): Int {
-        val size = Point()
-        activity.windowManager.defaultDisplay.getSize(size)
-        return size.x
     }
 }

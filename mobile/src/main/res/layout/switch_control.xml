@@ -15,6 +15,6 @@
         android:layout_gravity="center"
         android:text="OFF"
         android:id="@+id/switch_text"
-        style="@style/tb_robo_regular_12dp_grey"/>
+        style="@style/tb_robo_regular_14dp_grey"/>
 
 </LinearLayout>

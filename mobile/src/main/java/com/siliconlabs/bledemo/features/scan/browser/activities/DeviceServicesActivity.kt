@@ -34,8 +34,11 @@ import android.view.*
 import android.view.View.OnScrollChangeListener
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.siliconlabs.bledemo.base.activities.BaseActivity
@@ -523,8 +526,49 @@ class DeviceServicesActivity : BaseActivity() {
                     show(newFragment)
                 }.commit()
                 activeFragment = newFragment
+                binding.servicesBottomNav.post { applyDeviceServicesBottomNavItemStyles() }
                 true
             } ?: false
+        }
+        binding.servicesBottomNav.post { applyDeviceServicesBottomNavItemStyles() }
+    }
+
+    /**
+     * BottomNavigationView shares one text appearance for all items. Remote (Client) and Local (Server)
+     * each use Stolzl Medium and [R.color.device_services_remote_nav_text_color] (primary when selected).
+     * Tab icon tints use the same color state list.
+     */
+    private fun applyDeviceServicesBottomNavItemStyles() {
+        val font = ResourcesCompat.getFont(this, R.font.stolzl_medium) ?: return
+        val labelColors = ContextCompat.getColorStateList(this, R.color.device_services_remote_nav_text_color)
+            ?: return
+        val menuView = binding.servicesBottomNav.getChildAt(0) as? ViewGroup ?: return
+
+        fun applyNavItemStyle(itemView: View) {
+            itemView.findViewById<ImageView>(R.id.navigation_bar_item_icon_view)?.let { icon ->
+                ImageViewCompat.setImageTintList(icon, labelColors)
+            }
+            fun applyToTextViews(view: View) {
+                when (view) {
+                    is TextView -> {
+                        view.typeface = font
+                        view.setTextColor(labelColors)
+                    }
+                    is ViewGroup -> {
+                        for (i in 0 until view.childCount) {
+                            applyToTextViews(view.getChildAt(i))
+                        }
+                    }
+                }
+            }
+            applyToTextViews(itemView)
+        }
+
+        listOf(R.id.services_nav_remote, R.id.services_nav_local).forEach { itemId ->
+            val itemView = (0 until menuView.childCount)
+                .map { menuView.getChildAt(it) }
+                .firstOrNull { it.id == itemId }
+            itemView?.let { applyNavItemStyle(it) }
         }
     }
 

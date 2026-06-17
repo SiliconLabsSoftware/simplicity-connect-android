@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/silabs_background">
+
+    <!-- Fake Status Bar View for edge-to-edge support -->
+    <View
+        android:id="@+id/fakeStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/silabs_dark_blue" />
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/silabs_dark_blue"
+        app:navigationIcon="@drawable/matter_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="@string/reflector_scan_title"
+        app:titleTextColor="@android:color/white">
+
+        <ImageButton
+            android:id="@+id/btn_refresh"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reflector_scan_refresh"
+            android:src="@drawable/ic_refresh"
+            app:tint="@android:color/white" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Content area with FrameLayout for bottom button overlay -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Scanning Animation Header -->
+            <LinearLayout
+                android:id="@+id/scan_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- Scan Animation Container -->
+                <FrameLayout
+                    android:id="@+id/scan_animation_container"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="16dp">
+
+                    <ProgressBar
+                        android:id="@+id/scan_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/silabs_blue" />
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/reflector_scan_icon_desc"
+                        android:src="@drawable/door_lock"
+                        app:tint="@color/silabs_blue" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/scan_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reflector_scan_scanning_title"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/scan_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/reflector_scan_scanning_subtitle"
+                    android:textColor="@color/silabs_subtle_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Section Label -->
+            <TextView
+                android:id="@+id/section_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/reflector_scan_available_devices"
+                android:textAllCaps="true"
+                android:textColor="@color/silabs_subtle_text"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Device List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/devices_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="80dp"
+                tools:listitem="@layout/item_reflector_scan_device" />
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="40dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/reflector_scan_no_devices"
+                    android:src="@drawable/door_lock"
+                    app:tint="@color/silabs_divider" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/reflector_scan_no_devices"
+                    android:textColor="@color/silabs_subtle_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Cancel Button - overlaid at bottom right -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/button_cancel"
+            android:textColor="@color/silabs_red"
+            app:backgroundTint="@android:color/white"
+            app:strokeColor="@color/silabs_red"
+            app:strokeWidth="1dp" />
+
+    </FrameLayout>
+
+</LinearLayout>

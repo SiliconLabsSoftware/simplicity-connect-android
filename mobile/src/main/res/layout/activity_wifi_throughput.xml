@@ -10,18 +10,24 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"/>
+        android:background="@color/silabs_redtheme_status_bar_color"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <!-- Toolbar that becomes supportActionBar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <!-- Content below toolbar -->
+    <!-- Content: grid draws patterned background in Compose -->
     <androidx.compose.ui.platform.ComposeView
+        android:background="@drawable/modal_bg"
         android:id="@+id/my_composable"
         android:layout_width="match_parent"
         android:layout_height="0dp"

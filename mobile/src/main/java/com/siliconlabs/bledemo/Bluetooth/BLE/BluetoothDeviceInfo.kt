@@ -6,10 +6,10 @@ import android.util.Log
 import androidx.core.util.isEmpty
 import com.siliconlabs.bledemo.bluetooth.beacon_utils.BleFormat
 import com.siliconlabs.bledemo.bluetooth.beacon_utils.BleFormat.Companion.getFormat
-import java.util.*
 import kotlin.math.min
 
-class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean = false) : Cloneable {
+class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean = false) :
+    Cloneable {
 
     var connectionState = ConnectionState.DISCONNECTED
     var isConnectable = false
@@ -21,7 +21,6 @@ class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean =
     var intervalNanos = 0L
     var count = 0
     var timestampLast: Long = 0
-
 
 
     public override fun clone(): BluetoothDeviceInfo {
@@ -72,7 +71,8 @@ class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean =
             this.intervalNanos = intervalNanos
         else if (intervalNanos < this.intervalNanos + 3000000) {
             val limitedCount = min(count, 10)
-            this.intervalNanos = (this.intervalNanos * (limitedCount - 1) + intervalNanos) / limitedCount
+            this.intervalNanos =
+                (this.intervalNanos * (limitedCount - 1) + intervalNanos) / limitedCount
         } else if (intervalNanos < this.intervalNanos * 1.4) {
             this.intervalNanos = (this.intervalNanos * 29 + intervalNanos) / 30
         }
@@ -106,6 +106,7 @@ class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean =
 
     val manufacturer: DeviceManufacturer
         get() = scanInfo?.scanRecord?.manufacturerSpecificData?.let {
+            println("---------------MAnufacture:$it")
             if (it.isEmpty()) DeviceManufacturer.UNKNOWN
             else when (it.keyAt(0)) {
                 MANUFACTURER_VALUE_WINDOWS -> DeviceManufacturer.WINDOWS
@@ -115,6 +116,7 @@ class BluetoothDeviceInfo(var device: BluetoothDevice, var isFavorite: Boolean =
 
     enum class DeviceManufacturer {
         WINDOWS,
+        ANDROID,
         UNKNOWN
     }
 

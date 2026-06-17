@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    style="@style/dialog_card"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    style="@style/dialog_card" >
+    android:layout_gravity="center_horizontal">
 
     <LinearLayout
         style="@style/dialog_margins"
@@ -14,11 +14,12 @@
 
         <TextView
             style="@style/dialog_title"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="@string/select_device"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-            android:layout_marginBottom="@dimen/dialog_title_margin_bottom" />
+            android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
+            android:textSize="@dimen/text_size_SM"
+            android:text="@string/select_device" />
 
         <TextView
             android:id="@+id/dialog_text_info"
@@ -31,69 +32,86 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-            android:layout_marginVertical="@dimen/space_SM">
+            android:layout_marginVertical="@dimen/space_SM"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/devices_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:fontFamily="@font/stolzl_medium"
                 android:text="@string/DEVICE_LIST"
-                android:textSize="18sp"
-                android:textColor="@color/silabs_primary_text" />
+                android:textColor="@color/silabs_redtheme_header_text_color"
+                android:textSize="18sp" />
 
-            <ProgressBar android:id="@+id/demo_scan_progress_bar"
+            <ProgressBar
+                android:id="@+id/demo_scan_progress_bar"
                 android:layout_width="32dp"
-                android:layout_height="32dp" />
+                android:layout_height="32dp"
+                android:indeterminateTint="@color/silabs_redtheme_navi_red_bar" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silabs_redtheme_select_dialog_device_list_line_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/dialog_margin_horizontal"
-            android:orientation="vertical"
-            android:background="@color/blue_teal" >
+            android:background="@color/silabs_redtheme_select_dialog_device_list_bg_color"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/no_devices_found"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/matter_100dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/dialog_margin_horizontal"
                 android:paddingVertical="@dimen/space_S"
                 tools:ignore="UseCompoundDrawables"
-                tools:visibility="gone" >
+                tools:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/redesign_ic_warning"
                     android:layout_marginEnd="@dimen/space_S"
-                    android:contentDescription="@string/content_desc_no_devices_discovered"/>
+                    android:contentDescription="@string/content_desc_no_devices_discovered"
+                    android:src="@drawable/redesign_ic_warning" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/stolzl_medium"
                     android:text="@string/please_connect_a_device"
                     android:textColor="@color/silabs_primary_text"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/matter_200dp"
                 android:layout_marginBottom="@dimen/matter_5dp"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton android:id="@+id/button_cancel"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/silabs_redtheme_select_dialog_device_list_line_color" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_cancel"
             style="@style/dialog_button_negative_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

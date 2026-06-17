@@ -30,8 +30,9 @@ class PendingServerConnectionActivity : BaseActivity() {
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
         WindowInsetsControllerCompat(window,window.decorView).apply {
-            isAppearanceLightStatusBars = true // adjust for dark/light icons
-            isAppearanceLightNavigationBars = true
+            // Status bar background is dark (#333333), so icons must be rendered in white.
+            isAppearanceLightStatusBars = false
+            isAppearanceLightNavigationBars = false
         }
         setContentView(R.layout.activity_pending_server_connection)
 

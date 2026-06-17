@@ -10,28 +10,28 @@
 
     <TextView
         android:id="@+id/tvTitle"
+        style="@style/SilabsMatterDeviceTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_marginTop="7dp"
-        android:textColor="@color/silabs_primary_text"
+        android:gravity="center"
         android:text="@string/matter_network_selection_alert_title"
-        android:fontFamily="sans-serif-black"
         android:textSize="@dimen/text_size_ML"
         android:textStyle="bold" />
 
 
     <TextView
         android:id="@+id/tvMessage"
+        style="@style/SilabsMatterDeviceBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:textStyle="bold"
         android:fontFamily="sans-serif-black"
+        android:gravity="center"
         android:text="@string/matter_select_network_mode_alert_message"
-        android:textSize="@dimen/text_size_SM" />
+        android:textSize="@dimen/text_size_SM"
+        android:textStyle="bold" />
 
 
     <LinearLayout
@@ -58,13 +58,13 @@
             android:padding="@dimen/matter_10dp">
 
             <TextView
+                style="@style/SilabsMatterDeviceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/matter_wifi"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/silabs_blue"
+                android:textColor="@color/silabs_redtheme_primary_color"
                 android:textSize="@dimen/text_size_ML" />
         </LinearLayout>
 
@@ -84,13 +84,13 @@
             android:padding="@dimen/matter_10dp">
 
             <TextView
-                android:fontFamily="sans-serif-medium"
+                style="@style/SilabsMatterDeviceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/matter_thread"
-                android:textColor="@color/silabs_blue"
+                android:textColor="@color/silabs_redtheme_primary_color"
                 android:textSize="@dimen/text_size_ML" />
 
         </LinearLayout>
@@ -112,13 +112,13 @@
             android:padding="@dimen/matter_10dp">
 
             <TextView
-                android:fontFamily="sans-serif-medium"
+                style="@style/SilabsMatterDeviceBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/matter_cancel"
-                android:textColor="@color/silabs_red"
+                android:textColor="@color/silabs_redtheme_primary_color"
                 android:textSize="@dimen/text_size_ML" />
 
         </LinearLayout>

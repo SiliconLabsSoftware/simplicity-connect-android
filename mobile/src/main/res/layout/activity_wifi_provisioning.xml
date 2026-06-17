@@ -13,15 +13,20 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_status_bar_color"
         app:layout_constraintBottom_toTopOf="@+id/appBarLayout"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +44,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible"
+        android:background="@drawable/modal_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +53,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/SilabsMatterDeviceTitle"
             android:gravity="center"
             android:padding="@dimen/adapter_item_padding"
             android:text="@string/matter_scanner_adapter_empty_list_title"
@@ -57,6 +64,7 @@
             android:id="@+id/tv_empty_scan_action_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/SilabsMatterDeviceTitle"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/dev_kit_sensor_empty"
@@ -68,9 +76,10 @@
     <LinearLayout
         android:id="@+id/scanner_place_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/matter_20dp"
         android:orientation="vertical"
+        android:background="@drawable/modal_bg"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,11 +96,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:gravity="start"
+                style="@style/Silabs_Rebranding_Title"
                 android:padding="@dimen/matter_25dp"
                 android:text="@string/wifi_provisioning_scanner_holder_description"
-                android:textColor="@color/black"
+                android:textColor="@color/silabs_rebranding_2373_connected_light_text_color"
                 android:textSize="@dimen/access_pt_name_size"
+                android:textStyle="normal"
                 android:visibility="gone" />
         </androidx.cardview.widget.CardView>
 

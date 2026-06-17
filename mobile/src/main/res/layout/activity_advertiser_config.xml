@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,16 +10,24 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"/>
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar that becomes supportActionBar -->
     <androidx.appcompat.widget.Toolbar
-        android:layout_below="@id/fakeStatusBar"
+        android:layout_below="@id/statusBarToolbarSeparator"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:background="@color/silabs_redtheme_tool_bar_color"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <com.siliconlabs.bledemo.common.views.HorizontalShadow
         android:id="@+id/horizontalShadow"
         android:layout_below="@id/toolbar"
@@ -60,7 +67,7 @@
 
                     <include
                         android:id="@+id/adv_config_param"
-                        layout= "@layout/advertiser_config_parameters" />
+                        layout="@layout/advertiser_config_parameters" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

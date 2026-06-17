@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:longClickable="false"
-    android:background="@color/sl_light_grey"
     tools:context=".features.demo.smartlock.activities.SmartLockActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -24,7 +23,12 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/blue_primary" />
+            android:background="@color/silabs_redtheme_status_bar_color" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/matter_1dp"
+            android:background="@color/grey" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,7 +38,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/silabs_dark_blue"
+                android:background="@color/silabs_redtheme_tool_bar_color"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 app:layout_constraintBottom_toBottomOf="parent"

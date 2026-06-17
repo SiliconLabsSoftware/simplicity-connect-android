@@ -35,6 +35,10 @@ open class GenericChipDeviceListener : ChipDeviceController.CompletionListener {
 
     }
 
+    override fun onCommissioningStageStart(nodeId: Long, stage: String?) {
+
+    }
+
     override fun onNotifyChipConnectionClosed() {
     }
 
@@ -50,7 +54,7 @@ open class GenericChipDeviceListener : ChipDeviceController.CompletionListener {
     override fun onICDRegistrationInfoRequired() {
     }
 
-    override fun onICDRegistrationComplete(errorCode: Long, icdDeviceInfo: ICDDeviceInfo?) {
+    override fun onICDRegistrationComplete(errorCode: Long, icdDeviceInfo: ICDDeviceInfo) {
     }
 
 

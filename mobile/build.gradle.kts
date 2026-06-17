@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.Copy
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -11,6 +13,17 @@ repositories {
     maven { url = uri("https://maven.fabric.io/public") }
     maven { url = uri("https://jitpack.io") }
     mavenCentral()
+}
+
+// Registered Copy task (not assemble.doLast { copy { } }) keeps configuration cache working:
+// doLast + copy { } resolves to project.copy() at execution time and captures Project.
+tasks.register<Copy>("copySiConnectReleaseApkToBuilds") {
+    from(layout.buildDirectory.dir("outputs/apk/Si-Connect/release")) {
+        include("*.apk")
+        // Stable name for scripts (e.g. automation_scripts/launch_apk.sh)
+        rename { _ -> "mobile-Si-Connect-release.apk" }
+    }
+    into(layout.projectDirectory.dir("Builds"))
 }
 
 android {
@@ -60,15 +73,6 @@ android {
 
 
 
-    applicationVariants.all{
-        assembleProvider.get().doLast{
-            copy{
-                from("Builds/${rootProject.name}/${project.name}/outputs/apk/Si-Connect/release/mobile-Si-Connect-release.apk")
-                into ("Builds")
-            }
-        }
-    }
-
     lint {
         checkReleaseBuilds = false
         // Or, if you prefer, you can continue to check for errors in release builds,
@@ -83,8 +87,8 @@ android {
         create("Si-Connect") {
             dimension = versionDim
             applicationId = "com.siliconlabs.bledemo"
-            versionCode = 76
-            versionName = "3.2.2"
+            versionCode = 77
+            versionName = "3.3.0"
         }
     }
 
@@ -118,9 +122,15 @@ android {
             val apkName = "mobile-${name}-${versionName}.apk"
             (this as? com.android.build.gradle.internal.api.BaseVariantOutputImpl)?.outputFileName = apkName
         }
+        if (buildType.name == "release") {
+            assembleProvider.configure {
+                finalizedBy(tasks.named("copySiConnectReleaseApkToBuilds"))
+            }
+        }
     }
 
 }
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11

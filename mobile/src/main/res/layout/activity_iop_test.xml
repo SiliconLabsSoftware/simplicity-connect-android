@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/silabs_white"> <!-- Changed from gray to white so only content area is gray -->
+    android:layout_height="match_parent">
 
     <!-- Fake Status Bar View -->
     <View
@@ -13,16 +12,23 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:layout_height="1dp"
+        android:background="@color/silabs_redtheme_tool_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_below="@id/fakeStatusBar"
+        android:layout_below="@id/statusBarToolbarSeparator"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <FrameLayout
@@ -31,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ll_iop_footer"
-        android:background="@color/gray_background" />
+        android:background="@drawable/modal_bg" />
 
     <LinearLayout
         android:id="@+id/ll_iop_footer"
@@ -41,11 +47,11 @@
         android:background="@color/silabs_white"
         android:orientation="horizontal">
         <LinearLayout
+            android:layout_marginStart="@dimen/matter_10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:paddingHorizontal="@dimen/space_M"
             android:orientation="vertical">
 
             <TextView
@@ -58,6 +64,7 @@
                 tools:text="Firmware name: XXX"/>
 
             <TextView
+                android:layout_marginStart="@dimen/matter_12dp"
                 android:id="@+id/tv_device_name"
                 style="@style/list_item_card_view_text_info"
                 android:layout_width="match_parent"
@@ -68,6 +75,8 @@
                 tools:text="Device name: YYY"/>
 
             <TextView
+                android:layout_marginStart="9dp"
+                android:gravity="center_horizontal"
                 android:id="@+id/tv_progress"
                 style="@style/list_item_card_view_text_info"
                 android:layout_width="match_parent"
@@ -79,16 +88,21 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:textFontWeight="500"
+            android:textSize="14sp"
+            android:lineHeight="16dp"
+            android:letterSpacing="0.1"
             android:id="@+id/btn_start_and_stop_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/stolzl_medium"
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:gravity="center"
             android:layout_marginVertical="@dimen/extended_fab_margin"
-            android:layout_marginEnd="@dimen/extended_fab_margin"
+            android:layout_marginEnd="@dimen/matter_10dp"
             android:text="@string/button_run_test"
-            app:backgroundTint="@color/blue_primary"
+            app:backgroundTint="@color/silabs_red"
             tools:text="@string/btn_create_new"
             tools:style="@style/ExtendedFloatingActionButton" />
 

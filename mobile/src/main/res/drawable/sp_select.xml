@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true">
-        <color android:color="@color/silabs_blue"/>
+    <item android:state_activated="true">
+        <color android:color="@color/silabs_primary_color"/>
     </item>
 
-    <item android:state_pressed="false">
+    <item android:state_pressed="true">
+        <color android:color="@color/silabs_primary_color"/>
+    </item>
+
+    <item>
         <color android:color="#f2f2f2"/>
     </item>
 

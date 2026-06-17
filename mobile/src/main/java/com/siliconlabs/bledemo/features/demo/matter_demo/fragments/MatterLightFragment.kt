@@ -270,7 +270,7 @@ class MatterLightFragment : Fragment() {
             requireActivity().runOnUiThread {
                 binding.btnMatterDeviceState.setImageResource(R.drawable.matter_light)
                 binding.btnMatterDeviceState.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.silabs_grey),
+                    ContextCompat.getColor(requireContext(), R.color.silabs_rebranding_2373_matter_image_disable_color),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
             }

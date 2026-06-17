@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_floating_sheet">
+
+    <!-- Content area: title + message (iOS-style modal content) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/matter_16dp"
+        android:paddingEnd="@dimen/matter_16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tv_oven_rangehood_binding_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            style="@style/Silabs_Rebranding_Title"
+            android:text="@string/matter_oven_rangehood_binding_dialog_title"
+            android:textColor="@color/silabs_redtheme_subheader_text_color"
+            android:textSize="@dimen/text_size_L"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_oven_rangehood_binding_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:fontFamily="@font/stolzl_regular"
+            android:text="@string/matter_oven_rangehood_binding_dialog_message_not_bound"
+            android:textColor="@color/silabs_redtheme_body_text_color"
+            android:textSize="@dimen/text_size_SM" />
+    </LinearLayout>
+
+    <!-- Thin separator line (iOS-style) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silabs_divider" />
+
+    <!-- Unbind RangeHood: red text, transparent background (visible when bound) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_oven_rangehood_unbind"
+        style="@style/ButtonBorderlessRed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/matter_oven_unbind_rangehood"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silabs_divider" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_oven_rangehood_bind_to_different"
+        style="@style/ButtonBorderlessBlueActionSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/matter_oven_bind_to_different_rangehood"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silabs_divider" />
+
+    <!-- Bind to RangeHood: blue text (visible when not bound) -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_oven_rangehood_bind"
+        style="@style/ButtonBorderlessBlueActionSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/matter_oven_bind_to_rangehood"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silabs_divider" />
+
+    <!-- Cancel: blue text, transparent background -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_oven_rangehood_cancel"
+        style="@style/ButtonBorderlessBlueActionSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/matter_cancel" />
+
+    <!-- Bottom padding for safe area -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+</LinearLayout>

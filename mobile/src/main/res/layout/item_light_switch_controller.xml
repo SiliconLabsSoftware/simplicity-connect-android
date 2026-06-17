@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -14,27 +13,30 @@
 
         <ImageView
             android:id="@+id/iconLight"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/icon_light" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_icon_light_bulb" />
 
         <TextView
+            android:textColor="#525252"
+            android:lineHeight="@dimen/matter_16dp"
+            android:textFontWeight="400"
+            android:fontFamily="@font/stolzl_regular"
             android:id="@+id/deviceName"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:text="Cell 1"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/checkmark"
-            android:layout_weight="0.5"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_check"
-            android:visibility="gone"
-            app:tint="@color/silabs_dark_blue" />
+            android:layout_marginEnd="@dimen/matter_16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_yes_icon_symbol"
+            android:visibility="gone" />
 
         <ProgressBar
             android:visibility="gone"
@@ -42,16 +44,6 @@
             android:layout_width="24dp"
             android:layout_height="24dp">
         </ProgressBar>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:visibility="gone"
-            android:id="@+id/btn_unbind"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background_red_box"
-            android:text="UnBind" />
     </LinearLayout>
 
     <!-- Divider -->

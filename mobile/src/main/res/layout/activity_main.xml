@@ -17,7 +17,7 @@
         android:layout_weight="1"
         app:navGraph="@navigation/navigation_main_activity"
         app:defaultNavHost="true"
-        tools:layout="@layout/fragment_scan"/>
+        tools:layout="@layout/fragment_demo"/>
 
     <com.siliconlabs.bledemo.home_screen.views.HidableBottomNavigationView
         android:id="@+id/main_navigation"

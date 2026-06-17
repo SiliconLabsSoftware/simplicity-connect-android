@@ -1,6 +1,7 @@
 package com.siliconlabs.bledemo.features.demo.channel_sounding.fragments
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.ranging.ble.cs.BleCsRangingCapabilities
@@ -11,8 +12,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.siliconlabs.bledemo.R
@@ -89,87 +92,42 @@ class ChannelSoundingConfigureFragment : Fragment() {
         )
     }
 
+    /**
+     * Skydoves Balloon tooltips for this screen: Stolzl Regular, #525252 text; #ECECEC body with
+     * 1dp top/bottom border #C5C5C5 (`@drawable/channel_sounding_tooltip_balloon_bg`).
+     */
+    private fun createChannelSoundingTooltip(@StringRes textRes: Int): Balloon =
+        createChannelSoundingTooltip(requireContext().getString(textRes))
+
+    private fun createChannelSoundingTooltip(text: CharSequence): Balloon {
+        val context = requireContext()
+        val typeface = ResourcesCompat.getFont(context, R.font.stolzl_regular) ?: Typeface.DEFAULT
+        val strokeColor = ContextCompat.getColor(context, R.color.silabs_redtheme_select_device_outline_color)
+        val textColor = ContextCompat.getColor(context, R.color.silabs_redtheme_checkbox_text_color)
+        return Balloon.Builder(context)
+            .setText(text)
+            .setArrowSize(10)
+            .setWidthRatio(0.5f)
+            .setCornerRadius(4f)
+            .setAutoDismissDuration(TIME_OUT)
+            .setBackgroundDrawableResource(R.drawable.channel_sounding_tooltip_balloon_bg)
+            .setTextColor(textColor)
+            .setTextSize(14f)
+            .setTextTypeface(typeface)
+            .setArrowColor(strokeColor)
+            .build()
+    }
+
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     private fun initViews() {
 
-        val tooltipFreq = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_freq))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-        val tooltipDuration = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_duration))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-
-        val tooltipSesor = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_sensor))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-        val tooltipLocatoin = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_location))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-        val tooltipSight = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_sight))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-        val tooltipSecurity = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_duration))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
-        val tooltipKalmanFilter = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_kalman_filter))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
-            .setTextSize(14f)
-            .build()
+        val tooltipFreq = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_freq)
+        val tooltipDuration = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_duration)
+        val tooltipSesor = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_sensor)
+        val tooltipLocatoin = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_location)
+        val tooltipSight = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_sight)
+        val tooltipSecurity = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_duration)
+        val tooltipKalmanFilter = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_kalman_filter)
 
         binding.ivInfoFreq.setOnClickListener {
             tooltipFreq.showAlignTop(binding.ivInfoFreq)
@@ -200,10 +158,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
         // Initialize filtering level spinner (replaces on/off toggle)
         spinnerFilteringLevelAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            SPINNER_ITEM_LAYOUT,
             KalmanFilterConfig.getFilteringLevelDisplayStrings()
         ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         }
         binding.spinnerFilteringLevel.adapter = spinnerFilteringLevelAdapter
         
@@ -237,26 +195,26 @@ class ChannelSoundingConfigureFragment : Fragment() {
 
         // Frequency Spinner
         spinnerFrequencyAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_spinner_item, ArrayList<String>()
+            requireContext(), SPINNER_ITEM_LAYOUT, ArrayList<String>()
         )
-        spinnerFrequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerFrequencyAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerFrequency.adapter = spinnerFrequencyAdapter
         spinnerFrequencyAdapter.addAll(viewModelDM.getMeasurementFrequencies())
 
         // Duration Spinner now uses Int values directly
         spinnerDurationAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_spinner_item, ArrayList<String>()
+            requireContext(), SPINNER_ITEM_LAYOUT, ArrayList<String>()
         )
-        spinnerDurationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDurationAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerDuration.adapter = spinnerDurationAdapter
         spinnerDurationAdapter.addAll(viewModelDM.getMeasurementDurations())
 
         //Sensor Enabled
         spinnerSensorEnabledAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, ArrayList<String>()
+            SPINNER_ITEM_LAYOUT, ArrayList<String>()
         ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         }
         binding.spinnerSensorEnabled.adapter = spinnerSensorEnabledAdapter
         spinnerSensorEnabledAdapter.addAll(viewModelDM.getSensorFusionEnable())
@@ -269,10 +227,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
 
         spinnerSecurityLevelAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, securityLeveLList
+            SPINNER_ITEM_LAYOUT, securityLeveLList
         )
 
-        spinnerSecurityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSecurityLevelAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerSecurityLevel.adapter = spinnerSecurityLevelAdapter
         binding.spinnerSecurityLevel.visibility = View.GONE
         binding.securityLevelParent.visibility = View.GONE
@@ -280,20 +238,20 @@ class ChannelSoundingConfigureFragment : Fragment() {
         //Location Type
         spinnerLocationTypeSAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, ArrayList<String>()
+            SPINNER_ITEM_LAYOUT, ArrayList<String>()
         )
         binding.spinnerLocationType.adapter = spinnerLocationTypeSAdapter
-        spinnerLocationTypeSAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerLocationTypeSAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         spinnerLocationTypeSAdapter.addAll(viewModelDM.getLocationTypes())
 
         //Sight Type
 
         spinnerSightTypeAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item, ArrayList<String>()
+            SPINNER_ITEM_LAYOUT, ArrayList<String>()
         )
 
-        spinnerSightTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerSightTypeAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerSightType.adapter = spinnerSightTypeAdapter
         spinnerSightTypeAdapter.addAll(viewModelDM.getSightType())
         configurationParameters
@@ -472,65 +430,11 @@ class ChannelSoundingConfigureFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     private fun initializeKalmanFilterSettings() {
         // Create tooltips for Kalman filter settings
-        val tooltipOutlierDetection = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_outlier_detection))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            .setTextSize(14f)
-            .build()
-
-        val tooltipAdaptiveFiltering = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_adaptive_filtering))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            .setTextSize(14f)
-            .build()
-
-        val tooltipProcessNoise = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_process_noise))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            .setTextSize(14f)
-            .build()
-
-        val tooltipMeasurementNoise = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_measurement_noise))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            .setTextSize(14f)
-            .build()
-
-        val tooltipOutlierThreshold = Balloon.Builder(requireContext())
-            .setText(requireContext().getString(R.string.channel_sounding_tooltip_outlier_threshold))
-            .setArrowSize(10)
-            .setWidthRatio(0.5f)
-            .setHeight(100)
-            .setCornerRadius(4f)
-            .setAutoDismissDuration(TIME_OUT)
-            .setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_teal))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            .setTextSize(14f)
-            .build()
+        val tooltipOutlierDetection = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_outlier_detection)
+        val tooltipAdaptiveFiltering = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_adaptive_filtering)
+        val tooltipProcessNoise = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_process_noise)
+        val tooltipMeasurementNoise = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_measurement_noise)
+        val tooltipOutlierThreshold = createChannelSoundingTooltip(R.string.channel_sounding_tooltip_outlier_threshold)
 
         // Set up tooltip click listeners
         binding.ivInfoOutlierDetection.setOnClickListener {
@@ -568,10 +472,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
         // Initialize Process Noise Spinner
         spinnerProcessNoiseAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            SPINNER_ITEM_LAYOUT,
             KalmanFilterConfig.getProcessNoiseDisplayStrings()
         )
-        spinnerProcessNoiseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerProcessNoiseAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerProcessNoise.adapter = spinnerProcessNoiseAdapter
         binding.spinnerProcessNoise.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -586,10 +490,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
         // Initialize Measurement Noise Spinner
         spinnerMeasurementNoiseAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            SPINNER_ITEM_LAYOUT,
             KalmanFilterConfig.getMeasurementNoiseDisplayStrings()
         )
-        spinnerMeasurementNoiseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerMeasurementNoiseAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerMeasurementNoise.adapter = spinnerMeasurementNoiseAdapter
         binding.spinnerMeasurementNoise.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -604,10 +508,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
         // Initialize Outlier Threshold Spinner
         spinnerOutlierThresholdAdapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            SPINNER_ITEM_LAYOUT,
             KalmanFilterConfig.getOutlierThresholdDisplayStrings()
         )
-        spinnerOutlierThresholdAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerOutlierThresholdAdapter.setDropDownViewResource(SPINNER_DROPDOWN_LAYOUT)
         binding.spinnerOutlierThreshold.adapter = spinnerOutlierThresholdAdapter
         binding.spinnerOutlierThreshold.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -770,6 +674,10 @@ class ChannelSoundingConfigureFragment : Fragment() {
 
     companion object {
         private val TIME_OUT = 35000L
+
+        /** Spinner closed row + dropdown list typography (Stolzl Regular 12sp / #525252 / 16sp line height). */
+        private val SPINNER_ITEM_LAYOUT = R.layout.item_channel_sounding_spinner
+        private val SPINNER_DROPDOWN_LAYOUT = R.layout.item_channel_sounding_spinner_dropdown
         fun newInstance(): ChannelSoundingConfigureFragment {
             return ChannelSoundingConfigureFragment()
         }

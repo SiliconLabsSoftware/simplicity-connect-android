@@ -30,13 +30,13 @@ class GattServerViewHolder(
             swGattServer.isChecked = gattServer.isSwitchedOn
         }
 
-        prepareView(isExportMode)
+        prepareView(isExportMode, gattServer)
         prepareDetailsView(gattServer)
         handleClickActions(gattServer)
         handleSwitchActions()
     }
 
-    private fun prepareView(isExportMode: Boolean) {
+    private fun prepareView(isExportMode: Boolean, gattServer: GattServer) {
         viewBinding.apply {
             cbExport.visibility = if (isExportMode) View.VISIBLE else View.GONE
             swGattServer.isEnabled = !isExportMode
@@ -45,7 +45,7 @@ class GattServerViewHolder(
             toggleImageButton(ibEdit, !isExportMode)
             toggleImageButton(ibRemove, !isExportMode)
 
-            if (!isExportMode) cbExport.isChecked = false
+            cbExport.isChecked = isExportMode && gattServer.isCheckedForExport
         }
     }
 

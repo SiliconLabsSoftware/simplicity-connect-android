@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.FragmentThroughputBinding
 import com.siliconlabs.bledemo.features.demo.throughput.activities.ThroughputActivity
-import com.siliconlabs.bledemo.features.demo.throughput.views.SpeedView
 import com.siliconlabs.bledemo.features.demo.throughput.viewmodels.ThroughputViewModel
+import com.siliconlabs.bledemo.features.demo.throughput.views.SpeedView
 
 
 class ThroughputFragment : Fragment(R.layout.fragment_throughput) {
@@ -34,7 +34,6 @@ class ThroughputFragment : Fragment(R.layout.fragment_throughput) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ThroughputViewModel::class.java)
-        //speed_view.setUnitsArray(unitsArray)
         binding.speedView.setUnitsArray(unitsArray)
 
         handleClickEvents()
@@ -54,31 +53,26 @@ class ThroughputFragment : Fragment(R.layout.fragment_throughput) {
 
     private fun observeChanges() {
         viewModel.phyStatus.observe(viewLifecycleOwner, Observer {
-            // tv_phy_status_value.text = getString(it.stringResId)
             binding.viewConnectionParameters.tvPhyStatusValue.text = getString(it.stringResId)
         })
         viewModel.connectionInterval.observe(viewLifecycleOwner, Observer {
-            //tv_interval_value.text = it.toString().plus(getString(R.string.throughput_ms))
             binding.viewConnectionParameters.tvIntervalValue.text =
                 it.toString().plus(getString(R.string.throughput_ms))
         })
         viewModel.slaveLatency.observe(viewLifecycleOwner, Observer {
-            // tv_latency_value.text = it.toString().plus(getString(R.string.throughput_ms))
             binding.viewConnectionParameters.tvLatencyValue.text =
                 it.toString().plus(getString(R.string.throughput_ms))
         })
         viewModel.supervisionTimeout.observe(viewLifecycleOwner, Observer {
-            // tv_supervision_timeout_value.text =
+
             binding.viewConnectionParameters.tvSupervisionTimeoutValue.text =
                 it.toString().plus(getString(R.string.throughput_ms))
         })
         viewModel.mtuSize.observe(viewLifecycleOwner, Observer {
-//            tv_mtu_value.text = getString(R.string.throughput_n_bytes, it)
             binding.viewConnectionParameters.tvMtuValue.text =
                 getString(R.string.throughput_n_bytes, it)
         })
         viewModel.pduSize.observe(viewLifecycleOwner, Observer {
-            // tv_pdu_value.text = getString(R.string.throughput_n_bytes, it)
             binding.viewConnectionParameters.tvPduValue.text =
                 getString(R.string.throughput_n_bytes, it)
         })
@@ -86,12 +80,9 @@ class ThroughputFragment : Fragment(R.layout.fragment_throughput) {
             updateSpeed(it)
         })
         viewModel.isDownloadActive.observe(viewLifecycleOwner, Observer {
-            // btn_start_stop.isEnabled = !it
             binding.btnStartStop.isEnabled = !it
             toggleRadioButtonsClickable(!it)
             when (viewModel.isDownloadingNotifications) {
-                // true -> rb_notifications.isChecked = true
-//                false -> rb_indications.isChecked = true
                 true -> binding.viewConnectionParameters.rbNotifications.isChecked = true
                 false -> binding.viewConnectionParameters.rbIndications.isChecked = true
             }
@@ -133,14 +124,14 @@ class ThroughputFragment : Fragment(R.layout.fragment_throughput) {
     }
 
     private fun updateSpeed(speed: Int) {
-      //  speed_view
+        //  speed_view
         binding.speedView
             .updateSpeed(
-            getProgress(speed),
-            getSpeedAsString(speed),
-            getUnitAsString(speed),
-            getTestMode()
-        )
+                getProgress(speed),
+                getSpeedAsString(speed),
+                getUnitAsString(speed),
+                getTestMode()
+            )
     }
 
     private fun getTestMode(): SpeedView.Mode {

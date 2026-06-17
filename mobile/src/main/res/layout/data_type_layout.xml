@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:layout_marginTop="1dp"
     android:background="@color/gray_subtle">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_data_type"
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             android:layout_height="0dp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
         <LinearLayout
             android:id="@+id/ll_data"
@@ -44,9 +45,9 @@
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             app:layout_constraintEnd_toEndOf="@id/tv_name"
 
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-<!--                <include tools:layout="@layout/data_type_item" />-->
+            <!--                <include tools:layout="@layout/data_type_item" />-->
         </LinearLayout>
 
         <ImageButton
@@ -74,6 +75,6 @@
         android:layout_marginHorizontal="32dp"
         android:layout_gravity="center_horizontal"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
 </LinearLayout>

@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/device_information_title" />
+            android:text="@string/device_information_title" 
+            android:fontFamily="@font/stolzl_regular" />
 
         <TextView
             android:id="@+id/hardware_header_title"
@@ -28,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:gravity="start"
-            android:text="@string/device_information_header_one" />
+            android:text="@string/device_information_header_one" 
+            android:fontFamily="@font/stolzl_regular" />
 
         <View
             android:layout_width="match_parent"
@@ -49,7 +51,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_device_name_label" />
+                android:text="@string/device_information_device_name_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/device_name_info"
@@ -59,7 +62,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_device_name_label" />
+                android:text="@string/device_information_device_name_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +80,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_android_version_label" />
+                android:text="@string/device_information_android_version_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/android_version_info"
@@ -86,7 +91,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_title" />
+                android:text="@string/device_information_title" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,7 +109,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_manufacturer_label" />
+                android:text="@string/device_information_manufacturer_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/manufacturer_info"
@@ -112,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -129,7 +137,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_model_label" />
+                android:text="@string/device_information_model_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/model_info"
@@ -139,7 +148,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_model_label" />
+                android:text="@string/device_information_model_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -156,7 +166,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_build_version_label" />
+                android:text="@string/device_information_build_version_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/build_version_info"
@@ -166,7 +177,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_build_version_label" />
+                android:text="@string/device_information_build_version_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +195,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_board_label" />
+                android:text="@string/device_information_board_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/board_info"
@@ -193,7 +206,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_board_label" />
+                android:text="@string/device_information_board_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -210,7 +224,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_product_label" />
+                android:text="@string/device_information_product_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/product_info"
@@ -220,7 +235,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_product_label" />
+                android:text="@string/device_information_product_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <View
@@ -239,7 +255,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:gravity="start"
-            android:text="@string/device_information_header_two" />
+            android:text="@string/device_information_header_two" 
+            android:fontFamily="@font/stolzl_regular" />
 
         <View
             android:layout_width="match_parent"
@@ -260,7 +277,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/bluetooth_low_energy_supported" />
+                android:text="@string/bluetooth_low_energy_supported" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/bluetooth_low_energy_supported_info"
@@ -269,7 +287,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <!--        HID-->
@@ -287,7 +306,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/native_hid_supported" />
+                android:text="@string/native_hid_supported" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/native_hid_supported_info"
@@ -296,7 +316,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <!--        HID-->
@@ -314,7 +335,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/lollipop_scanner_api_supported" />
+                android:text="@string/lollipop_scanner_api_supported" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/lollipop_scanner_api_supported_info"
@@ -323,7 +345,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <!-- Offloaded filtering supported -->
@@ -340,7 +363,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/offloaded_filtering_supported" />
+                android:text="@string/offloaded_filtering_supported" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/tv_show_offload_filter"
@@ -349,7 +373,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -365,7 +390,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/offload_scan_batch_support" />
+                android:text="@string/offload_scan_batch_support" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/tv_show_offload_scan_batch"
@@ -374,7 +400,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -390,7 +417,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/peripheral_mode" />
+                android:text="@string/peripheral_mode" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/tv_show_per_mode_supp"
@@ -399,7 +427,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -415,7 +444,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/multiple_mode_adv" />
+                android:text="@string/multiple_mode_adv" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/tv_show_mult_mode_adv"
@@ -424,7 +454,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
 
@@ -448,7 +479,8 @@
                     android:layout_weight="2.5"
                     android:text="@string/high_speed_supported"
                     android:gravity="start"
-                    />
+                    
+            android:fontFamily="@font/stolzl_regular" />
 
                 <TextView
                     android:id="@+id/tv_show_high_speed"
@@ -458,7 +490,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="start"
-                    tools:text="Not Supported" />
+                    tools:text="Not Supported" 
+            android:fontFamily="@font/stolzl_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -475,7 +508,8 @@
                     android:layout_weight="2.5"
                     android:text="@string/long_range_supported"
                     android:gravity="start"
-                    />
+                    
+            android:fontFamily="@font/stolzl_regular" />
 
                 <TextView
                     android:id="@+id/tv_show_long_range"
@@ -485,7 +519,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="start"
-                    tools:text="Not Supported" />
+                    tools:text="Not Supported" 
+            android:fontFamily="@font/stolzl_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -502,7 +537,8 @@
                     android:layout_weight="2.5"
                     android:text="@string/periodic_adv_supported"
                     android:gravity="start"
-                    />
+                    
+            android:fontFamily="@font/stolzl_regular" />
 
                 <TextView
                     android:id="@+id/tv_show_periodic_adv"
@@ -512,7 +548,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="start"
-                    tools:text="Not Supported" />
+                    tools:text="Not Supported" 
+            android:fontFamily="@font/stolzl_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -529,7 +566,8 @@
                     android:layout_weight="2.5"
                     android:text="@string/extended_adv_supported"
                     android:gravity="start"
-                    />
+                    
+            android:fontFamily="@font/stolzl_regular" />
 
                 <TextView
                     android:id="@+id/tv_show_extended_adv"
@@ -539,7 +577,8 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="start"
-                    tools:text="Not Supported" />
+                    tools:text="Not Supported" 
+            android:fontFamily="@font/stolzl_regular" />
             </LinearLayout>
 
 
@@ -560,7 +599,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/maximum_advertising_data" />
+                android:text="@string/maximum_advertising_data" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/maximum_advertising_data_length_info"
@@ -569,7 +609,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:gravity="start" />
+                android:gravity="start" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
 
@@ -584,7 +625,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:gravity="start"
-            android:text="@string/device_information_header_five" />
+            android:text="@string/device_information_header_five" 
+            android:fontFamily="@font/stolzl_regular" />
 
         <View
             android:layout_width="match_parent"
@@ -605,7 +647,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/le_audio_supported_label" />
+                android:text="@string/le_audio_supported_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/le_audio_supported_info"
@@ -616,7 +659,8 @@
                 android:layout_weight="1"
                 android:gravity="start"
 
-                android:text="@string/le_audio_supported_info" />
+                android:text="@string/le_audio_supported_info" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -633,7 +677,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/le_audio_broadcast_source_supported_label" />
+                android:text="@string/le_audio_broadcast_source_supported_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/le_audio_broadcast_source_supported_info"
@@ -643,7 +688,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/le_audio_broadcast_source_supported_yes" />
+                android:text="@string/le_audio_broadcast_source_supported_yes" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -660,7 +706,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/le_audio_broadcast_assist_supported_label" />
+                android:text="@string/le_audio_broadcast_assist_supported_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/le_audio_broadcast_assist_supported_info"
@@ -670,7 +717,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/le_audio_broadcast_assist_supported_yes" />
+                android:text="@string/le_audio_broadcast_assist_supported_yes" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -687,7 +735,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="@string/device_information_max_connect_audio_device_label" />
+                android:text="@string/device_information_max_connect_audio_device_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/max_connect_audio_device_info"
@@ -697,7 +746,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_max_connect_audio_device_info" />
+                android:text="@string/device_information_max_connect_audio_device_info" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <View
@@ -712,7 +762,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:gravity="start"
-            android:text="@string/device_information_header_three" />
+            android:text="@string/device_information_header_three" 
+            android:fontFamily="@font/stolzl_regular" />
 
         <View
             android:layout_width="match_parent"
@@ -733,7 +784,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_resolution_label" />
+                android:text="@string/device_information_resolution_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/resolution_info"
@@ -743,7 +795,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_resolution_label" />
+                android:text="@string/device_information_resolution_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -760,7 +813,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_dimension_px_label" />
+                android:text="@string/device_information_dimension_px_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/dimension_px_info"
@@ -770,7 +824,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_title" />
+                android:text="@string/device_information_title" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -787,7 +842,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_dimension_dip_label" />
+                android:text="@string/device_information_dimension_dip_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/dimension_dip_info"
@@ -797,7 +853,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_manufacturer_label" />
+                android:text="@string/device_information_manufacturer_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -814,7 +871,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_wide_color_gamut_label" />
+                android:text="@string/device_information_wide_color_gamut_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/wide_color_gamut_info"
@@ -824,7 +882,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_model_label" />
+                android:text="@string/device_information_model_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -841,7 +900,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_high_dynamic_range_label" />
+                android:text="@string/device_information_high_dynamic_range_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/high_dynamic_range_info"
@@ -851,7 +911,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_build_version_label" />
+                android:text="@string/device_information_build_version_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -868,7 +929,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_size_label" />
+                android:text="@string/device_information_size_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/size_info"
@@ -878,7 +940,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_board_label" />
+                android:text="@string/device_information_board_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <LinearLayout
@@ -895,7 +958,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_aspect_label" />
+                android:text="@string/device_information_aspect_label" 
+            android:fontFamily="@font/stolzl_regular" />
 
             <TextView
                 android:id="@+id/aspect_info"
@@ -905,7 +969,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/device_information_product_label" />
+                android:text="@string/device_information_product_label" 
+            android:fontFamily="@font/stolzl_regular" />
         </LinearLayout>
 
         <View
@@ -918,6 +983,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/btn_device_information_close_bg"
             android:text="@string/button_close" />
     </LinearLayout>
 </ScrollView>

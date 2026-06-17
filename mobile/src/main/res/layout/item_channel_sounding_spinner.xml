@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closed spinner row: Stolzl Regular 12sp, #525252, 16sp line height (Figma) -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:ellipsize="end"
+    android:fontFamily="@font/stolzl_regular"
+    android:gravity="center_vertical|start"
+    android:includeFontPadding="false"
+    android:letterSpacing="0"
+    android:lineHeight="16sp"
+    android:maxLines="1"
+    android:textColor="@color/silabs_redtheme_checkbox_text_color"
+    android:textSize="12sp"
+    tools:text="Selected value" />

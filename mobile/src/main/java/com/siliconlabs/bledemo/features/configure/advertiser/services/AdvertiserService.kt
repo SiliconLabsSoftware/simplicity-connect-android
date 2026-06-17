@@ -75,7 +75,7 @@ class AdvertiserService : Service() {
         return Notification.Builder(this, CHANNEL_ID).apply {
             setContentTitle("Si Connect")
             setContentText("Advertiser is running...")
-            setSmallIcon(R.mipmap.si_launcher)
+            setSmallIcon(R.mipmap.ic_launcher_rebranded)
             setContentIntent(pendingIntent)
             setShowWhen(false)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

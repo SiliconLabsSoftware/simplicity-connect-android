@@ -17,27 +17,33 @@
 
         <ImageView
             android:id="@+id/rssi_label_color_dot"
-            android:layout_width="@dimen/legend_dot_size"
-            android:layout_height="@dimen/legend_dot_size"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:background="@drawable/rssi_color_dot"
             android:contentDescription="@string/content_desc_color_dot"
             android:layout_marginBottom="4dp"/>
 
         <TextView
+            android:lineHeight="16sp"
+            android:fontFamily="@font/stolzl_regular"
+            android:textFontWeight="400"
             android:id="@+id/rssi_label_device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/silabs_black"
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
             tools:text="Device name"/>
 
         <TextView
+            android:lineHeight="@dimen/matter_100dp"
+            android:textFontWeight="400"
+            android:fontFamily="@font/helvetica_neue"
             android:id="@+id/rssi_label_device_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/silabs_black"
+            android:textSize="11sp"
+            android:textColor="@color/silabs_dark_gray_text"
             tools:text="Device address" />
 
     </LinearLayout>

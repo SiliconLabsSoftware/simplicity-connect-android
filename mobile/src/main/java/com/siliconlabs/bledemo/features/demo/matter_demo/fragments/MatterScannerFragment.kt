@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -64,9 +63,12 @@ import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScanned
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.ENERGY_EVSE_TYPE
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.ENHANCED_COLOR_LIGHT_TYPE
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.GENERIC_SWITCH
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.MICROWAVE_OVEN
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.OCCUPANCY_SENSOR_TYPE
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.ON_OFF_LIGHT_SWITCH
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.ON_OFF_LIGHT_TYPE
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.OVEN
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.RANGE_HOOD
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.TEMPERATURE_SENSOR_TYPE
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.THERMOSTAT_TYPE
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment.Companion.WINDOW_COVERING_TYPE
@@ -81,12 +83,14 @@ import com.siliconlabs.bledemo.features.demo.matter_demo.utils.DeviceIDUtil
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.FragmentUtils
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.ICDCheckInCallback
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.MessageDialogFragment
+import com.siliconlabs.bledemo.features.demo.matter_demo.utils.MatterTitleMessageOkDialogFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.SharedPrefsUtils
 import com.siliconlabs.bledemo.features.iop_test.utils.DialogDeviceInfoFragment
 import com.siliconlabs.bledemo.utils.BLEUtils
 import com.siliconlabs.bledemo.utils.CustomToastManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import matter.onboardingpayload.OnboardingPayload
@@ -101,6 +105,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
 
 
     private var customProgressDialog: CustomProgressDialog? = null
+    private var commissioningTimeoutJob: Job? = null
     val dialogTag = "MessageDialog"
 
     private var networkSelectionDialog: MatterNetworkSelectionInputDialogFragment? = null
@@ -518,8 +523,9 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
     private fun displayCommissioningDialog() {
         val str = requireContext().getString(R.string.matter_commissioning_device)
         showMatterProgressDialog(str, false)
-        CoroutineScope(Dispatchers.IO).launch {
-            delay(COMMISSIONING_DIALOG_TIME_OUT)
+        lifecycleScope.launch {
+            delay(CREDENTIAL_PROMPT_DELAY_MS)
+            if (!isAdded) return@launch
             removeProgress()
             displayInputWindowBasedOnProvisionType()
         }
@@ -530,7 +536,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
         if (inputOTBR.isBlank()) {
             //Toast.makeText(requireContext(), "input OTBR is empty", Toast.LENGTH_SHORT).show()
             CustomToastManager.show(
-                requireContext(), "input OTBR is empty", 5000
+                requireContext(), "Input OTBR is empty", 5000
             )
             return
         }
@@ -748,7 +754,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
             Timber.tag(TAG).e("showMessage:$msg")
             /*Toast.makeText(context, msg, Toast.LENGTH_SHORT)
                 .show()*/
-            CustomToastManager.show(
+            CustomToastManager.showSuccess(
                 requireContext(), msg, 5000
             )
         }
@@ -840,21 +846,60 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
     }
 
     private fun showMatterProgressDialog(message: String, showCancelButton: Boolean) {
+        cancelCommissioningTimeout()
         customProgressDialog = CustomProgressDialog(requireContext())
         customProgressDialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         customProgressDialog!!.setMessage(message)
         customProgressDialog!!.setCanceledOnTouchOutside(false)
         customProgressDialog!!.setCustomButtonVisible(showCancelButton) {
-            deviceController.close()
-            requireActivity().supportFragmentManager.popBackStack(
-                null,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
-            sendToScanResultFragment()
-
-            customProgressDialog!!.dismiss()
+            cancelCommissioningAndReturnHome()
         }
         customProgressDialog!!.show()
+        if (showCancelButton) {
+            scheduleCommissioningTimeout()
+        }
+    }
+
+    private fun scheduleCommissioningTimeout() {
+        cancelCommissioningTimeout()
+        commissioningTimeoutJob = lifecycleScope.launch {
+            delay(COMMISSIONING_DIALOG_TIME_OUT_MS)
+            if (!isAdded || customProgressDialog?.isShowing != true) return@launch
+            handleCommissioningTimeout()
+        }
+    }
+
+    private fun cancelCommissioningTimeout() {
+        commissioningTimeoutJob?.cancel()
+        commissioningTimeoutJob = null
+    }
+
+    private fun handleCommissioningTimeout() {
+        removeProgress()
+        try {
+            deviceController.close()
+        } catch (e: Exception) {
+            Timber.tag(TAG).e("Commissioning timeout close error $e")
+        }
+        gatt?.close()
+        gatt = null
+        if (!isAdded) return
+        showCommissioningTimeoutAlert()
+    }
+
+    private fun showCommissioningTimeoutAlert() {
+        showCommissioningResultAlert(getString(R.string.matter_commissioning_timeout))
+    }
+
+    private fun cancelCommissioningAndReturnHome() {
+        cancelCommissioningTimeout()
+        deviceController.close()
+        requireActivity().supportFragmentManager.popBackStack(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+        sendToScanResultFragment()
+        customProgressDialog?.dismiss()
     }
 
     private fun sendToScanResultFragment() {
@@ -876,6 +921,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
     }
 
     private fun removeProgress() {
+        cancelCommissioningTimeout()
         if (customProgressDialog?.isShowing == true) {
             customProgressDialog?.dismiss()
         }
@@ -899,19 +945,25 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
 
     inner class ConnectionCallback : GenericChipDeviceListener() {
         override fun onConnectDeviceComplete() {
-           // super.onConnectDeviceComplete()
+            // super.onConnectDeviceComplete()
             Timber.tag(TAG).e("onConnectDeviceComplete")
         }
 
         override fun onStatusUpdate(status: Int) {
-           // super.onStatusUpdate(status)
+            // super.onStatusUpdate(status)
             Timber.tag(TAG).e("onStatusUpdate : $status.toString()")
         }
 
         override fun onPairingComplete(errorCode: Long) {
             Timber.tag(TAG).e("onPairingComplete: $errorCode")
             if (errorCode != STATUS_PAIRING_SUCCESS) {
-                showMessage(R.string.rendezvous_over_ble_pairing_failure_text)
+                requireActivity().runOnUiThread {
+                    CustomToastManager.showError(
+                        requireContext(),
+                        getString(R.string.rendezvous_over_ble_pairing_failure_text),
+                        5000
+                    )
+                }
             }
         }
 
@@ -938,7 +990,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
         @SuppressLint("StringFormatMatches")
         override fun onICDRegistrationComplete(
             errorCode: Long,
-            icdDeviceInfo: ICDDeviceInfo?
+            icdDeviceInfo: ICDDeviceInfo
         ) {
             requireActivity().runOnUiThread {
                 val message = getString(
@@ -956,7 +1008,7 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
 
         @SuppressLint("MissingPermission")
         override fun onCommissioningComplete(nodeId: Long, errorCode: Long) {
-          //  super.onCommissioningComplete(nodeId, errorCode)
+            //  super.onCommissioningComplete(nodeId, errorCode)
             Timber.tag(TAG).e("onCommissioningComplete : NodeID:  $nodeId.toString()")
             Timber.tag(TAG).e("%s%s", "onCommissioningComplete : errorCode: ", errorCode.toString())
             removeAlert()
@@ -1025,13 +1077,19 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
                                         requireContext().getString(R.string.matter_air_quality_sensor_list)
 
                                 GENERIC_SWITCH, DIMMER_SWITCH, COLOR_DIMMER_SWITCH,
-                                    ON_OFF_LIGHT_SWITCH ->
-                                        device =
-                                            requireContext().getString(R.string.matter_light_switch)
-                                ENERGY_EVSE_TYPE  ->
+                                ON_OFF_LIGHT_SWITCH ->
+                                    device =
+                                        requireContext().getString(R.string.matter_light_switch)
+
+                                ENERGY_EVSE_TYPE ->
                                     device =
                                         requireContext().getString(R.string.matter_ev_charger)
 
+                                OVEN, MICROWAVE_OVEN ->
+                                    device = requireContext().getString(R.string.matter_oven_device)
+
+                                RANGE_HOOD->
+                                    device = requireContext().getString(R.string.matter_range_hood_device)
                                 else -> device = matterScanDevice.name
 
 
@@ -1096,31 +1154,24 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun showAlertWindow(errorCode: Long) {
-        val builder = android.app.AlertDialog.Builder(context, R.style.AlertDialogTheme)
-        val alertMessageStart =
-            requireContext().getString(R.string.matter_device_commissioning_failed)
-        val alertTitle = requireContext().getString(R.string.matter_delete_alert_title)
+        if (!isAdded) return
+        showCommissioningResultAlert(getString(R.string.matter_commissioning_failed))
+    }
 
-
-        builder.setTitle(alertTitle)
-        builder.setMessage(alertMessageStart)
-        builder.setPositiveButton(
-            requireContext().getString(R.string.matter_alert_ok)
-        ) { dialog: DialogInterface?, which: Int ->
-            // When the user click yes button then app will close
-            dialog?.dismiss()
-            requireActivity().supportFragmentManager.popBackStack()
+    private fun showCommissioningResultAlert(message: String) {
+        val fragment = MatterTitleMessageOkDialogFragment.newInstance(
+            getString(R.string.matter_delete_alert_title),
+            message
+        )
+        fragment.onOkClick = {
+            if (isAdded) {
+                deviceController = ChipClient.getDeviceController(requireContext())
+                startCamera()
+            }
         }
-        builder.setNegativeButton(
-            requireContext().getString(R.string.matter_cancel)
-        ) { dialog: DialogInterface?, which: Int ->
-            // When the user click yes button then app will close
-            dialog?.dismiss()
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-        builder.show()
-
+        fragment.show(requireActivity().supportFragmentManager, "MatterCommissioningResultAlert")
     }
 
     override fun onDestroy() {
@@ -1146,7 +1197,8 @@ class MatterScannerFragment : ICDCheckInCallback, Fragment() {
 
     companion object {
         private val TAG = MatterScannerFragment::class.java.classes.toString()
-        private const val COMMISSIONING_DIALOG_TIME_OUT = 1000L
+        private const val COMMISSIONING_DIALOG_TIME_OUT_MS = 60_000L
+        private const val CREDENTIAL_PROMPT_DELAY_MS = 1_000L
         const val CANCEL_REQ_CODE = 5000
         const val WIFI_REQ_CODE = 5001
         const val THREAD_REQ_CODE = 5002

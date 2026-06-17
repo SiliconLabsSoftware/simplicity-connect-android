@@ -12,12 +12,16 @@ import android.os.Handler
 import android.os.Looper
 import android.os.ParcelUuid
 import android.text.Html
+import android.text.Spannable
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +43,7 @@ import com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.models.Thun
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.activities.BlinkyThunderboardActivity
 import com.siliconlabs.bledemo.databinding.DialogSelectDeviceBinding
 import com.siliconlabs.bledemo.features.demo.channel_sounding.activities.ChannelSoundingActivity
+import com.siliconlabs.bledemo.features.demo.channel_sounding.dialogs.ReflectorPairingDialog
 import com.siliconlabs.bledemo.features.demo.esl_demo.activities.EslDemoActivity
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.environment.activities.EnvironmentActivity
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.motion.activities.MotionActivity
@@ -64,7 +69,7 @@ class SelectDeviceDialog(
 
     private var currentDeviceInfo: BluetoothDeviceInfo? = null
     private var connectType: GattConnectType? = null
-
+    private var isReflectorMode: Boolean = false
 
     private var cachedBoardType: String? = null
 
@@ -213,10 +218,17 @@ class SelectDeviceDialog(
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
+        arguments?.let { args ->
+            connectType = GattConnectType.values()[args.getInt(CONN_TYPE_INFO, 0)]
+            isReflectorMode = args.getBoolean(IS_REFLECTOR_MODE, false)
+        }
+
         viewModel = ViewModelProvider(this)[SelectDeviceViewModel::class.java]
+        val showProtocolIcon = arguments?.getBoolean(SHOW_PROTOCOL_ICON, false) ?: false
         adapter = ScannedDevicesAdapter(
             mutableListOf(),
-            this
+            this,
+            showProtocolIcon = showProtocolIcon,
         ).also { it.setHasStableIds(true) }
 
         if (bluetoothService == null) {
@@ -225,13 +237,26 @@ class SelectDeviceDialog(
     }
 
     override fun onDemoDeviceClicked(deviceInfo: BluetoothDeviceInfo) {
-        when (connectType) {
-            GattConnectType.RANGE_TEST -> {
+        when {
+            // Handle Reflector mode - show pairing dialog
+            isReflectorMode -> {
+                dismiss()
+                val pairingDialog = ReflectorPairingDialog.newInstance(
+                    deviceAddress = deviceInfo.device.address,
+                    deviceName = deviceInfo.name
+                )
+                pairingDialog.show(
+                    (activity as MainActivity).supportFragmentManager,
+                    ReflectorPairingDialog.TAG
+                )
+            }
+
+            connectType == GattConnectType.RANGE_TEST -> {
                 dismiss()
                 rangeTestCallback?.getBluetoothDeviceInfo(deviceInfo)
             }
 
-            GattConnectType.IOP_TEST -> {
+            connectType == GattConnectType.IOP_TEST -> {
                 dismiss()
                 IOPTest.createDataTest(deviceInfo.name, deviceInfo.address)
                 getIntent(connectType)?.let {
@@ -258,6 +283,7 @@ class SelectDeviceDialog(
 
         arguments?.let { args ->
             connectType = GattConnectType.values()[args.getInt(CONN_TYPE_INFO, 0)]
+            isReflectorMode = args.getBoolean(IS_REFLECTOR_MODE, false)
         }
     }
 
@@ -302,6 +328,24 @@ class SelectDeviceDialog(
         }
     }
 
+    /**
+     * Renders HTML with clickable links, theme red text, and no underline (default [URLSpan] underlines).
+     */
+    private fun spannedHtmlWithRedLinks(html: String): CharSequence {
+        val ctx = context ?: return html
+        val spanned = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY) as Spannable
+        val linkColor = ContextCompat.getColor(ctx, R.color.silabs_redtheme_button_text_color)
+        spanned.getSpans(0, spanned.length, URLSpan::class.java).toList().forEach { span ->
+            val start = spanned.getSpanStart(span)
+            val end = spanned.getSpanEnd(span)
+            val flags = spanned.getSpanFlags(span)
+            val url = span.url
+            spanned.removeSpan(span)
+            spanned.setSpan(NoUnderlineUrlSpan(url, linkColor), start, end, flags)
+        }
+        return spanned
+    }
+
     @SuppressLint("StringFormatInvalid")
     private fun initDemoDescription() {
         binding.dialogTextInfo.apply {
@@ -335,9 +379,8 @@ class SelectDeviceDialog(
                 )
 
                 GattConnectType.WIFI_COMMISSIONING -> {
-                    Html.fromHtml(
-                        getString(R.string.soc_wifi_commissioning_must_be_connected),
-                        Html.FROM_HTML_MODE_LEGACY
+                    spannedHtmlWithRedLinks(
+                        getString(R.string.soc_wifi_commissioning_must_be_connected)
                     )
                 }
 
@@ -360,11 +403,14 @@ class SelectDeviceDialog(
                 }
 
                 GattConnectType.CHANNEL_SOUNDING_DEMO -> {
-                    getString(
-                        R.string.channel_sounding_demo_dialog_select_dialog,
-                        getString(R.string.channel_sounding_config_demo)
-                    )
-
+                    if (isReflectorMode) {
+                        getString(R.string.reflector_scan_dialog_description)
+                    } else {
+                        getString(
+                            R.string.channel_sounding_demo_dialog_select_dialog,
+                            getString(R.string.channel_sounding_config_demo)
+                        )
+                    }
                 }
 
                 else -> getString(R.string.empty_description)
@@ -456,7 +502,11 @@ class SelectDeviceDialog(
 
         when (connectType) {
             GattConnectType.CHANNEL_SOUNDING_DEMO -> {
-              // add(buildFilter(BuildFilterName.CHANNEL_SOUNDING_TEST))
+                if (isReflectorMode) {
+                    // Reflector mode: Filter for "Silabs Example" devices (CS Initiator / Door Lock)
+                    add(buildFilter(BuildFilterName.SILABS_EXAMPLE))
+                }
+                // else: No filter for initiator mode - shows all CS Reflector devices
             }
 
             GattConnectType.THERMOMETER -> {
@@ -551,6 +601,7 @@ class SelectDeviceDialog(
         }
 
         bluetoothService?.let { service ->
+            stopDiscovery()
             (activity as BaseActivity).showModalDialog(BaseActivity.ConnectionStatus.CONNECTING) {
                 currentDeviceInfo?.let { service.disconnectGatt(it.address) }
             }
@@ -642,8 +693,22 @@ class SelectDeviceDialog(
 
     }
 
+    private class NoUnderlineUrlSpan(
+        url: String,
+        private val linkColor: Int
+    ) : URLSpan(url) {
+        override fun updateDrawState(ds: TextPaint) {
+            super.updateDrawState(ds)
+            ds.isUnderlineText = false
+            ds.color = linkColor
+        }
+    }
+
     companion object {
         private const val CONN_TYPE_INFO = "_conn_type_info_"
+        private const val IS_REFLECTOR_MODE = "_is_reflector_mode_"
+        /** When true, device rows show protocol icon ([android.R.id.icon2]) and RSSI ([android.R.id.icon]). */
+        private const val SHOW_PROTOCOL_ICON = "_show_protocol_icon_"
         const val CONNECTION_SUPPORTED = "connection_supported"
 
         const val MODEL_TYPE_EXTRA = "model_type"
@@ -652,11 +717,29 @@ class SelectDeviceDialog(
 
         fun newDialog(
             connectType: GattConnectType?,
-            service: BluetoothService? = null
+            service: BluetoothService? = null,
+            showProtocolIcon: Boolean = connectType == GattConnectType.LIGHT,
         ): SelectDeviceDialog {
             return SelectDeviceDialog(service).apply {
                 arguments = Bundle().apply {
                     connectType?.let { putInt(CONN_TYPE_INFO, connectType.ordinal) }
+                    putBoolean(SHOW_PROTOCOL_ICON, showProtocolIcon)
+                }
+            }
+        }
+
+        /**
+         * Creates a new dialog for Reflector mode scanning.
+         * Filters for "Silabs Example" devices and shows ReflectorPairingDialog on selection.
+         */
+        fun newReflectorDialog(
+            service: BluetoothService? = null
+        ): SelectDeviceDialog {
+            return SelectDeviceDialog(service).apply {
+                arguments = Bundle().apply {
+                    putInt(CONN_TYPE_INFO, GattConnectType.CHANNEL_SOUNDING_DEMO.ordinal)
+                    putBoolean(IS_REFLECTOR_MODE, true)
+                    putBoolean(SHOW_PROTOCOL_ICON, false)
                 }
             }
         }
@@ -672,7 +755,8 @@ class SelectDeviceDialog(
         IOP_TEST_NO_1("IOP_Test_1"),
         IOP_TEST_NO_2("IOP_Test_2"),
         DEV_KIT_SENSOR("WIFI_SENSOR"),
-        CHANNEL_SOUNDING_TEST("CS RFLCT")
+        CHANNEL_SOUNDING_TEST("CS RFLCT"),
+        SILABS_EXAMPLE("Silabs Example")
     }
 }
 

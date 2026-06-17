@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/silabs_background"
     android:orientation="vertical"
     tools:context=".features.scan.browser.activities.DeviceServicesActivity">
 
@@ -14,14 +13,19 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <FrameLayout
@@ -62,6 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/separator"
+                    android:fontFamily="@font/stolzl_medium"
                     android:textColor="@color/silabs_black"
                     android:layout_marginHorizontal="@dimen/space_XXS" />
 
@@ -80,6 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:fontFamily="@font/stolzl_medium"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/space_XS"
                 android:text="@string/ota_firmware"
@@ -125,6 +131,7 @@
             android:id="@+id/services_bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:itemBackground="@drawable/bottom_navigation_ripple_device_services"
             app:menu="@menu/bottom_nav_device_services" />
 
 

@@ -3,6 +3,7 @@ package com.siliconlabs.bledemo.features.demo.awsiot.repository
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.siliconlabs.bledemo.R
@@ -47,6 +48,26 @@ class MqttRepository(private val context: Context) {
     private val _connectionState = MutableLiveData<ConnectionResult>()
     val connectionState: LiveData<ConnectionResult> = _connectionState
 
+    private fun emitConnection(state: ConnectionResult) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            _connectionState.value = state
+        } else {
+            _connectionState.postValue(state)
+        }
+    }
+
+    /**
+     * Wipes the cached MQTT body so a new [mqttMessageLiveData] observer is not invoked with an
+     * old retained message the moment [observe] registers (LiveData replays the latest value).
+     */
+    fun clearMqttMessageCacheForNewSubscription() {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            _mqttMessageLiveData.value = ""
+        } else {
+            _mqttMessageLiveData.postValue("")
+        }
+    }
+
     private var options = MqttConnectOptions().apply {
         isCleanSession = true
         isAutomaticReconnect = true // Manual retry logic for better control
@@ -54,7 +75,7 @@ class MqttRepository(private val context: Context) {
         connectionTimeout = 60
         maxRetryDelay = 60000L // Maximum retry delay of 30 seconds
         retryDelay = 1000L // Initial retry delay
-      //  socketFactory = createSSLContext(context).socketFactory
+        socketFactory = createSSLContext(context).socketFactory
         setWill("debug/status", "Client disconnected unexpectedly".toByteArray(), 1, true)
     }
 
@@ -63,6 +84,10 @@ class MqttRepository(private val context: Context) {
     private val maxRetryDelay = 30000L // Cap retry at 30 seconds
 
     fun connect(subscribeTopic: String, endPoint: String, sslContext: SSLContext) {
+        // Must run before any async connect callback so UI never receives Connected before Connecting
+        // (postValue(Connecting) from IO was racing setValue(Connected) from onSuccess and hid the load bar).
+        emitConnection(ConnectionResult.Connecting)
+
         // Show foreground notification when connecting
         this@MqttRepository.endPoint = endPoint
         this@MqttRepository.sslContext = sslContext
@@ -76,12 +101,6 @@ class MqttRepository(private val context: Context) {
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 context.startMqttForegroundService()
-            }
-        }
-        coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                //_connectionState.value = ConnectionResult.Connecting
-                _connectionState.postValue(ConnectionResult.Connecting)
             }
         }
         coroutineScope.launch {
@@ -109,7 +128,7 @@ class MqttRepository(private val context: Context) {
 
                             Timber.tag(TAG).d("Connected successfully")
 
-                            _connectionState.value = ConnectionResult.Connected
+                            emitConnection(ConnectionResult.Connected)
                             retryDelay = 1000L // Reset retry delay after success
                             oldTopic.value = subscribeTopic
                             subscribe(subscribeTopic)
@@ -122,7 +141,7 @@ class MqttRepository(private val context: Context) {
                         ) {
                             Timber.tag(TAG).e("Connection failed: ${exception?.message}")
 
-                            _connectionState.postValue(
+                            emitConnection(
                                 ConnectionResult.Error("Connection failed: ${exception?.message}")
                             )
                             //retryConnection()
@@ -131,7 +150,7 @@ class MqttRepository(private val context: Context) {
                 } catch (e: MqttException) {
                     Timber.tag(TAG).e("Exception in connect: ${e.message}")
 
-                    _connectionState.postValue(
+                    emitConnection(
                         ConnectionResult.Error("Exception in connect: ${e.message}")
                     )
                     retryConnection()
@@ -141,14 +160,14 @@ class MqttRepository(private val context: Context) {
     }
 
     fun subscribe(topic: String) {
-        _connectionState.value = ConnectionResult.SubscribeConnecting
+        emitConnection(ConnectionResult.SubscribeConnecting)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 mqttClient.subscribe(topic, 1, null, object : IMqttActionListener {
                     override fun onSuccess(asyncActionToken: IMqttToken?) {
                         Timber.tag(TAG).d("Subscribed to $topic successfully")
 
-                        _connectionState.value = ConnectionResult.SubscribeConnected
+                        emitConnection(ConnectionResult.SubscribeConnected)
                         CustomToastManager.show(context, "Subscribed to $topic successfully", 5000)
 
                     }
@@ -157,8 +176,9 @@ class MqttRepository(private val context: Context) {
 
                         Timber.tag(TAG).e("Subscription failed: ${exception?.message}")
                         //CustomToastManager.show(context,"Subscription failed: ${exception?.message}",5000)
-                        _connectionState.value =
+                        emitConnection(
                             ConnectionResult.Error("Subscription failed: ${exception?.message}")
+                        )
                     }
                 })
 
@@ -166,8 +186,9 @@ class MqttRepository(private val context: Context) {
                     override fun connectionLost(cause: Throwable?) {
                         Timber.tag(TAG).e("Connection lost: ${cause?.message}")
 
-                        _connectionState.value =
+                        emitConnection(
                             ConnectionResult.Error("Connection lost: ${cause?.message}")
+                        )
 
                     }
 
@@ -189,14 +210,15 @@ class MqttRepository(private val context: Context) {
             } catch (e: Exception) {
                 Timber.tag(TAG).e("Error in subscription: ${e.message}")
 
-                _connectionState.value =
+                emitConnection(
                     ConnectionResult.Error("Error in subscription: ${e.message}")
+                )
             }
         }
     }
 
     private fun retryConnection() {
-        _connectionState.value = ConnectionResult.Connecting
+        emitConnection(ConnectionResult.Connecting)
         coroutineScope.launch {
             delay(retryDelay)
             Timber.tag(TAG).d("Retrying connection in ${retryDelay / 1000} seconds...")
@@ -313,24 +335,24 @@ class MqttRepository(private val context: Context) {
         // const val AWS_END_POINT = "a2m21kovu9tcsh-ats.iot.us-east-2.amazonaws.com"
 
 
-//        fun createSSLContext(context: Context): SSLContext {
-//            val keyStore = KeyStore.getInstance("PKCS12")
-//            val password =
-//                "1234567890".toCharArray() // Use the same password you used to create the .p12 file
-//
-//            val inputStream: InputStream =
-//                context.resources.openRawResource(R.raw.silabsawsiot) // Put server.p12 in res/raw
-//            keyStore.load(inputStream, password)
-//
-//            val keyManagerFactory =
-//                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
-//            keyManagerFactory.init(keyStore, password)
-//
-//            val sslContext = SSLContext.getInstance("TLS")
-//            sslContext.init(keyManagerFactory.keyManagers, null, null)
-//
-//            return sslContext
-//        }
+        fun createSSLContext(context: Context): SSLContext {
+            val keyStore = KeyStore.getInstance("PKCS12")
+            val password =
+                "1234567890".toCharArray() // Use the same password you used to create the .p12 file
+
+            val inputStream: InputStream =
+                context.resources.openRawResource(R.raw.silabsawsiot) // Put server.p12 in res/raw
+            keyStore.load(inputStream, password)
+
+            val keyManagerFactory =
+                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm())
+            keyManagerFactory.init(keyStore, password)
+
+            val sslContext = SSLContext.getInstance("TLS")
+            sslContext.init(keyManagerFactory.keyManagers, null, null)
+
+            return sslContext
+        }
     }
 
 

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp">
@@ -14,37 +15,43 @@
         android:text="@string/advertiser_title_advertising_type" />
 
     <RadioButton
-            android:buttonTint="@color/silabs_dark_blue"
-            android:id="@+id/rb_legacy_advertising"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:checked="true"
-            android:text="@string/advertiser_label_legacy_advertising"
-            style="@style/TextMedium"/>
-
-    <RadioButton
-        android:buttonTint="@color/silabs_dark_blue"
-        android:id="@+id/rb_extended_advertising"
+        android:id="@+id/rb_legacy_advertising"
+        style="@style/TextMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/advertiser_label_extended_advertising"
-        style="@style/TextMedium"/>
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/stolzl_medium"
+        android:buttonTint="@color/silabs_redtheme_primary_color"
+        android:checked="true"
+        android:text="@string/advertiser_label_legacy_advertising" />
+
+    <RadioButton
+        android:id="@+id/rb_extended_advertising"
+        style="@style/TextMedium"
+        android:fontFamily="@font/stolzl_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/silabs_redtheme_primary_color"
+        android:text="@string/advertiser_label_extended_advertising" />
 
     <Spinner
         android:id="@+id/sp_legacy"
         style="@style/CustomSpinner"
-        tools:listitem="@layout/spinner_item_layout_medium"
         android:layout_width="match_parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/stolzl_medium"
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+        tools:listitem="@layout/spinner_item_advertiser_config_type" />
 
     <Spinner
         android:id="@+id/sp_extended"
         style="@style/CustomSpinner"
-        tools:listitem="@layout/spinner_item_layout_medium"
         android:layout_width="match_parent"
         android:layout_marginTop="12dp"
-        android:visibility="gone"/>
+        android:fontFamily="@font/stolzl_medium"
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+        android:visibility="gone"
+        tools:listitem="@layout/spinner_item_advertiser_config_type" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,27 +60,34 @@
         android:layout_marginBottom="4dp"
         android:orientation="horizontal">
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cb_include_tx_power"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/stolzl_medium"
+            android:minHeight="48dp"
+            android:layoutDirection="rtl"
+            android:textDirection="ltr"
+            android:padding="4dp"
             android:text="@string/advertiser_label_include_tx_power"
-            android:button="@null"
-            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-            style="@style/TextMedium"
-            android:background="?selectableItemBackground"/>
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textSize="@dimen/text_size_M"
+            app:buttonCompat="@drawable/throughput_rb_notifications_square_selector" />
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cb_anonymous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/stolzl_medium"
+            android:minHeight="48dp"
+            android:padding="4dp"
+            android:layoutDirection="rtl"
+            android:textDirection="ltr"
             android:text="@string/advertiser_label_anonymous"
-            android:button="@null"
-            android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
-            style="@style/TextMedium"
-            android:background="?selectableItemBackground"/>
-
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textSize="@dimen/text_size_M"
+            app:buttonCompat="@drawable/throughput_rb_notifications_square_selector" />
     </LinearLayout>
 
     <TextView

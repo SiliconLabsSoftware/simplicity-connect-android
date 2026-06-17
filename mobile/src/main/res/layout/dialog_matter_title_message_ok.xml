@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/matter_progress_shape"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/matter_15dp">
+
+    <TextView
+        android:id="@+id/tv_ok_alert_title"
+        style="@style/SilabsMatterDeviceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/matter_8dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_ML"
+        tools:text="Alert" />
+
+    <TextView
+        android:id="@+id/tv_ok_alert_message"
+        style="@style/SilabsMatterDeviceBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/matter_5dp"
+        android:layout_marginTop="@dimen/matter_8dp"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_SM"
+        tools:text="@string/matter_oven_binding_success_message" />
+
+    <View
+        android:id="@+id/view_ok_alert_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/matter_5dp"
+        android:background="@color/silabs_grey" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ok_alert_ok"
+        style="@style/button_add_data_outlined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="@dimen/space_S"
+        android:gravity="center"
+        android:text="@string/matter_alert_ok"
+        android:textSize="@dimen/text_size_ML"
+        android:textStyle="normal"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
+</LinearLayout>

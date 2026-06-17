@@ -22,13 +22,15 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
-import androidx.activity.result.contract.ActivityResultContract
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.base.activities.BaseDemoActivity
-import com.pranavpandey.android.dynamic.toasts.DynamicToast
 import com.siliconlabs.bledemo.bluetooth.ble.GattCharacteristic
 import com.siliconlabs.bledemo.bluetooth.ble.GattService
 import com.siliconlabs.bledemo.bluetooth.ble.TimeoutGattCallback
@@ -44,13 +46,8 @@ import com.siliconlabs.bledemo.features.demo.wifi_commissioning.models.AccessPoi
 import com.siliconlabs.bledemo.features.demo.wifi_commissioning.models.BoardCommand
 import com.siliconlabs.bledemo.features.demo.wifi_commissioning.models.SecurityMode
 import com.siliconlabs.bledemo.utils.AppUtil
-import com.siliconlabs.bledemo.utils.CustomToastManager
-import com.siliconlabs.bledemo.home_screen.dialogs.SelectDeviceDialog.Companion.CONNECTION_SUPPORTED
-import com.siliconlabs.bledemo.home_screen.menu_items.ConnectedLighting
 import com.siliconlabs.bledemo.utils.Converters
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-
+import com.siliconlabs.bledemo.utils.CustomToastManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -87,9 +84,16 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     private lateinit var sharedPref: SharedPreferences
 
     var connectType = BluetoothService.GattConnectType.WIFI_COMMISSIONING;
-    private val twentySeconds = 20000L // 20 seconds in milliseconds
+    private val twentySeconds = 60000L //60 seconds in milliseconds (btapp-2433)
 
     private val handler = Handler(Looper.getMainLooper())
+    private var isPullRefreshScan = false
+
+    private val pullRefreshTimeoutRunnable = Runnable {
+        isPullRefreshScan = false
+        _binding.swipeRefreshContainer.isRefreshing = false
+    }
+
     private val timeoutRunnable = Runnable {
         showToastOnUi("Timeout Expired")
         lifecycleScope.launch {
@@ -108,6 +112,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         connectType =
             ((intent?.getSerializableExtra("connectType") as? BluetoothService.GattConnectType)!!)
         setupRecyclerView()
+        setupSwipeRefreshLayout()
         setupUiListeners()
     }
 
@@ -129,11 +134,11 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
+
     override fun onBluetoothServiceBound() {
         service?.registerGattCallback(mBluetoothGattCallback)
         gatt?.discoverServices()
         showProgressDialogWithTimeout(getString(R.string.ble_detail_device_connection))
-       // showProgressDialog(getString(R.string.ble_detail_device_connection))
     }
 
     private fun setupRecyclerView() {
@@ -149,6 +154,41 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         }
     }
 
+    private fun setupSwipeRefreshLayout() {
+        _binding.swipeRefreshContainer.setOnRefreshListener { refreshAccessPointsFromPull() }
+        _binding.swipeRefreshContainer.setColorSchemeColors(
+            ContextCompat.getColor(this, android.R.color.holo_red_dark),
+            ContextCompat.getColor(this, android.R.color.holo_orange_dark),
+            ContextCompat.getColor(this, android.R.color.holo_orange_light),
+            ContextCompat.getColor(this, android.R.color.holo_red_light)
+        )
+    }
+
+    private fun refreshAccessPointsFromPull() {
+        if (connectedAccessPoint != null) {
+            stopPullRefresh()
+            return
+        }
+        if (gatt == null || characteristicWrite == null) {
+            stopPullRefresh()
+            showToastOnUi(getString(R.string.ble_detail_device_connection))
+            return
+        }
+        isPullRefreshScan = true
+        clickedAccessPoint = null
+        accessPoints.clear()
+        runOnUiThread { accessPointsAdapter?.notifyDataSetChanged() }
+        handler.removeCallbacks(pullRefreshTimeoutRunnable)
+        writeCommand(BoardCommand.Send.SCAN)
+        handler.postDelayed(pullRefreshTimeoutRunnable, PULL_REFRESH_SCAN_TIMEOUT_MS)
+    }
+
+    private fun stopPullRefresh() {
+        isPullRefreshScan = false
+        handler.removeCallbacks(pullRefreshTimeoutRunnable)
+        runOnUiThread { _binding.swipeRefreshContainer.isRefreshing = false }
+    }
+
     private fun setupUiListeners() {
         _binding.disconnectBtn.setOnClickListener { showDisconnectionDialog() }
     }
@@ -158,6 +198,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             progressDialog?.dismiss()
             progressDialog =
                 ProgressDialog.show(this, getString(R.string.empty_description), message)
+            applyProgressDialogMessageStyle(progressDialog)
         }
     }
 
@@ -166,12 +207,14 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             progressDialog?.dismiss()
             progressDialog =
                 ProgressDialog.show(this, getString(R.string.empty_description), message)
+            applyProgressDialogMessageStyle(progressDialog)
             lifecycleScope.launch {
-                delay(35000) // Show progress dialog for 35 seconds
+                delay(60_000) // 60 seconds
                 if (progressDialog?.isShowing == true) {
                     progressDialog?.dismiss()
-                    progressDialog =null
-                    DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000).show()
+                    progressDialog = null
+                    DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
+                        .show()
                     finish()
                 }
             }
@@ -180,6 +223,26 @@ class WifiCommissioningActivity : BaseDemoActivity() {
 
     private fun dismissProgressDialog() {
         runOnUiThread { progressDialog?.dismiss() }
+    }
+
+    private fun applyProgressDialogMessageStyle(dialog: ProgressDialog?) {
+        val d = dialog ?: return
+        val applyStyle: () -> Unit = {
+            d.findViewById<TextView>(android.R.id.message)?.apply {
+                ResourcesCompat.getFont(this@WifiCommissioningActivity, R.font.stolzl_regular)
+                    ?.let { tf ->
+                        typeface = tf
+                    }
+                setTextColor(
+                    ContextCompat.getColor(
+                        this@WifiCommissioningActivity,
+                        R.color.wifi_commissioning_progress_message
+                    )
+                )
+            }
+            Unit
+        }
+        d.window?.decorView?.post(applyStyle) ?: applyStyle()
     }
 
 
@@ -193,13 +256,15 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     private fun showToastOnUi(message: String) {
         runOnUiThread {
             CustomToastManager.show(
-                this@WifiCommissioningActivity,message,5000
+                this@WifiCommissioningActivity, message, 5000
             )
         }
     }
 
     fun onAccessPointScanned(accessPoint: AccessPoint) {
-        dismissProgressDialog()
+        if (!isPullRefreshScan) {
+            dismissProgressDialog()
+        }
         accessPoints.add(accessPoint)
         runOnUiThread { accessPointsAdapter?.notifyDataSetChanged() }
     }
@@ -270,6 +335,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
                     activityLauncher.launch(devKitIntent)
 
                 }
+
                 BluetoothService.GattConnectType.LIGHT -> {
                     showToastOnUi(getString(R.string.ap_connect))
                     connectedAccessPoint = clickedAccessPoint
@@ -425,8 +491,11 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         runOnUiThread {
             _binding.apConnectedLayout.visibility =
                 if (isAccessPointConnected) View.VISIBLE else View.GONE
-            _binding.wifiAccessPtsList.visibility =
+            _binding.swipeRefreshContainer.visibility =
                 if (isAccessPointConnected) View.GONE else View.VISIBLE
+            if (isAccessPointConnected) {
+                stopPullRefresh()
+            }
         }
     }
 
@@ -534,6 +603,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     }
 
     private fun scanForAccessPoints() {
+        stopPullRefresh()
         clickedAccessPoint = null
         accessPoints.clear()
         runOnUiThread { accessPointsAdapter?.notifyDataSetChanged() }
@@ -548,6 +618,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             Timber.d("onConnectionStateChange; status = $status, newState = $newState")
             if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                Timber.e("onConnectionStateChange; status = $status, newState = $newState")
                 onDeviceDisconnected()
             }
         }
@@ -817,6 +888,8 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     override fun onDestroy() {
         super.onDestroy()
         progressDialog?.dismiss()
+        handler.removeCallbacks(pullRefreshTimeoutRunnable)
+        handler.removeCallbacks(timeoutRunnable)
         handler.removeCallbacksAndMessages(null)
     }
 
@@ -847,6 +920,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     )
 
     companion object {
+        private const val PULL_REFRESH_SCAN_TIMEOUT_MS = 8_000L
         private const val RADIX_HEX = 16
         private const val PADDING_LENGTH = 2
         private const val FIRMWARE_BYTE_START_INDEX = 2

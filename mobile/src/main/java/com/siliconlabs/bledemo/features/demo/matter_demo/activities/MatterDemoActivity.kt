@@ -16,6 +16,8 @@ import com.siliconlabs.bledemo.features.demo.matter_demo.dishwasher_demo.view.Ma
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterDoorFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterLightFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterOccupancySensorFragment
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterOvenFragment
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterRangeHoodFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannedResultFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterScannerFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterThermostatFragment
@@ -48,9 +50,10 @@ class MatterDemoActivity : AppCompatActivity(),
     MatterWifiInputDialogFragment.CallBackHandler,
     MatterDoorFragment.CallBackHandler,
     MatterWindowCoverFragment.CallBackHandler,
-    MatterOccupancySensorFragment.CallBackHandler {
+    MatterOccupancySensorFragment.CallBackHandler,
+    MatterOvenFragment.CallBackHandler,
+    MatterRangeHoodFragment.CallBackHandler {
 
-    private var currentFragment: Fragment? = null
     private lateinit var binding: ActivityMatterDemoBinding
     private var scannedDeviceList = ArrayList<MatterScannedResultModel>()
     private lateinit var mPrefs: SharedPreferences
@@ -105,8 +108,10 @@ class MatterDemoActivity : AppCompatActivity(),
         sendToScanResultFragment()
     }
 
+    private var periodicJob: Job? = null
+    
     private fun startPeriodictFunction() {
-        CoroutineScope(Dispatchers.Default).launch {
+        periodicJob = CoroutineScope(Dispatchers.Default).launch {
             while (shouldContinueOperation) {
                 performLongRunningOperation()
                 delay(DELAY_TIMEOUT)
@@ -116,6 +121,18 @@ class MatterDemoActivity : AppCompatActivity(),
 
     private fun stopPeriodicOperation() {
         shouldContinueOperation = false
+        periodicJob?.cancel()
+        periodicJob = null
+        pollJob?.cancel()
+        pollJob = null
+        pollInProgress = false
+    }
+
+    fun stopMatterScanning() {
+        Timber.tag(TAG).d("Stopping Matter scanning")
+        stopPeriodicOperation()
+        ChipClient.stopDnssd(this)
+        removeProgress()
     }
 
     private fun prepareList(scannedDeviceListPrep: ArrayList<MatterScannedResultModel>) {
@@ -155,7 +172,7 @@ class MatterDemoActivity : AppCompatActivity(),
     override fun onPause() {
         super.onPause()
         Timber.tag(TAG).e(" onPause")
-        ChipClient.stopDnssd(this)
+        stopMatterScanning()
     }
 
     override fun onStart() {
@@ -354,34 +371,27 @@ class MatterDemoActivity : AppCompatActivity(),
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    private fun processHomeAsUpAction() {
+        val top = supportFragmentManager.findFragmentById(R.id.matter_container)
+        when {
+            top is MatterScannedResultFragment -> finish()
+            top is MatterDishwasherFragment -> top.handleDishwasherBackNavigationUI()
+            supportFragmentManager.backStackEntryCount > 0 -> supportFragmentManager.popBackStack()
+            else -> finish()
+        }
+    }
 
+    override fun onSupportNavigateUp(): Boolean {
+        processHomeAsUpAction()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                currentFragment = supportFragmentManager.findFragmentById(R.id.matter_container)
-                if (currentFragment != null && currentFragment is MatterScannedResultFragment) {
-
-                    this.finish()
-
-                }else if (currentFragment != null && currentFragment is MatterDishwasherFragment) {
-
-                    val fragment = supportFragmentManager.findFragmentById(R.id.matter_container) as? MatterDishwasherFragment
-
-                    fragment?.let {
-                        // You can access the DataBinding object here
-                        // Example: Change the text of the TextView inside the fragment when back is pressed
-                        it.handleDishwasherBackNavigationUI()
-                    }
-
-                }
-                else if (supportFragmentManager.backStackEntryCount > 0) {
-                    supportFragmentManager.popBackStack()
-                } else {
-                    this.finish()
-                }
+                processHomeAsUpAction()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }

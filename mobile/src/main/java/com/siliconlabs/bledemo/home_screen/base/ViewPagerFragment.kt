@@ -59,9 +59,9 @@ class ViewPagerFragment : Fragment() {
 
         TabLayoutMediator(binding.scanTabLayout, binding.scanViewPager2) { tab, position ->
             tab.text = when (position) {
-                0 -> getString(R.string.tab_scanner_label)
-                1 -> getString(R.string.tab_rssi_graph_label)
-                2 -> getString(R.string.tab_connections_label)
+                0 -> getString(R.string.tab_scanner_label).uppercase()
+                1 -> getString(R.string.tab_rssi_graph_label).uppercase()
+                2 -> getString(R.string.tab_connections_label).uppercase()
                 else -> null
             }
         }.attach()
@@ -69,7 +69,8 @@ class ViewPagerFragment : Fragment() {
 
     private fun setupDataObservers() {
         viewModel.numberOfConnectedDevices.observe(viewLifecycleOwner) {
-            binding.scanTabLayout.getTabAt(2)?.text = getString(R.string.tab_connections_label, it)
+            binding.scanTabLayout.getTabAt(2)?.text =
+                getString(R.string.tab_connections_label, it).uppercase()
         }
     }
 

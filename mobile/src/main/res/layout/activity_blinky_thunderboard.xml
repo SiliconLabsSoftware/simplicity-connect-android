@@ -1,151 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Fake Status Bar View -->
+    android:background="@drawable/modal_bg"
+    android:orientation="vertical">
+
     <View
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
 
-    <!-- Toolbar just below fake status bar -->
-    <androidx.appcompat.widget.Toolbar
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
+
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:background="@color/silabs_redtheme_tool_bar_color"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIconTint="@color/silabs_white"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.ToolbarTitle"
+        app:titleTextColor="@color/silabs_white"
+        tools:title="@string/title_Blinky" />
+
     <ScrollView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/match" >
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <LinearLayout
-            style="@style/block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/iodemo_margin"
-            android:paddingLeft="@dimen/iodemo_margin"
-            android:paddingRight="@dimen/iodemo_margin"
-            android:paddingBottom="@dimen/iodemo_margin">
+            android:padding="@dimen/blinky_tb_content_padding">
 
-            <LinearLayout style="@style/block">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardview_menu_tile3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/space_XXXS"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardCornerRadius="16dp">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textview_menu_title3"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_centerVertical="true"
-                            android:text="@string/blinky_tb_switch_status"
-                            style="@style/tb_robo_medium_18dp"/>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_alignParentEnd="true">
-
-                            <com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.control.SwitchControl
-                                android:id="@+id/switch_0"
-                                android:layout_width="@dimen/space_L"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/space_XXS"
-                                android:layout_marginEnd="@dimen/space_XXS"/>
-
-                            <com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.control.SwitchControl
-                                android:layout_marginStart="@dimen/space_XXS"
-                                android:id="@+id/switch_1"
-                                android:layout_width="@dimen/space_L"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="@dimen/space_XXS"
-                                android:layout_marginEnd="@dimen/space_XXS"
-                                style="@style/wrap" />
-
-                        </LinearLayout>
-
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/leds_control"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/space_XXXS"
-                android:layout_marginEnd="@dimen/space_XXXS"
-                android:layout_marginTop="@dimen/space_SM"
-                android:layout_marginBottom="@dimen/space_XS"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:cardCornerRadius="16dp">
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/silabs_white"
+                app:cardCornerRadius="@dimen/blinky_tb_card_corner_radius"
+                app:cardElevation="@dimen/blinky_tb_card_elevation">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
-                        android:id="@+id/lightsTitle"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
+                        android:id="@+id/textview_menu_title3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="@string/blinky_tb_leds"
-                        style="@style/tb_robo_medium_18dp"/>
-
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/stolzl_medium"
+                        android:text="@string/blinky_tb_switch_status"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                        android:textSize="@dimen/text_size_ML" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentEnd="true">
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+
+                        <com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.control.SwitchControl
+                            android:id="@+id/switch_0"
+                            android:layout_width="@dimen/space_L"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/space_XS" />
+
+                        <com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.control.SwitchControl
+                            android:id="@+id/switch_1"
+                            android:layout_width="@dimen/space_L"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/leds_control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/blinky_tb_card_spacing"
+                app:cardBackgroundColor="@color/silabs_white"
+                app:cardCornerRadius="@dimen/blinky_tb_card_corner_radius"
+                app:cardElevation="@dimen/blinky_tb_card_elevation">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="14dp">
+
+                    <TextView
+                        android:id="@+id/lightsTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/stolzl_medium"
+                        android:text="@string/blinky_tb_leds"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                        android:textSize="@dimen/text_size_ML" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/led_0"
-                            android:layout_width="@dimen/space_L"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:thumb="@drawable/thumb_selector"
-                            app:track="@drawable/track_selector"
-                            android:layout_marginEnd="@dimen/space_XS"/>
+                            android:layout_gravity="center"
+                            android:minWidth="32dp"
+                            android:padding="0dp"
+                            android:layout_marginStart="@dimen/matter_5dp"
+                            android:thumb="@drawable/sw_thumb"
+                            app:splitTrack="false"
+                            app:switchMinWidth="32dp"
+                            app:track="@drawable/sw_track"  />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/led_1"
-                            android:layout_width="@dimen/space_L"
+                            android:layout_marginStart="@dimen/matter_15dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:thumb="@drawable/thumb_selector"
-                            app:track="@drawable/track_selector"
-                            android:layout_marginEnd="@dimen/space_XS"/>
-
+                            android:layout_gravity="center"
+                            android:minWidth="32dp"
+                            android:padding="0dp"
+                            android:thumb="@drawable/sw_thumb"
+                            app:splitTrack="false"
+                            app:switchMinWidth="32dp"
+                            app:track="@drawable/sw_track"  />
                     </LinearLayout>
-
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.control.ColorLEDControl
                 android:id="@+id/color_led_control"
-                style="@style/block"
-                android:layout_marginTop="@dimen/space_S"
-                android:layout_marginBottom="@dimen/space_XS" />
-
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/blinky_tb_card_spacing" />
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>

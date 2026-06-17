@@ -18,6 +18,7 @@
             android:id="@+id/characteristic_field_value"
             android:layout_width="0dp"
             android:layout_weight="3.5"
+            android:fontFamily="@font/stolzl_regular"
             android:layout_height="wrap_content"
             android:textSize="@dimen/characteristic_list_item_value_text_size"
             android:background="@color/silabs_white"
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:visibility="gone"
+            android:fontFamily="@font/stolzl_regular"
             android:layout_gravity="end"
             android:gravity="end"
             android:background="@color/silabs_white"
@@ -38,9 +40,10 @@
     </LinearLayout>
 
     <TextView
-        android:id="@id/characteristic_field_name"
+        android:id="@+id/characteristic_field_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/stolzl_regular"
         android:textSize="@dimen/characteristic_list_item_value_label_text_size"
         android:background="@color/silabs_white"
         android:textColor="@color/silabs_subtle_text"

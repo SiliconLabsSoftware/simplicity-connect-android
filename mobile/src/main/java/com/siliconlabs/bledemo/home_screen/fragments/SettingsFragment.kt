@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.siliconlabs.bledemo.BuildConfig
 import com.siliconlabs.bledemo.R
@@ -39,6 +40,14 @@ class SettingsFragment : Fragment() {
 
     private fun initTextsAndLinks() {
         _binding.apply {
+            val scanTimeoutAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.scan_timeout_options,
+                R.layout.spinner_scan_timeout_text_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(R.layout.spinner_scan_timeout_dropdown_item)
+            }
+            spinnerScanTimeoutSetting.adapter = scanTimeoutAdapter
             spinnerScanTimeoutSetting.setSelection(getScanTimeoutSelection())
             btnReportIssue.linkToWebpage(LINK_REPORT_ISSUE)
 

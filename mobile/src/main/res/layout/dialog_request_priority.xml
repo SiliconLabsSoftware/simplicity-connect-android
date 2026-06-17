@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/dialog_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:orientation="vertical"
-    style="@style/dialog_card" >
+    android:orientation="vertical">
 
     <LinearLayout
         style="@style/dialog_margins"
-        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+        android:orientation="vertical">
 
         <TextView
             style="@style/dialog_title"
@@ -38,7 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="@string/low_priority"/>
+                android:text="@string/low_priority"
+                app:buttonTint="@color/filter_fragment_checkbox_button_tint"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/balanced_priority"
@@ -46,43 +48,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="@string/balanced_priority"/>
+                android:text="@string/balanced_priority"
+                app:buttonTint="@color/filter_fragment_checkbox_button_tint"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/high_priority"
                 style="@style/full_line_checkbox_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/high_priority"/>
+                android:text="@string/high_priority"
+                app:buttonTint="@color/filter_fragment_checkbox_button_tint"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
             android:layout_marginEnd="@dimen/dialog_margin_horizontal"
-            android:gravity="end">
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/cancel_request"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_request"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:text="@string/button_cancel"
+                app:cornerRadius="@dimen/silabs_btn_radius"/>
 
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/request"
-                style="@style/dialog_button_positive_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/request"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_button_margin_end"
-                android:text="@string/Request" />
+                android:text="@string/Request"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius"/>
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>

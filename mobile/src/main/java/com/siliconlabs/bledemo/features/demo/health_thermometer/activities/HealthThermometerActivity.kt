@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.MenuItem
-import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import com.siliconlabs.bledemo.home_screen.dialogs.SelectDeviceDialog
 import com.siliconlabs.bledemo.bluetooth.ble.GattCharacteristic
 import com.siliconlabs.bledemo.bluetooth.ble.GattService
@@ -31,7 +31,7 @@ class HealthThermometerActivity : BaseDemoActivity() {
     private var serviceHasBeenSet = false
 
     private var currentReading: TemperatureReading? = null
-    private var currentType: TemperatureReading.Type? = null
+    private var currentType: TemperatureReading.Type = TemperatureReading.Type.FAHRENHEIT
     private lateinit var binding: ActivityThermometerBinding
 
     private val gattCallback: TimeoutGattCallback = object : TimeoutGattCallback() {
@@ -82,8 +82,7 @@ class HealthThermometerActivity : BaseDemoActivity() {
                 }
                 runOnUiThread {
                     setCurrentReading(reading)
-                    binding.connectionBarText.text =
-                        getString(R.string.demo_connected_to, deviceName)
+                    binding.connectionDeviceName.text = deviceName
                 }
             }
         }
@@ -112,20 +111,53 @@ class HealthThermometerActivity : BaseDemoActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityThermometerBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
-        //setContentView(R.layout.activity_thermometer)
         prepareToolBar()
-        binding.thermoLargeTemperature.setFontFamily("sans-serif-thin", Typeface.NORMAL)
-        binding.typeSwitch.setOnCheckedChangeListener { _, isChecked -> onTabClick(isChecked) }
+        applyTemperatureUnitUi(isFahrenheit = true)
+        binding.thermoLargeTemperature.setCurrentType(currentType)
+        binding.thermoUnitFTab.setOnClickListener { setTemperatureUnit(isFahrenheit = true) }
+        binding.thermoUnitCTab.setOnClickListener { setTemperatureUnit(isFahrenheit = false) }
+    }
+
+    private fun setTemperatureUnit(isFahrenheit: Boolean) {
+        currentType = if (isFahrenheit) {
+            TemperatureReading.Type.FAHRENHEIT
+        } else {
+            TemperatureReading.Type.CELSIUS
+        }
+        applyTemperatureUnitUi(isFahrenheit)
+        binding.thermoLargeTemperature.setCurrentType(currentType)
+        refreshUi()
+    }
+
+    private fun applyTemperatureUnitUi(isFahrenheit: Boolean) {
+        val red = ContextCompat.getColor(this, R.color.silabs_redtheme_primary_color)
+        val lightLine = ContextCompat.getColor(this, R.color.silabs_divider)
+        val selectedH = resources.getDimensionPixelSize(R.dimen.thermo_tab_underline_selected)
+        val unselectedH = resources.getDimensionPixelSize(R.dimen.thermo_tab_underline_unselected)
+        binding.thermoUnitFUnderline.setBackgroundColor(if (isFahrenheit) red else lightLine)
+        binding.thermoUnitCUnderline.setBackgroundColor(if (isFahrenheit) lightLine else red)
+        binding.thermoUnitFUnderline.layoutParams = binding.thermoUnitFUnderline.layoutParams.apply {
+            height = if (isFahrenheit) selectedH else unselectedH
+        }
+        binding.thermoUnitCUnderline.layoutParams = binding.thermoUnitCUnderline.layoutParams.apply {
+            height = if (isFahrenheit) unselectedH else selectedH
+        }
+        binding.thermoUnitFUnderline.requestLayout()
+        binding.thermoUnitCUnderline.requestLayout()
     }
 
     private fun prepareToolBar() {
         AppUtil.setEdgeToEdge(window, this)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        binding.fakeStatusBar.setBackgroundColor(
+            ContextCompat.getColor(this, R.color.silabs_redtheme_status_bar_color)
+        )
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.matter_back)
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = this.getString(R.string.title_Health_Thermometer)
+            actionBar.title = getString(R.string.title_Health_Thermometer)
         }
     }
 
@@ -153,12 +185,6 @@ class HealthThermometerActivity : BaseDemoActivity() {
         }
     }
 
-    private fun onTabClick(isFahrenheitUnit: Boolean) {
-        currentType =
-            if (isFahrenheitUnit) TemperatureReading.Type.FAHRENHEIT else TemperatureReading.Type.CELSIUS
-        binding.thermoLargeTemperature.setCurrentType(currentType)
-    }
-
     fun setCurrentReading(temperatureReading: TemperatureReading?) {
         currentReading = temperatureReading
         refreshUi()
@@ -168,14 +194,9 @@ class HealthThermometerActivity : BaseDemoActivity() {
         if (currentReading != null) {
             binding.thermoLargeTemperature.setTemperature(currentReading)
             binding.thermoTypeValueText.text = getString(currentReading?.htmType?.nameResId!!)
-            binding.thermoTypeValue.text = getString(R.string.temperature_type,
-                getString(currentReading?.htmType?.nameResId!!))
-
             binding.thermoLargeTimeText.text = currentReading?.getFormattedTime()
         }
     }
-
-    //private fun textView(): TextView = binding.thermoTypeValue.text
 
     override fun onBluetoothServiceBound() {
         serviceHasBeenSet = true

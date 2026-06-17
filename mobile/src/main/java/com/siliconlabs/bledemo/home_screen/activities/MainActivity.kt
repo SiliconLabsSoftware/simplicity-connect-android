@@ -22,7 +22,9 @@ import com.siliconlabs.bledemo.base.activities.BaseActivity
 import com.siliconlabs.bledemo.bluetooth.services.BluetoothService
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.ActivityMainBinding
+import com.siliconlabs.bledemo.features.demo.channel_sounding.utils.ReflectorFlowNavigator
 import com.siliconlabs.bledemo.home_screen.dialogs.PermissionsDialog
+import com.siliconlabs.bledemo.home_screen.fragments.DemoFragment
 import com.siliconlabs.bledemo.home_screen.viewmodels.MainActivityViewModel
 import com.siliconlabs.bledemo.home_screen.views.HidableBottomNavigationView
 import com.siliconlabs.bledemo.utils.AppUtil
@@ -62,12 +64,13 @@ open class MainActivity : BaseActivity(),
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.MainAppTheme)
+        setTheme(R.style.MainAppTheme_NoActionBar)
 
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
        // setContentView(R.layout.activity_main)
         setContentView(_binding.root)
+        setSupportActionBar(_binding.includeLayoutEdgeToEdge.toolbar)
         AppUtil.setEdgeToEdge(window,this)
         supportActionBar?.show()
 
@@ -75,12 +78,27 @@ open class MainActivity : BaseActivity(),
 
         handlePermissions()
         setupMainNavigationListener()
-
-
+        handleReflectorLaunchIntent(intent)
 
         // Register the receiver
         val filter = IntentFilter(ACTION_SHOW_CUSTOM_TOAST)
         LocalBroadcastManager.getInstance(this).registerReceiver(toastReceiver, filter)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleReflectorLaunchIntent(intent)
+    }
+
+    private fun handleReflectorLaunchIntent(intent: Intent?) {
+        if (intent?.getBooleanExtra(ReflectorFlowNavigator.EXTRA_LAUNCH_REFLECTOR_PAIRING, false) != true) {
+            return
+        }
+        intent.removeExtra(ReflectorFlowNavigator.EXTRA_LAUNCH_REFLECTOR_PAIRING)
+        DemoFragment.requestReflectorPairingOnNextResume()
+        val navFragment = supportFragmentManager.findFragmentById(R.id.main_fragment) as? NavHostFragment
+        navFragment?.navController?.navigate(R.id.demoFragment)
     }
 
     override fun onResume() {
@@ -177,6 +195,10 @@ open class MainActivity : BaseActivity(),
     private fun handlePermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             neededPermissions.addAll(android12Permissions)
+        }
+        // API 33+: notifications are off by default until POST_NOTIFICATIONS is granted (FGS, permission bar, etc.)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            neededPermissions.add(Manifest.permission.POST_NOTIFICATIONS)
         }
 
         if (neededPermissions.any { !isPermissionGranted(it) }) askForPermissions()

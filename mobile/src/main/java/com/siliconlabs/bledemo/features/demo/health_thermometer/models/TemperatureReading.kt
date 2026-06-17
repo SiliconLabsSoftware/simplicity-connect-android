@@ -40,7 +40,7 @@ class TemperatureReading(val type: Type, val temperature: Double, private val re
     }
 
     fun getFormattedTime(): String {
-        return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(readingTime))
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(readingTime))
     }
 
     fun getTemperature(fetchType: Type): Double {

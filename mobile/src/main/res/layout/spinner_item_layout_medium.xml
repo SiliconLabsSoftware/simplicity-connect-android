@@ -12,5 +12,5 @@
     android:paddingEnd="32dp"
     android:paddingBottom="8dp"
     tools:text="Option"
-    android:fontFamily="sans-serif-medium"
+    android:fontFamily="@font/stolzl_regular"
     android:textSize="14sp" />

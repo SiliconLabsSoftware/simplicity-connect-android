@@ -110,7 +110,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
     private var lastAppliedDuration: Int = 0
 
     // === HIGH-CONFIDENCE GRACE WINDOW ===
-    // Track last HIGH (confidence == 2) timestamp; 10s without HIGH ΓåÆ show "Out of Measurements" and restart
+    // Track last HIGH (confidence == 2) timestamp; 10s without HIGH → show "Out of Measurements" and restart
     private var lastHighConfidenceTimestamp: Long = 0L
     private var highConfidenceGraceWindowJob: Job? = null
     private var showedWaitingToastInCurrentWindow: Boolean = false
@@ -129,25 +129,25 @@ class ChannelSoundingActivity : BaseDemoActivity(),
             actionBar.setDisplayHomeAsUpEnabled(true)
             title = getString(R.string.channel_sounding_screen_name)
         }
-        binding.channelSoundingConfig.setOnClickListener {
-            binding.configureContainer.visibility = View.VISIBLE
-            binding.channelSoundingConfig.isEnabled = false
-            binding.channelSoundingActivityContainer.visibility = View.GONE
-            hideConfigureIcon()
-            val fragment = ChannelSoundingConfigureFragment.newInstance()
-            showFragment(fragment, fragment::class.java.simpleName)
-        }
         initViews()
+    }
+
+    private fun openConfigureScreen() {
+        binding.configureContainer.visibility = View.VISIBLE
+        binding.channelSoundingActivityContainer.visibility = View.GONE
+        hideConfigureIcon()
+        val fragment = ChannelSoundingConfigureFragment.newInstance()
+        showFragment(fragment, fragment::class.java.simpleName)
     }
 
     fun hideConfigureIcon() {
         menu?.findItem(R.id.menu_start_stop)?.isVisible = false
-        binding.channelSoundingConfig.visibility = View.GONE
+        menu?.findItem(R.id.menu_configure)?.isVisible = false
     }
 
     fun showConfigureIcon() {
         menu?.findItem(R.id.menu_start_stop)?.isVisible = true
-        binding.channelSoundingConfig.visibility = View.VISIBLE
+        menu?.findItem(R.id.menu_configure)?.isVisible = true
     }
 
     private fun registerReceiver() {
@@ -178,6 +178,9 @@ class ChannelSoundingActivity : BaseDemoActivity(),
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_channel_sounding, menu)
         this.menu = menu
+        menu?.findItem(R.id.menu_configure)?.icon?.mutate()?.setTint(
+            ContextCompat.getColor(this, R.color.silabs_white)
+        )
         updateMenuTitle()
         return true
     }
@@ -189,11 +192,15 @@ class ChannelSoundingActivity : BaseDemoActivity(),
                     this.supportFragmentManager.popBackStack()
                     binding.configureContainer.visibility = android.view.View.GONE
                     binding.channelSoundingActivityContainer.visibility = android.view.View.VISIBLE
-                    binding.channelSoundingConfig.isEnabled = true
                     return true
                 } else {
                     this.finish()
                 }
+                true
+            }
+
+            R.id.menu_configure -> {
+                openConfigureScreen()
                 true
             }
 
@@ -431,7 +438,6 @@ class ChannelSoundingActivity : BaseDemoActivity(),
             showConfigureIcon()
             binding.configureContainer.visibility = android.view.View.GONE
             binding.channelSoundingActivityContainer.visibility = android.view.View.VISIBLE
-            binding.channelSoundingConfig.isEnabled = true
 
             // === FILTER-ONLY CHANGE DETECTION ===
             // Check if only Kalman filter changed (frequency and duration unchanged)
@@ -505,7 +511,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
                 stallMonitorJob?.cancel()
                 // Start monitoring for measurement stall
                 startMeasurementStallMonitor()
-                // Start HIGH-confidence grace window monitor (10s without HIGH ΓåÆ dialog + restart)
+                // Start HIGH-confidence grace window monitor (10s without HIGH → dialog + restart)
                 startHighConfidenceGraceWindowMonitor()
             } else if (state == ChannelSoundingConstant.RangeSessionState.STOPPED) {
                 // Cancel stall monitor and poor-signal timer when session stops
@@ -749,7 +755,6 @@ class ChannelSoundingActivity : BaseDemoActivity(),
     override fun onBackHandler() {
         binding.configureContainer.visibility = android.view.View.GONE
         binding.channelSoundingActivityContainer.visibility = android.view.View.VISIBLE
-        binding.channelSoundingConfig.isEnabled = true
     }
 
     @RequiresPermission(permission.BLUETOOTH_CONNECT)
@@ -1121,7 +1126,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
         // Create spike points dataset (dotted red) - only shown if checkbox is enabled and there are spikes
         val dataSets = mutableListOf<LineDataSet>(rawDataSet, filteredDataSet)
         if (spikeEntries.isNotEmpty() && showSpikes) {
-            val spikeDataSet = LineDataSet(spikeEntries, "ΓÜá∩╕Å Spikes").apply {
+            val spikeDataSet = LineDataSet(spikeEntries, "⚠️ Spikes").apply {
                 color = Color.parseColor("#F44336")  // Red color
                 lineWidth = 0f  // No line, only circles
                 setDrawCircles(true)
@@ -1190,9 +1195,9 @@ class ChannelSoundingActivity : BaseDemoActivity(),
 
     private fun updateRippleColor(distance: Double) {
         val color = when (distance) {
-            in rangeLow -> ContextCompat.getColor(this, R.color.cs_silabs_blue_high)
-            in rangeMid -> ContextCompat.getColor(this, R.color.cs_silabs_blue_mid)
-            else -> ContextCompat.getColor(this, R.color.cs_silabs_blue_low)
+            in rangeLow -> ContextCompat.getColor(this, R.color.silabs_rebranding_2373_fly_bar_gradient)
+            in rangeMid -> ContextCompat.getColor(this, R.color.ch_medium_color)
+            else -> ContextCompat.getColor(this, R.color.silabs_rebranding_2373_fly_bar_gradient)
         }
 
         binding.rippleAnimation.setRippleColor(color)
@@ -1247,7 +1252,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
     }
 
     /**
-     * Monitors for 10s without HIGH-confidence data. During 2ΓÇô10s shows "Waiting for high-confidenceΓÇª" toast once.
+     * Monitors for 10s without HIGH-confidence data. During 2–10s shows "Waiting for high-confidence…" toast once.
      * After 10s shows "Out of Measurements" (no-high-confidence) dialog; on OK restarts CS session (no retries).
      */
     private fun startHighConfidenceGraceWindowMonitor() {
@@ -1430,7 +1435,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
         private const val CONFIDENCE_VALUE_HIGH = 2
         /** Grace window: if no HIGH confidence for this many ms, show "Out of Measurements" and restart. */
         private const val HIGH_CONFIDENCE_GRACE_WINDOW_MS = 10_000L
-        /** After this many ms without HIGH, show "Waiting for high-confidenceΓÇª" toast once. */
+        /** After this many ms without HIGH, show "Waiting for high-confidence…" toast once. */
         private const val HIGH_CONFIDENCE_WAITING_TOAST_THRESHOLD_MS = 2_000L
         private const val REMOVE_BONDING = "removeBond"
     }

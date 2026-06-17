@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/blue_primary"
+    android:background="@color/silabs_redtheme_primary_color"
     android:layout_height="@dimen/scanning_animation_bar_height">
 
     <TextView
         android:id="@+id/connecting_label_textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/stolzl_medium"
         android:gravity="center"
         android:textColor="@color/silabs_white"
         android:textSize="@dimen/connecting_bar_text_size"

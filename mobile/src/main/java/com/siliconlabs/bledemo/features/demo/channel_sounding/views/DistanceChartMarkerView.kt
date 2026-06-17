@@ -12,9 +12,9 @@ import java.util.Locale
 
 /**
  * Custom MarkerView for the distance chart that displays:
- * - "ΓÜá∩╕Å Spike" for raw data points that deviate significantly from filtered values
+ * - "⚠️ Spike" for raw data points that deviate significantly from filtered values
  * - "~ Smoothing" for points where Kalman filter is actively smoothing
- * - "Γ£ô Stable" for points where raw and filtered are very close
+ * - "✓ Stable" for points where raw and filtered are very close
  *
  * This provides visual feedback on where the Kalman filter is actively working.
  * Tap on any point on the chart to see the marker with spike/smoothing information.

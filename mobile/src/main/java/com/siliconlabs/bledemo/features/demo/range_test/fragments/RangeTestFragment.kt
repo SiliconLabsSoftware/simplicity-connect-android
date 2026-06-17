@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.LimitLine
@@ -90,10 +91,7 @@ class RangeTestFragment : Fragment(), RangeTestPresenter.RangeTestView {
         }
 
         rxLayouts.apply {
-            add(binding.rangeRxDataRow1)
-            add(binding.rangeRxDataRow2)
-            add(binding.chart)
-            add(binding.tvRangeRxChartLabel)
+            add(binding.rangeRxMetricsAndChartSection)
         }
 
         disabledLayouts.apply {
@@ -477,7 +475,8 @@ class RangeTestFragment : Fragment(), RangeTestPresenter.RangeTestView {
     private fun setupChartView() {
         val textColor = ContextCompat.getColor(requireContext(), R.color.silabs_dark_gray_text)
         val axisColor = ContextCompat.getColor(requireContext(), R.color.silabs_dark_gray_text)
-        val graphColor = ContextCompat.getColor(requireContext(), R.color.silabs_blue)
+        val graphColor = ContextCompat.getColor(requireContext(), R.color.silabs_red)
+        val axisTypeface = ResourcesCompat.getFont(requireContext(), R.font.stolzl_regular)
 
         binding.chart.apply {
             description?.isEnabled = false
@@ -490,6 +489,7 @@ class RangeTestFragment : Fragment(), RangeTestPresenter.RangeTestView {
             axisLeft.valueFormatter = YAxisValueFormatter()
             axisLeft.textSize = 10f
             axisLeft.textColor = textColor
+            axisLeft.typeface = axisTypeface
             axisLeft.axisMinimum = -100f
             axisLeft.axisMaximum = 25f
             axisLeft.granularity = 25f
@@ -507,6 +507,7 @@ class RangeTestFragment : Fragment(), RangeTestPresenter.RangeTestView {
             xAxis.axisMinimum = 0f
             xAxis.axisMaximum = 50f
             xAxis.valueFormatter = XAxisValueFormatter()
+            xAxis.typeface = axisTypeface
             minOffset = 0f
             setExtraOffsets(-4f, 0f, 4f, 4f)
             axisLeft.addLimitLine(createLimitLine(0f, axisColor))

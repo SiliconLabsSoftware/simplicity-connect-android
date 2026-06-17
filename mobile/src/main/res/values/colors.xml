@@ -2,42 +2,63 @@
 <resources>
 
     <color name="primary">@color/silabs_red</color>
+    <color name="silabs_primary_color">@color/silabs_redtheme_primary_color</color>
 
     <color name="silabs_dark_blue">#0F62FE</color>
     <color name="silabs_blue">#0086D9</color>
     <color name="silabs_red">#D91E2A</color>
     <color name="silabs_white">#FFFFFF</color>
+    <!-- Launcher adaptive icon background: match Figma Si mark red (#D91E2A) -->
+    <color name="ic_launcher_si_red">#D91E2A</color>
     <color name="silabs_led_white">#D0D0D0</color>
     <color name="silabs_black">#000000</color>
     <color name="silabs_transparent">#00000000</color>
     <color name="silabs_yellow">#F9C80E</color>
     <color name="silabs_grey">#7A7878</color>
     <color name="silabs_green">#14A359</color>
+    <color name="channel_sounding_filtered_distance">#02B96F</color>
     <color name="silabs_magenta">#FF00FF</color>
     <color name="silabs_cyan_led">#00FFFF</color>
     <color name="silabs_yellow_led">#FFFF00</color>
 
-    <color name="silabs_ripple_blue">#400086D9</color>
+    <color name="silabs_ripple_blue">#ECECEC</color>
 
     <color name="silabs_red_dark">#FFA1171F</color>
 
     <color name="silabs_background">#ECECEC</color>
 
-    <color name="silabs_inactive">#7C7C7C</color>
-    <color name="silabs_inactive_light">#AFAFAF</color>
+    <color name="silabs_inactive">#C5C5C5</color>
+    <color name="silabs_inactive_light">#C5C5C5</color>
     <color name="silabs_subtle_text">#7C7C7C</color>
-    <color name="silabs_primary_text">#333333</color>
-    <color name="silabs_dark_gray_text">#666666</color>
+    <color name="aws_iot_demo_toolbar">#333333</color>
+    <color name="mqtt_led_on_button">#333333</color>
+    <color name="mqtt_led_off_button">#7A7879</color>
+    <color name="silabs_primary_text">#525252</color>
+    <color name="silabs_dark_gray_text">#939393</color>
+    <color name="wifi_commissioning_progress_message">#939393</color>
+
+    <color name="range_test_toolbar_bg">#2C2C2C</color>
+    <color name="range_test_toolbar_divider">#3D3D3D</color>
+    <color name="range_test_content_background">#EBEBEB</color>
+    <color name="range_test_tabs_track_fill">#E0E0E0</color>
+    <color name="range_test_tab_selected_fill">#FFFFFF</color>
+    <color name="range_test_dialog_spacer">#F0F0F0</color>
 
     <color name="silabs_primary_icon">#333333</color>
     <color name="silabs_dark_gray_icon">#666666</color>
 
     <color name="silabs_dialog_title_background">#F2F2F2</color>
     <color name="silabs_divider">#CCCCCC</color>
+    <color name="range_slider_thumb_background">#EBEBEB</color>
 
     <color name="silabs_speedmeter_start">#0086D9</color>
     <color name="silabs_speedmeter_center">#921084</color>
     <color name="silabs_speedmeter_end">#D91E2A</color>
+
+    <!-- BLE throughput speed ring: red gradient (Wi‑Fi keeps silabs_speedmeter_*) -->
+    <color name="ble_throughput_speed_ring_start">#E85A63</color>
+    <color name="ble_throughput_speed_ring_center">#D91E2A</color>
+    <color name="ble_throughput_speed_ring_end">#A1171F</color>
 
     <!-- Colors probably to change in the future -->
     <color name="dialog_loading_spinner_center">#FF999999</color>
@@ -65,11 +86,14 @@
     <!--RESKINNING-->
 
     <color name="main_background">#ececec</color>
-    <color name="tb_font_grey">#7c7c7c</color>
+    <color name="tb_font_grey">#939393</color>
     <color name="tb_red">#d91e2a</color>
     <color name="tb_green_dot">#32d74b</color>
     <color name="tb_blue">#0086d9</color>
     <color name="tb_grey">#cccccc</color>
+    <!-- Blinky Thunderboard SwitchCompat -->
+    <color name="blinky_tb_switch_track_stroke">#4D000000</color>
+    <color name="blinky_tb_switch_thumb_stroke">#66000000</color>
 
     <!-- WiFi Commissioning -->
     <color name="grey">#808080</color>
@@ -94,7 +118,7 @@
 
     <color name="gray_subtle">#e1e1e1</color>
     <color name="btn_action_on">#D91E2A</color>
-    <color name="btn_disabled">#c2c2c2</color>
+    <color name="btn_disabled">@color/silabs_white</color>
 
     <color name="menu_icon">@android:color/white</color>
     <color name="action_icon">@color/silabs_dark_gray_icon</color>
@@ -109,7 +133,7 @@
     <color name="track_disabled">#80C0C0C0</color>
     <color name="thumb_disabled">#80FFFFFF</color>
 
-    <color name="fly_in_bar_gradient">#B3B3FF</color>
+    <color name="fly_in_bar_gradient">#FFB3B3</color>
     <color name="spinner_end_gradient">@color/blue_dark</color>
     <color name="seekbar_progress">@color/blue_dark</color>
     <color name="seekbar_background">@color/gray_background</color>
@@ -134,7 +158,7 @@
     <color name="button_blue">#0000FF</color>
     <color name="button_black">#000000</color>
 
-<!--    Device Info-->
+    <!--    Device Info-->
     <color name="red_text">#BD0909</color>
     <color name="green_text">#18A918</color>
     <color name="blue_text">#0000FF</color>
@@ -144,4 +168,62 @@
     <color name="cs_silabs_blue_high">#0F62FE</color>
     <color name="cs_silabs_blue_mid">#4169E1</color>
     <color name="cs_silabs_blue_low">#87CEEB</color>
+
+    <!--    Rebranding-->
+    <color name="silabs_redtheme_status_bar_color">#333333</color>
+    <color name="silabs_redtheme_navi_bar_color">#333333</color>
+    <color name="silabs_redtheme_tool_bar_color">#333333</color>
+
+    <color name="silabs_redtheme_iop_full_screen_txt_color">#525252</color>
+    <color name="silabs_redtheme_primary_color">#D91E1E</color>
+    <color name="silabs_redtheme_bottom_navigation_active_text">#D91E1E</color>
+    <color name="silabs_redtheme_bottom_navigation_inactive_text">#D91E1E</color>
+    <color name="silabs_redtheme_navi_red_bar">#D91E1E</color>
+    <color name="silabs_redtheme_select_dialog_device_list_bg_color">#ECECEC</color>
+    <!-- Matter scanned device list (card rows) -->
+    <color name="matter_scanned_row_card_bg">#E5E5E5</color>
+    <color name="matter_scanned_chevron_muted">#BDBDBD</color>
+    <!-- CardView: softer ambient + stronger spot shadow reads as lift from below (key light) -->
+    <color name="matter_scanned_list_card_ambient_shadow">#10000000</color>
+    <color name="matter_scanned_list_card_spot_shadow">#59000000</color>
+    <color name="matter_switch_bind_outline_gray">#C5C5C5</color>
+    <color name="matter_switch_bind_row_shadow">#40000000</color>
+    <color name="silabs_redtheme_select_dialog_device_list_line_color">#C5C5C5</color>
+    <color name="silabs_redtheme_iop_test_pass_color">#00B970</color>
+    <color name="silabs_redtheme_iop_test_fail_color">#D91E1E</color>
+    <color name="silabs_redtheme_toolbar_text_color">#FFFFFF</color>
+    <color name="silabs_redtheme_header_text_color">#333333</color>
+    <color name="silabs_redtheme_body_text_color">#939393</color>
+    <color name="silabs_redtheme_subheader_text_color">#525252</color>
+    <color name="silabs_redtheme_scanner_bg_color">#FFFFFF</color>
+    <color name="silabs_redtheme_button_text_color">#D91E1E</color>
+    <color name="silabs_redtheme_button_outline_color">#D91E1E</color>
+    <color name="silabs_redtheme_button_inner_color">#FFFFFF</color>
+    <color name="silabs_redtheme_button_fill_color">#D91E1E</color>
+    <color name="silabs_redtheme_scanner_header_text_color">#525252</color>
+    <color name="silabs_redtheme_scanner_body_text_color">#939393</color>
+    <color name="silabs_redtheme_filer_hint_text_color">#939393</color>
+    <color name="silabs_redtheme_select_device_element_bg_color">#FFFFFF</color>
+    <color name="silabs_redtheme_select_device_outline_color">#C5C5C5</color>
+    <color name="silabs_redtheme_checkbox_text_color">#525252</color>
+    <color name="silabs_redtheme_progress_dialog_color">#D91E1E</color>
+    <color name="silabs_rebranding_2526_blinky_color_on">#00B970</color>
+    <color name="silabs_rebranding_2373_connected_light_text_color">#939393</color>
+    <color name="silabs_rebranding_2373_floating_button_text_color">#FFFFFF</color>
+    <color name="silabs_rebranding_2373_fly_bar_gradient">#FFB3B3</color>
+    <color name="silabs_rebranding_2373_hyperlink_text_color">#D91E1E</color>
+    <color name="silabs_rebranding_2373_edit_box_outline_color">#C5C5C5</color>
+    <color name="silabs_rebranding_2373_matter_image_disable_color">#A2A2A2</color>
+    <color name="silabs_rebranding_2373_matter_list_disable_color">#939393</color>
+    <color name="silabs_rebranding_2373_matter_primary_text_color">#D91E1E</color>
+    <!-- Matter custom text alert (Material-style title) -->
+    <color name="silabs_rebranding_matter_alert_title_blue">#D91E1E</color>
+    <color name="silabs_redtheme_devkit_text_color">#525252</color>
+
+    <color name="ch_low_color">#FFE5E5</color>
+    <color name="ch_medium_color">#FF8080</color>
+    <color name="silabs_alternate_log_color_p1">#ECECEC</color>
+    <color name="silabs_alternate_log_color_p2">#F9F9F9</color>
+    <color name="silabs_matter_oven_bg">#F8F8FA</color>
+    <color name="silabs_rangehood_yellow">#F9C80E</color>
 </resources>

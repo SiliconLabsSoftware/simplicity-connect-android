@@ -378,19 +378,19 @@ class AdvertiserConfigActivity : BaseActivity(), IAdvertiserConfigActivityView {
     ) {
         val legacyAdapter = ArrayAdapter(
             this,
-            R.layout.spinner_item_layout_medium,
+            R.layout.spinner_item_advertiser_config_type,
             translator.getValuesAsStringList(legacyModes)
         )
 
-        legacyAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_layout)
+        legacyAdapter.setDropDownViewResource(R.layout.spinner_dropdown_advertiser_config_type)
         binding.advConfigType.spLegacy.adapter = legacyAdapter
 
         val extendedAdapter = ArrayAdapter(
             this,
-            R.layout.spinner_item_layout_medium,
+            R.layout.spinner_item_advertiser_config_type,
             translator.getValuesAsStringList(extendedModes)
         )
-        extendedAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item_layout)
+        extendedAdapter.setDropDownViewResource(R.layout.spinner_dropdown_advertiser_config_type)
         binding.advConfigType.spExtended.adapter = extendedAdapter
 
         if (isLegacy) binding.advConfigType.tvExtendedAdvNotSupported.visibility = View.VISIBLE

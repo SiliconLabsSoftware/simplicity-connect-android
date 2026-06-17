@@ -88,6 +88,7 @@
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
             android:text="@string/gatt_configurator_label_indicate"
+            android:fontFamily="@font/stolzl_regular"
             android:visibility="gone"
             tools:visibility="visible"
             app:drawableStartCompat="@drawable/redesign_ic_property_indicate_scaled" />
@@ -100,6 +101,7 @@
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
             android:text="@string/gatt_configurator_label_notify"
+            android:fontFamily="@font/stolzl_regular"
             android:visibility="gone"
             tools:visibility="visible"
             app:drawableStartCompat="@drawable/redesign_ic_property_notify_scaled"/>
@@ -112,6 +114,7 @@
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
             android:text="@string/gatt_configurator_label_write"
+            android:fontFamily="@font/stolzl_regular"
             android:visibility="gone"
             tools:visibility="visible"
             app:drawableStartCompat="@drawable/redesign_ic_property_write" />
@@ -124,6 +127,7 @@
             android:gravity="center_vertical"
             android:text="@string/gatt_configurator_label_read"
             android:visibility="gone"
+            android:fontFamily="@font/stolzl_regular"
             tools:visibility="visible"
             app:drawableStartCompat="@drawable/redesign_ic_property_read_off"/>
     </LinearLayout>
@@ -169,6 +173,7 @@
         android:layout_height="wrap_content"
         style="@style/button_add_data_outlined"
         android:text="@string/button_add_descriptor"
+        app:cornerRadius="@dimen/matter_12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

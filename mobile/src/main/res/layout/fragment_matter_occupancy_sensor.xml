@@ -21,6 +21,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/matter_5dp"
                 android:gravity="center"
+                android:fontFamily="@font/stolzl_regular"
                 android:text="@string/matter_occupancy_cluster"
                 android:textSize="@dimen/text_size_XL"
                 android:textStyle="bold" />
@@ -68,6 +69,8 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:fontFamily="@font/stolzl_regular"
+                    android:textColor="@color/silabs_rebranding_2373_matter_list_disable_color"
                     android:textSize="@dimen/text_size_ML"
                     android:text="@string/matter_occupancy_sensor_action"
                     android:layout_width="wrap_content"

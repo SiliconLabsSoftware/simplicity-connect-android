@@ -2,22 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/modal_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Fake status bar: gets real height at runtime and paints blue -->
+    <!-- Fake status bar: height applied at runtime; matches toolbar -->
     <View
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/range_test_toolbar_bg" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/range_test_toolbar_divider" />
 
     <!-- Toolbar that becomes supportActionBar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fakeStatusBar"
+        android:layout_below="@id/statusBarToolbarSeparator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,53 +34,127 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/blue_primary"
+            android:background="@color/range_test_toolbar_bg"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="#ffff"
+            app:titleTextColor="@color/silabs_white"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
-        android:id="@+id/tabs_container"
+        android:id="@+id/range_test_tabs_strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appBarLayout"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal">
+        android:background="@color/range_test_toolbar_bg"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/matter_16dp"
+        android:paddingTop="@dimen/matter_8dp"
+        android:paddingEnd="@dimen/matter_16dp"
+        android:paddingBottom="@dimen/matter_12dp">
 
-        <TextView
-            android:id="@+id/tv_device1_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/btn_rounded_white"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:minWidth="140dp"
-            android:text="@string/range_test_no_device"
-            android:textColor="@color/silabs_red" />
+        <LinearLayout
+            android:id="@+id/tabs_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/matter_30dp"
+            android:background="@drawable/range_test_tabs_track"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/matter_4dp">
 
-        <TextView
-            android:id="@+id/tv_device2_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@drawable/btn_rounded_red_dark"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:minWidth="140dp"
-            android:text="@string/range_test_no_device"
-            android:textColor="@color/silabs_white" />
+            <TextView
+                android:id="@+id/tv_device1_tab"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/matter_40dp"
+                android:layout_weight="1"
+                android:background="@drawable/range_test_tab_selected"
+                android:ellipsize="end"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/matter_8dp"
+                android:paddingEnd="@dimen/matter_8dp"
+                android:text="@string/range_test_no_device"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="@dimen/adapter_label_medium_size" />
+
+            <TextView
+                android:id="@+id/tv_device2_tab"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/matter_40dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/matter_8dp"
+                android:paddingEnd="@dimen/matter_8dp"
+                android:text="@string/range_test_no_device"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="@dimen/adapter_label_medium_size" />
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/fragment"
+        android:id="@+id/range_test_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tabs_container" />
+        android:layout_below="@id/range_test_tabs_strip">
+
+        <LinearLayout
+            android:id="@+id/range_test_empty_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/iv_range_test_empty_icon"
+                android:layout_width="@dimen/matter_100dp"
+                android:layout_height="@dimen/matter_100dp"
+                android:layout_marginTop="@dimen/matter_16dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/redesign_ic_demo_range_test" />
+
+            <TextView
+                android:id="@+id/tv_range_test_empty_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/matter_16dp"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center"
+                android:text="@string/range_test_device_not_connected"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="@dimen/text_size_ML" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_range_test_empty_connect"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="48dp"
+                android:text="@string/button_connect"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </RelativeLayout>

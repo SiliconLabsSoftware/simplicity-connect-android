@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:fitsSystemWindows="false">
     <!-- Fake Status Bar View -->
     <View
@@ -11,19 +12,26 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_below="@id/fakeStatusBar"
-        android:background="@color/blue_primary"
+        android:layout_below="@id/statusBarToolbarSeparator"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:layout_marginBottom="@dimen/matter_50dp"
+        android:layout_marginBottom="@dimen/matter_30dp"
         android:id="@+id/fragment_container"
         android:name="com.siliconlabs.bledemo.features.demo.throughput.fragments.ThroughputFragment"
         android:layout_width="match_parent"

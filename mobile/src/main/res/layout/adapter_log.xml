@@ -7,27 +7,27 @@
     android:paddingHorizontal="24dp"
     android:paddingVertical="16dp"
     android:orientation="horizontal"
-    tools:background="@color/silabs_ripple_blue">
+    tools:background="@color/silabs_alternate_log_color_p1">
 
     <TextView
         android:id="@+id/tv_log_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/stolzl_medium"
         android:layout_gravity="center"
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
         android:text="@string/log_example_time"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/log_time_text_size" />
+        android:textColor="@color/silabs_primary_text"
+        android:textSize="@dimen/text_size_SM" />
 
     <TextView
         android:id="@+id/tv_log_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/stolzl_regular"
         android:text="@string/log_example_text"
-        android:textColor="@color/silabs_black"
+        android:textColor="@color/silabs_primary_text"
         android:textSize="@dimen/log_info_text_size" />
 
 </LinearLayout>

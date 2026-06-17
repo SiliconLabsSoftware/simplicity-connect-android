@@ -19,6 +19,9 @@ enum class SecurityMode(val value: Int) {
 
     UNKNOWN(255);
 
+    /** Open networks do not use a pre-shared key in the provisioning flow. */
+    fun requiresPassword(): Boolean = this != OPEN
+
     companion object {
         fun fromInt(code: Int) : SecurityMode {
             for (mode in values()) {

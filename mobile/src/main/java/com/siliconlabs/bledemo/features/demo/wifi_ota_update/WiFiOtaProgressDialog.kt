@@ -2,8 +2,12 @@ package com.siliconlabs.bledemo.features.demo.wifi_ota_update
 
 import android.app.Dialog
 import android.content.Context
-import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.Chronometer
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
+import com.google.android.material.button.MaterialButton
 import com.siliconlabs.bledemo.R
 
 class WiFiOtaProgressDialog(context: Context) : Dialog(context) {
@@ -14,10 +18,9 @@ class WiFiOtaProgressDialog(context: Context) : Dialog(context) {
     var filename: TextView
     var steps: TextView
     var chrono: Chronometer
-    var btnOtaEnd: Button
+    var btnOtaEnd: MaterialButton
     var btnCancel: Button
     var sizename: TextView
-    var uploadImage: ProgressBar
     var firmwareStatus: TextView
     var wifiIpAddress: TextView
     var wifiPort: TextView
@@ -27,7 +30,7 @@ class WiFiOtaProgressDialog(context: Context) : Dialog(context) {
         setContentView(R.layout.dialog_wifi_ota_progress)
         window?.apply {
             setLayout(
-                    (context.resources.displayMetrics.widthPixels * 0.8f).toInt(),
+                    (context.resources.displayMetrics.widthPixels * 0.9f).toInt(),
                     LinearLayout.LayoutParams.WRAP_CONTENT
             )
             window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -42,7 +45,6 @@ class WiFiOtaProgressDialog(context: Context) : Dialog(context) {
         btnOtaEnd = findViewById(R.id.otabutton)
         btnCancel = findViewById(R.id.cancel)
         sizename = findViewById(R.id.file_size)
-        uploadImage = findViewById(R.id.connecting_spinner)
         firmwareStatus = findViewById(R.id.text_firmware_status)
         wifiIpAddress = findViewById(R.id.wifi_ip_address)
         wifiPort = findViewById(R.id.wifi_port)
@@ -57,7 +59,6 @@ class WiFiOtaProgressDialog(context: Context) : Dialog(context) {
         filename.text = fileName
         steps.text = context.getString(R.string.iop_test_label_1_of_1)
         sizename.text = context.getString(R.string.iop_test_n_bytes, fileSize)
-        uploadImage.visibility = View.VISIBLE
         wifiIpAddress.text = ipAddress
         wifiPort.text = port
     }

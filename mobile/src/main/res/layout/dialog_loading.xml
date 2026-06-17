@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/space_S"
                 android:elegantTextHeight="true"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:gravity="center"
                 android:maxLength="25"
                 tools:text="Loading..."/>

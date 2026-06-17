@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
 import com.siliconlabs.bledemo.base.fragments.BaseDialogFragment
 import com.siliconlabs.bledemo.databinding.DialogWifiOtaFileUpdateBinding
 
@@ -30,17 +31,21 @@ class WiFiOtaFileSelectionDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.9f).toInt(),
+            LayoutParams.WRAP_CONTENT
+        )
         setupUiListeners()
-        _binding.otaCancel.setOnClickListener {
-            dismiss()
-            cancelCallback.onDismiss()
-        }
     }
 
     fun setupUiListeners() {
         _binding.apply {
             selectAppFileBtn.setOnClickListener { listener.onSelectFileButtonClicked() }
-            otaCancel.setOnClickListener { listener.onCancelButtonClicked() }
+            otaCancel.setOnClickListener {
+                listener.onCancelButtonClicked()
+                dismiss()
+                cancelCallback.onDismiss()
+            }
             otaProceed.setOnClickListener { listener.onOtaButtonClicked() }
         }
     }

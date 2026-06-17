@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -18,6 +20,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.gridlayout.widget.GridLayout
+import com.google.android.material.button.MaterialButton
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.SensorDemoGridItemBinding
 import com.siliconlabs.bledemo.features.demo.devkitsensor917.APIInterface
@@ -172,13 +175,15 @@ open class DevKitSensorControl(
         var apiJob: Job? = null
         val devkitSensorDialog = Dialog(context, R.style.Style_Dialog_Rounded_Corner)
         devkitSensorDialog.setContentView(R.layout.dev_kit_sesnor_917_motion_control_dialog_layout)
+        devkitSensorDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
         devkitSensorDialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dialogWidth,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val header: TextView = devkitSensorDialog.findViewById(R.id.header)
-        val yesBtn: TextView = devkitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devkitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton = devkitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton = devkitSensorDialog.findViewById(R.id.no_opt)
         val orientationX: TextView = devkitSensorDialog.findViewById(R.id.orient_x)
         val orientationY: TextView = devkitSensorDialog.findViewById(R.id.orientation_y)
         val orientationZ: TextView = devkitSensorDialog.findViewById(R.id.orientation_z)
@@ -189,12 +194,12 @@ open class DevKitSensorControl(
             orientationX.text = String.format(degreeString, 00f)
         }
         if (gyroResponse != null && gyroResponse!!.y.isNotEmpty()) {
-            orientationX.text = String.format(degreeString, gyroResponse!!.y.toFloat())
+            orientationY.text = String.format(degreeString, gyroResponse!!.y.toFloat())
         } else {
             orientationY.text = String.format(degreeString, 00f)
         }
         if (gyroResponse != null && gyroResponse!!.z.isNotEmpty()) {
-            orientationX.text = String.format(degreeString, gyroResponse!!.z.toFloat())
+            orientationZ.text = String.format(degreeString, gyroResponse!!.z.toFloat())
         } else {
             orientationZ.text = String.format(degreeString, 00f)
         }
@@ -296,7 +301,7 @@ open class DevKitSensorControl(
     private suspend fun doInMotionOrientationBackground(
         viewX: TextView,
         viewY: TextView,
-        viewZ: TextView, btn: TextView, ipAddress: String
+        viewZ: TextView, btn: View, ipAddress: String
     ) {
         withContext(Dispatchers.IO) {
             try {
@@ -351,15 +356,17 @@ open class DevKitSensorControl(
         var apiJob: Job? = null
         val devKitSensorDialog = Dialog(context, R.style.Style_Dialog_Rounded_Corner)
         devKitSensorDialog.setContentView(R.layout.dev_kit_sensor_917_dialog_layout)
+        devKitSensorDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
         devKitSensorDialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dialogWidth,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
         val header: TextView = devKitSensorDialog.findViewById(R.id.header)
         val subTitle: TextView = devKitSensorDialog.findViewById(R.id.subTitle)
-        val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.no_opt)
         val image: ImageView = devKitSensorDialog.findViewById(R.id.image)
         val dataHolder: TextView = devKitSensorDialog.findViewById(R.id.txt_value)
         dataHolder.text = context.getString(R.string.matter_init_value)
@@ -395,7 +402,7 @@ open class DevKitSensorControl(
     }
 
     @SuppressLint("SetTextI18n")
-    private suspend fun doInAmbientBackground(view: TextView, btn: TextView, ipAddress: String) {
+    private suspend fun doInAmbientBackground(view: TextView, btn: View, ipAddress: String) {
         // Disable the button immediately on the main thread
         withContext(Dispatchers.Main) {
             btn.isClickable = false
@@ -466,7 +473,7 @@ open class DevKitSensorControl(
 
 
     @SuppressLint("SetTextI18n")
-    private suspend fun doInHumidityBackground(view: TextView, btn: TextView, ipAddress: String) {
+    private suspend fun doInHumidityBackground(view: TextView, btn: View, ipAddress: String) {
         withContext(Dispatchers.IO) {
             try {
                 val url = "http://$ipAddress"
@@ -512,7 +519,7 @@ open class DevKitSensorControl(
     }
 
     @SuppressLint("SetTextI18n")
-    private suspend fun doInTempBackground(view: TextView, btn: TextView, ipAddress: String) {
+    private suspend fun doInTempBackground(view: TextView, btn: View, ipAddress: String) {
         // Disable the button immediately on the main thread
         withContext(Dispatchers.Main) {
             btn.isClickable = false
@@ -573,14 +580,16 @@ open class DevKitSensorControl(
         var apiJob: Job? = null
         val devKitSensorDialog = Dialog(context, R.style.Style_Dialog_Rounded_Corner)
         devKitSensorDialog.setContentView(R.layout.dev_kit_sensor_917_dialog_layout)
+        devKitSensorDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
         devKitSensorDialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dialogWidth,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val header: TextView = devKitSensorDialog.findViewById(R.id.header)
         val subTitle: TextView = devKitSensorDialog.findViewById(R.id.subTitle)
-        val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.no_opt)
         val image: ImageView = devKitSensorDialog.findViewById(R.id.image)
         val microphoneHolder = devKitSensorDialog.findViewById(R.id.txt_value) as TextView
         microphoneHolder.text = context.getString(R.string.dev_kit_sensor_micro_init_value)
@@ -614,14 +623,16 @@ open class DevKitSensorControl(
         var apiJob: Job? = null
         val devKitSensorDialog = Dialog(context, R.style.Style_Dialog_Rounded_Corner)
         devKitSensorDialog.setContentView(R.layout.dev_kit_sensor_917_dialog_layout)
+        devKitSensorDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
         devKitSensorDialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dialogWidth,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val header: TextView = devKitSensorDialog.findViewById(R.id.header)
         val subTitle: TextView = devKitSensorDialog.findViewById(R.id.subTitle)
-        val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.no_opt)
         val image: ImageView = devKitSensorDialog.findViewById(R.id.image)
         val abiHolder: TextView = devKitSensorDialog.findViewById(R.id.txt_value)
 
@@ -629,7 +640,6 @@ open class DevKitSensorControl(
         if (ambiResponse != null && ambiResponse!!.isNotEmpty()) {
             abiHolder.text = "$ambiResponse lx"
         }
-        abiHolder.textSize = 50F
         image.setImageResource(R.drawable.icon_light)
         header.text = title + SPACE + context.getString(R.string.title_sensor)
         subTitle.text = title
@@ -687,7 +697,6 @@ open class DevKitSensorControl(
         )
     }
 
-    @SuppressLint("SetTextI18n")
     private fun showLEDControlDialog(title: String, ipAddress: String) {
         val apiJob: Job? = null
         val devKitSensorDialog = Dialog(context, R.style.Style_Dialog_Rounded_Corner)
@@ -698,10 +707,17 @@ open class DevKitSensorControl(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
+        devKitSensorDialog.window?.setLayout(
+            dialogWidth,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         val header: TextView = devKitSensorDialog.findViewById(R.id.header)
         val subTitle: TextView = devKitSensorDialog.findViewById(R.id.subTitle)
-        val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton =
+            devKitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton =
+            devKitSensorDialog.findViewById(R.id.no_opt)
         onLEDBtn = devKitSensorDialog.findViewById(R.id.onButton)!!
         offLEDBtn = devKitSensorDialog.findViewById(R.id.offButton)!!
         redLEDBtn = devKitSensorDialog.findViewById(R.id.redButton)!!
@@ -709,12 +725,13 @@ open class DevKitSensorControl(
         blueLEDBtn = devKitSensorDialog.findViewById(R.id.blueButton)!!
         ledImageStatus = devKitSensorDialog.findViewById(R.id.imageLight)!!
 
-        header.text = title + SPACE + context.getString(R.string.title_control)
+        header.text = context.getString(R.string.led_control_characteristic_name)
         subTitle.text = title
         subTitle.visibility = View.GONE
 
         //LED Switch Off condition
         imageForLightOn(view = ledImageStatus, red = false, blue = false, green = false)
+        setInitialOnOffBtnBackground()
 
         CoroutineScope(Dispatchers.IO).launch {
             getLedSwitchStatus(ipAddress)
@@ -765,6 +782,16 @@ open class DevKitSensorControl(
         }
     }
 
+    /** Initial: both ON and OFF = #7A7879 */
+    private fun setInitialOnOffBtnBackground() {
+        onLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+        offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+        redLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+        greenLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+        blueLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+    }
+
+    /** ON pressed: ON = #333333, OFF = #7A7879 */
     private fun setOnBtnBackground() {
         onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
         offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
@@ -773,13 +800,23 @@ open class DevKitSensorControl(
         blueLEDBtn.setBackgroundResource(R.drawable.button_background_blue_box)
     }
 
-
+    /** OFF pressed: OFF = #333333, ON = #7A7879 */
     private fun setOffBtnBackground() {
         onLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         offLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
         redLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         greenLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         blueLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+    }
+
+    private fun applyOnOffToggleHighlight(ledsOn: Boolean) {
+        if (ledsOn) {
+            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
+            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+        } else {
+            onLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
+            offLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
+        }
     }
 
     private fun refreshLEDStatus(ipAddress: String) {
@@ -790,51 +827,21 @@ open class DevKitSensorControl(
 
     private fun setBtnColorBackground() {
         if (btnRedStatus) {
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
             redLEDBtn.setBackgroundResource(R.drawable.button_background_red_box)
         } else {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
             redLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         }
         if (btnGreenStatus) {
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
             greenLEDBtn.setBackgroundResource(R.drawable.button_background_green_box)
         } else {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
             greenLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         }
         if (btnBlueStatus) {
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
             blueLEDBtn.setBackgroundResource(R.drawable.button_background_blue_box)
-        }else{
+        } else {
             blueLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
         }
-        if (btnRedStatus && btnGreenStatus && btnBlueStatus) {
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-        } else if (btnRedStatus && btnGreenStatus) {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-            redLEDBtn.setBackgroundResource(R.drawable.button_background_red_box)
-            greenLEDBtn.setBackgroundResource(R.drawable.button_background_green_box)
-        } else if (btnRedStatus && btnBlueStatus) {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-            redLEDBtn.setBackgroundResource(R.drawable.button_background_red_box)
-            blueLEDBtn.setBackgroundResource(R.drawable.button_background_blue_box)
-        } else if (btnGreenStatus && btnBlueStatus) {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-            blueLEDBtn.setBackgroundResource(R.drawable.button_background_blue_box)
-            greenLEDBtn.setBackgroundResource(R.drawable.button_background_green_box)
-        } else if (!btnRedStatus && !btnGreenStatus && !btnBlueStatus) {
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-        } else {
-            offLEDBtn.setBackgroundResource(R.drawable.button_background_grey_box)
-            onLEDBtn.setBackgroundResource(R.drawable.button_background_soft_black_box)
-        }
-
+        applyOnOffToggleHighlight(btnRedStatus || btnGreenStatus || btnBlueStatus)
     }
 
     private fun setLEDControl(ipAddress: String) {
@@ -1195,14 +1202,16 @@ open class DevKitSensorControl(
         devKitSensorDialog.setContentView(
             R.layout.dev_kit_sensor_917_dialog_layout
         )
+        devKitSensorDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialogWidth = (context.resources.displayMetrics.widthPixels * 0.92f).toInt()
         devKitSensorDialog.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            dialogWidth,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         val header: TextView = devKitSensorDialog.findViewById(R.id.header)
         val subTitle: TextView = devKitSensorDialog.findViewById(R.id.subTitle)
-        val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
-        val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
+        val yesBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.yes_opt)
+        val noBtn: MaterialButton = devKitSensorDialog.findViewById(R.id.no_opt)
         val image: ImageView = devKitSensorDialog.findViewById(R.id.image)
         val humidityHolder: TextView = devKitSensorDialog.findViewById(R.id.txt_value)
         humidityHolder.text = context.getString(R.string.dev_kit_sensor_humidity_init_value)

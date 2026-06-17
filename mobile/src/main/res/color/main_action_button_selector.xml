@@ -7,7 +7,7 @@
         android:color="@color/btn_action_on" />
     <item
         android:state_enabled="true"
-        android:color="@color/blue_primary" />
+        android:color="@color/silabs_redtheme_primary_color" />
     <item android:color="@color/btn_disabled"
         android:alpha="@dimen/btn_disabled_alpha"/>
 

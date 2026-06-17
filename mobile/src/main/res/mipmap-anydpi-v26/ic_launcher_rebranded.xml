@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Full-bleed red behind mask; foreground is a smaller centered square (Figma Si) so circle reads as square-in-circle -->
+    <background android:drawable="@color/ic_launcher_si_red" />
+    <foreground android:drawable="@drawable/ic_launcher_si_foreground" />
+</adaptive-icon>

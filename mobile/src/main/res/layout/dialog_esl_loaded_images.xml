@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style='@style/dialog_card'
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style='@style/dialog_card'>
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/dialog_margins"
@@ -15,19 +15,19 @@
         <TextView
             android:id="@+id/loaded_images_title"
             style="@style/dialog_title"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-            android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+            android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
             tools:text="@string/dialog_upload_image_title" />
 
         <TextView
             android:id="@+id/loaded_images_message"
             style="@style/dialog_text_info"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-            android:layout_marginBottom="@dimen/space_SM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+            android:layout_marginBottom="@dimen/space_SM"
             tools:text="@string/dialog_upload_image_message" />
 
 
@@ -42,64 +42,98 @@
         <TextView
             android:id="@+id/loaded_images_note"
             style="@style/dialog_text_note"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+            android:fontFamily="@font/stolzl_regular"
+            android:textColor="#939393"
+            android:textSize="12sp"
             tools:text="@string/dialog_loaded_images_note" />
 
         <TextView
             android:id="@+id/esl_selected_image_message"
             style="@style/dialog_text_info"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-            android:layout_marginVertical="@dimen/space_SM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+            android:layout_marginVertical="@dimen/space_SM"
             android:text="@string/dialog_image_to_upload_message"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/esl_image_selected"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
             android:layout_gravity="center_horizontal"
-            app:srcCompat="@color/silabs_click_grey"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
+            android:background="@drawable/matter_oven_unbind_outline"
             android:visibility="gone"
+            app:srcCompat="@color/silabs_click_grey"
             tools:visibility="visible" />
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:fontFamily="@font/stolzl_regular"
+            android:textSize="12sp"
+            android:textColor="@color/silabs_primary_text"
             android:id="@+id/cb_display_after_upload"
             android:layout_width="match_parent"
+            app:buttonCompat="@drawable/throughput_rb_notifications_square_selector"
+            android:paddingStart="@dimen/matter_8dp"
+            android:paddingEnd="@dimen/matter_8dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
             android:layout_marginTop="@dimen/space_SM"
             android:text="@string/dialog_upload_image_display_checkbox"
             android:visibility="gone"
-            tools:visibility="visible" >
-        </CheckBox>
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
-            android:layout_marginHorizontal="@dimen/dialog_margin_horizontal_plus_button_margin_end"
-            android:gravity="end"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
-                style="@style/dialog_button_negative_action"
-                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/button_cancel" />
+                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/button_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_primary_color"
+                android:textSize="@dimen/dialog_button_text_size"
+                app:backgroundTint="@color/silabs_white"
+                app:cornerRadius="@dimen/matter_10dp"
+                app:minWidth="0dp"
+                app:strokeColor="@color/silabs_redtheme_primary_color"
+                app:strokeWidth="1dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_positive_action"
-                style="@style/dialog_button_positive_action"
-                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dialog_button_text_size"
+                app:backgroundTint="@color/dialog_positive_button_selector"
+                app:cornerRadius="@dimen/matter_10dp"
+                app:minWidth="0dp"
                 tools:text="@string/dialog_btn_upload" />
         </LinearLayout>
 

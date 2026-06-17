@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="false"
+    android:background="@color/silabs_background">
+
+    <!-- Fake Status Bar View for edge-to-edge support -->
+    <View
+        android:id="@+id/fakeStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/silabs_redtheme_status_bar_color"
+        />
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/silabs_redtheme_tool_bar_color"
+        android:fontFamily="@font/stolzl_medium"
+        app:navigationIcon="@drawable/matter_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="@string/reflector_dashboard_title"
+        app:titleTextAppearance="@style/TextAppearance.ReflectorDashboardToolbarTitle"
+        app:titleTextColor="@android:color/white">
+
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/btn_settings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/reflector_dashboard_settings"
+            android:src="@drawable/redesign_ic_settings"
+            app:tint="@android:color/white" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Mode Title -->
+            <TextView
+                android:fontFamily="@font/stolzl_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/reflector_dashboard_mode_title"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:visibility="gone"
+                android:fontFamily="@font/stolzl_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:text="@string/reflector_dashboard_mode_subtitle"
+                android:textColor="@color/silabs_subtle_text"
+                android:textSize="14sp" />
+
+            <!-- Digital Key Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/silabs_blue"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- Key Icon -->
+                    <FrameLayout
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/circle_background_white_transparent">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/reflector_dashboard_key_icon"
+                            android:src="@drawable/ic_key"
+                            app:tint="@android:color/white" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/key_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reflector_dashboard_key_active"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/status_dot"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_marginEnd="6dp"
+                            android:background="@drawable/circle_background_green" />
+
+                        <TextView
+                            android:id="@+id/key_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reflector_dashboard_responding"
+                            android:textColor="@android:color/white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Connected Device Section -->
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/reflector_dashboard_connected_device"
+                android:textAllCaps="true"
+                android:textColor="@color/silabs_subtle_text"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Device Card -->
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <!-- Lock Icon -->
+                    <FrameLayout
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/circle_background_blue">
+
+                        <ImageView
+                            android:id="@+id/device_card_lock_icon"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/reflector_dashboard_lock_icon"
+                            android:src="@drawable/door_lock" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/device_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/silabs_primary_text"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Silabs Example" />
+
+                        <TextView
+                            android:id="@+id/device_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:textColor="@color/silabs_subtle_text"
+                            android:textSize="12sp"
+                            tools:text="00:0B:57:8A:3C:F2" />
+
+                        <TextView
+                            android:id="@+id/connection_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/reflector_dashboard_connected"
+                            android:textColor="@color/silabs_green"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/proximity_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/reflector_dashboard_lock_state_unknown"
+                            android:textColor="@color/silabs_subtle_text"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+            <!-- Large digital-key state; card height wraps content so caption stays visible at the bottom of the card. -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="24dp">
+
+                    <TextView
+                        android:fontFamily="@font/stolzl_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="0.04"
+                        android:text="@string/reflector_dashboard_hero_label"
+                        android:textAllCaps="true"
+                        android:textColor="@color/silabs_subtle_text"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
+                        android:id="@+id/digital_key_hero_circle"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="8dp">
+
+                        <ImageView
+                            android:id="@+id/digital_key_hero_icon"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@string/reflector_dashboard_key_icon"
+                            android:importantForAccessibility="yes"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/door_lock" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:fontFamily="@font/stolzl_regular"
+                        android:id="@+id/digital_key_hero_caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="@string/reflector_fg_notification_body_out_range"
+                        android:textAlignment="center"
+                        android:textColor="@color/silabs_primary_text"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- GATT Services Section -->
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/reflector_dashboard_gatt_services"
+                android:textAllCaps="true"
+                android:textColor="@color/silabs_subtle_text"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- Services Container -->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/services_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- Loading indicator for services (permanently hidden; see ReflectorDashboardActivity) -->
+            <LinearLayout
+                android:id="@+id/services_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="24dp"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/silabs_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reflector_dashboard_discovering_services"
+                    android:textColor="@color/silabs_subtle_text"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Action Button -->
+    <com.google.android.material.button.MaterialButton
+        android:visibility="gone"
+        android:id="@+id/btn_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="14dp"
+        android:text="@string/reflector_dashboard_stop_reflector"
+        android:textSize="16sp"
+        app:backgroundTint="@color/silabs_red"
+        app:icon="@drawable/ic_stop"
+        app:iconGravity="textStart"
+        app:iconTint="@android:color/white" />
+
+</LinearLayout>

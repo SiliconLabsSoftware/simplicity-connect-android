@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_bottom_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,22 +8,30 @@
     android:orientation="horizontal"
     android:background="@color/silabs_white">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel_bar"
-        style="@style/ButtonBorderlessBlue"
+        style="@style/button_add_data_outlined"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:textStyle="normal"
         android:layout_marginVertical="@dimen/space_S"
-        android:textSize="18sp"
-        android:text="@string/button_cancel"/>
+        android:textSize="@dimen/text_size_ML"
+        android:text="@string/button_cancel"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/export_bar"
-        style="@style/ButtonBlue"
+        style="@style/Widget.MaterialComponents.Button"
+        android:fontFamily="@font/stolzl_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/space_S"
-        android:textSize="18sp"
-        android:text="@string/button_export"/>
+        android:text="@string/button_export"
+        android:textColor="@color/silabs_white"
+        android:textSize="@dimen/text_size_ML"
+        android:textAllCaps="false"
+        android:textStyle="normal"
+        app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
 </LinearLayout>

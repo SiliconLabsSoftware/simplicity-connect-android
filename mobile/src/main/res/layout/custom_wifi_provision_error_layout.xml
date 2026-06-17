@@ -36,5 +36,6 @@
         android:layout_marginTop="@dimen/matter_10dp"
         android:layout_marginBottom="@dimen/matter_10dp"
         android:padding="@dimen/matter_5dp"
-        android:text="@string/button_ok" />
+        android:text="@string/button_ok"
+        android:textColor="@color/silabs_redtheme_primary_color" />
 </LinearLayout>

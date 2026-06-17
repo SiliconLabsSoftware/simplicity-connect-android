@@ -10,15 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_below="@id/fakeStatusBar"
-        android:background="@color/blue_primary"
+        android:layout_below="@id/statusBarToolbarSeparator"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <!-- Main fragment container below Toolbar -->

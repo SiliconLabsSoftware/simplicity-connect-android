@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/export_xml"
-        android:title="@string/title_export"
-        android:icon="@drawable/redesign_ic_menu_export"
-        app:iconTint="@color/menu_icon"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/import_xml"
         android:title="@string/title_import"
         android:icon="@drawable/redesign_ic_menu_gatt_configurator_import"
         app:iconTint="@color/menu_icon"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/export_xml"
+        android:title="@string/title_export"
+        android:icon="@drawable/redesign_ic_menu_export"
+        app:iconTint="@color/menu_icon"
+        app:showAsAction="ifRoom" />
+
 </menu>

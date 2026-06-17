@@ -52,11 +52,12 @@ object ThroughputUtils {
         }
     }
 
+    /** Grid ordinal: 0 TCP_RX, 1 TCP_TX, 2 UDP_RX, 3 UDP_TX, 4 TLS_RX, 5 TLS_TX */
     fun isThroughPutTypeDownload(key : Int) : Boolean{
         return when(key){
-            0, 2, 4, 5 ->  true
-            1, 3 ->  false
-            else ->  false
+            0, 2, 4 -> true  // receive / download (this device is server)
+            1, 3, 5 -> false // send / upload (this device is client — user enters peer IP)
+            else -> false
         }
     }
 

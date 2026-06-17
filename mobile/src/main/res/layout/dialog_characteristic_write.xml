@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/dialog_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    style="@style/dialog_card">
+    android:layout_gravity="center_horizontal">
 
     <LinearLayout
         style="@style/dialog_margins"
@@ -18,18 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
-            android:text="@string/dialog_char_write_title"/>
+            android:text="@string/dialog_char_write_title" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/characteristic_dialog_service_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:text="@string/characteristic_dialog_default_service_name"
                 android:textSize="@dimen/dialog_charac_service_name_text_size" />
 
@@ -37,7 +38,7 @@
                 android:id="@+id/characteristic_dialog_characteristic_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:text="@string/characteristic_dialog_default_charac_name"
                 android:textColor="@color/silabs_primary_text"
                 android:textSize="@dimen/dialog_charac_name_text_size" />
@@ -46,7 +47,7 @@
                 android:id="@+id/characteristic_dialog_characteristic_uuid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/helvetica_neue_regular"
                 android:text="@string/characteristic_dialog_default_uuid"
                 android:textColor="@color/silabs_primary_text"
                 android:textSize="@dimen/dialog_charac_uuid_text_size" />
@@ -59,7 +60,7 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/characteristic_spinner_dialog_spinner_scroll_height" >
+            android:layout_height="@dimen/characteristic_spinner_dialog_spinner_scroll_height">
 
             <LinearLayout
                 android:id="@+id/characteristic_writable_fields_container"
@@ -69,57 +70,68 @@
                 android:paddingVertical="@dimen/dialog_writable_fields_container_padding" />
         </ScrollView>
 
-        <RadioGroup android:id="@+id/write_method_radio_group"
+        <RadioGroup
+            android:id="@+id/write_method_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RadioButton
-                style="@style/radio_button_bg"
                 android:id="@+id/write_with_resp_radio_button"
+                style="@style/radio_button_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Write_with_response"/>
+                android:fontFamily="@font/stolzl_regular"
+                android:text="@string/Write_with_response" />
 
             <RadioButton
-                style="@style/radio_button_bg"
                 android:id="@+id/write_without_resp_radio_button"
+                style="@style/radio_button_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Write_without_response"/>
+                android:fontFamily="@font/stolzl_regular"
+                android:text="@string/Write_without_response" />
 
         </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/cancel_btn"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_btn"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel"/>
+                android:text="@string/button_cancel"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/clear_btn"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clear_btn"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
                 android:gravity="center"
-                android:text="@string/button_clear" />
+                android:text="@string/button_clear"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/save_btn"
-                style="@style/dialog_button_positive_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_btn"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/button_send"
-                tools:text="Indicate"/>
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                tools:text="Indicate" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -18,11 +18,11 @@
 
     <EditText
         android:id="@+id/et_advertising_set_name"
-        style="@style/EditTextNormal"
-        android:fontFamily="sans-serif-medium"
+        style="@style/SilabsRebrandingEditTextNormal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="New adv"
+        android:fontFamily="@font/stolzl_medium"
+        tools:text="New advertiser"
         android:layout_marginTop="16dp" />
 
     <include

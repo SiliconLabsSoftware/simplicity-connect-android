@@ -28,6 +28,14 @@ class MqttViewModel(@SuppressLint("StaticFieldLeak") val context: Context) : Vie
     fun connect(topic: String, endPoint: String, sslContext: SSLContext) =
         repository.connect(topic, endPoint, sslContext)
 
+    /**
+     * Clears the last MQTT payload so [mqttMessages.observe] does not synchronously replay a
+     * retained/stale message and dismiss loading UI before real subscription traffic arrives.
+     */
+    fun prepareMqttObservationForNewSubscription() {
+        repository.clearMqttMessageCacheForNewSubscription()
+    }
+
     fun subscribe(topic: String) {
         repository.subscribe(topic)
     }

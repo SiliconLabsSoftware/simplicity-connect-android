@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Disabled: gray checkbox (checked or unchecked) -->
+    <item android:color="@color/silabs_inactive" android:state_enabled="false" />
+    <item android:color="@color/silabs_redtheme_primary_color" android:state_checked="true" />
+    <item android:color="@color/silabs_redtheme_checkbox_text_color" />
+</selector>

@@ -15,6 +15,7 @@
         android:layout_marginStart="32dp"
         android:ellipsize="end"
         android:maxLines="2"
+        android:fontFamily="@font/stolzl_regular"
         app:layout_constraintEnd_toStartOf="@id/ib_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -100,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
+            android:fontFamily="@font/stolzl_regular"
             android:text="@string/gatt_configurator_label_write"
             android:visibility="gone"
             tools:visibility="visible"
@@ -115,7 +117,8 @@
             android:text="@string/gatt_configurator_label_read"
             android:visibility="gone"
             tools:visibility="visible"
-            app:drawableStartCompat="@drawable/redesign_ic_property_read_off"/>
+            android:fontFamily="@font/stolzl_regular"
+            app:drawableStartCompat="@drawable/redesign_ic_property_read_off" />
     </LinearLayout>
 
     <View

@@ -9,15 +9,18 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@drawable/modal_bg"
+        android:clipChildren="false">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_scanned_devices"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top"
-            android:layout_marginStart="@dimen/matter_2dp"
-            android:layout_marginEnd="@dimen/matter_2dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/matter_8dp"
+            android:paddingBottom="@dimen/matter_16dp"
             android:dividerHeight="@dimen/matter_2dp"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
@@ -46,10 +49,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/SilabsMatterDeviceTitle"
                     android:gravity="center"
                     android:padding="@dimen/adapter_item_padding"
                     android:text="@string/matter_scanner_adapter_empty_list_title"
-                    android:textColor="@color/adapter_item_title_color"
                     android:textSize="@dimen/text_size_L"
                      />
 
@@ -58,9 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    style="@style/SilabsMatterDeviceTitle"
                     android:layout_gravity="center"
                     android:text="@string/matter_scanner_adapter_empty_list_message_idle"
-                    android:textColor="@color/adapter_item_title_color"
                     android:textSize="@dimen/text_size_SM" />
 
 
@@ -70,11 +73,12 @@
                 android:id="@+id/tv_quick_start_hyperlink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/Silabs_Rebranding_Body"
                 android:gravity="center|start"
                 android:layout_gravity="center"
                 android:layout_marginTop ="@dimen/matter_50dp"
-                android:padding="@dimen/matter_30dp"
-                android:textColor="@color/adapter_item_title_color"
+                android:padding="@dimen/matter_45dp"
+                android:textColor="@color/silabs_redtheme_body_text_color"
                 android:textSize="@dimen/text_size_SM" />
         </LinearLayout>
     </FrameLayout>

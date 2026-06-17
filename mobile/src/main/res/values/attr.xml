@@ -14,4 +14,9 @@
         <attr name="rippleRadius" format="dimension" />
         <attr name="rippleScale" format="float" />
     </declare-styleable>
+
+    <declare-styleable name="SpeedView">
+        <!-- When true, BLE throughput red ring colors; when false, Wi‑Fi style silabs_speedmeter gradient -->
+        <attr name="useBleThroughputSpeedRing" format="boolean" />
+    </declare-styleable>
 </resources>

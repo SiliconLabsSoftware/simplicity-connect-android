@@ -1,10 +1,11 @@
 package com.siliconlabs.bledemo.bluetooth.services
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
+// GATT-server debug notification (disabled) — uncomment if re-enabling:
+// import android.app.Notification
+// import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
+// import android.app.PendingIntent
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
@@ -46,7 +47,7 @@ import com.siliconlabs.bledemo.bluetooth.ble.ConnectedDeviceInfo
 import com.siliconlabs.bledemo.bluetooth.ble.GattConnection
 import com.siliconlabs.bledemo.bluetooth.ble.ScanResultCompat
 import com.siliconlabs.bledemo.bluetooth.ble.TimeoutGattCallback
-import com.siliconlabs.bledemo.features.configure.advertiser.activities.PendingServerConnectionActivity
+// import com.siliconlabs.bledemo.features.configure.advertiser.activities.PendingServerConnectionActivity
 import com.siliconlabs.bledemo.features.configure.advertiser.services.AdvertiserService
 import com.siliconlabs.bledemo.features.configure.gatt_configurator.utils.BluetoothGattServicesCreator
 import com.siliconlabs.bledemo.features.configure.gatt_configurator.utils.GattConfiguratorStorage
@@ -56,7 +57,7 @@ import com.siliconlabs.bledemo.features.scan.browser.models.logs.GattOperationWi
 import com.siliconlabs.bledemo.features.scan.browser.models.logs.GattOperationWithParameterLog
 import com.siliconlabs.bledemo.features.scan.browser.models.logs.Log
 import com.siliconlabs.bledemo.features.scan.browser.models.logs.TimeoutLog
-import com.siliconlabs.bledemo.home_screen.activities.MainActivity
+// import com.siliconlabs.bledemo.home_screen.activities.MainActivity
 import com.siliconlabs.bledemo.home_screen.activities.MainActivity.Companion.ACTION_SHOW_CUSTOM_TOAST
 import com.siliconlabs.bledemo.home_screen.activities.MainActivity.Companion.EXTRA_TOAST_MESSAGE
 import com.siliconlabs.bledemo.home_screen.menu_items.HealthThermometer
@@ -88,17 +89,18 @@ class BluetoothService : LocalService<BluetoothService>() {
         private const val RSSI_UPDATE_FREQUENCY = 2000L
         private const val REFRESH_SERVICES_DELAY = 500L // give device time refresh cache
 
-        private const val ACTION_GATT_SERVER_DEBUG_CONNECTION =
-            "com.siliconlabs.bledemo.action.GATT_SERVER_DEBUG_CONNECTION"
-        private const val ACTION_GATT_SERVER_REMOVE_NOTIFICATION =
-            "com.siliconlabs.bledemo.action.GATT_SERVER_REMOVE_NOTIFICATION"
         const val ACTION_SHOW_BOND_LOSS_DIALOG =
             "com.siliconlabs.bledemo.action.SHOW_BOND_LOSS_DIALOG"
-        private const val GATT_SERVER_REMOVE_NOTIFICATION_REQUEST_CODE = 666
-        private const val GATT_SERVER_DEBUG_CONNECTION_REQUEST_CODE = 888
-        private const val GATT_SERVER_OPEN_CONNECTION_REQUEST_CODE = 777
+        // GATT-server debug notification (disabled) — companion symbols for restore:
+        // private const val ACTION_GATT_SERVER_DEBUG_CONNECTION =
+        //     "com.siliconlabs.bledemo.action.GATT_SERVER_DEBUG_CONNECTION"
+        // private const val ACTION_GATT_SERVER_REMOVE_NOTIFICATION =
+        //     "com.siliconlabs.bledemo.action.GATT_SERVER_REMOVE_NOTIFICATION"
+        // private const val GATT_SERVER_REMOVE_NOTIFICATION_REQUEST_CODE = 666
+        // private const val GATT_SERVER_DEBUG_CONNECTION_REQUEST_CODE = 888
+        // private const val GATT_SERVER_OPEN_CONNECTION_REQUEST_CODE = 777
         private const val NOTIFICATION_ID = 999
-        private const val CHANNEL_ID = "DEBUG_CONNECTION_CHANNEL"
+        // private const val CHANNEL_ID = "DEBUG_CONNECTION_CHANNEL"
         const val EXTRA_BLUETOOTH_DEVICE = "EXTRA_BLUETOOTH_DEVICE"
         const val EXTRA_DEVICE_ADDRESS = "EXTRA_DEVICE_ADDRESS"
     }
@@ -252,7 +254,7 @@ class BluetoothService : LocalService<BluetoothService>() {
         registerReceiver(scanReceiver, IntentFilter(BluetoothDevice.ACTION_FOUND))
         registerReceiver(bluetoothReceiver, IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED))
         registerReceiver(locationReceiver, IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION))
-        registerGattServerReceiver()
+        // GATT-server debug notification (disabled): registerGattServerReceiver()
         initGattServer()
         // Register for KEY_MISSING and ENCRYPTION_CHANGE intents
         val filter = IntentFilter().apply {
@@ -350,19 +352,18 @@ class BluetoothService : LocalService<BluetoothService>() {
         }
     }
 
-    private fun registerGattServerReceiver() {
-        val filter = IntentFilter().apply {
-            addAction(ACTION_GATT_SERVER_DEBUG_CONNECTION)
-            addAction(ACTION_GATT_SERVER_REMOVE_NOTIFICATION)
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(gattServerBroadcastReceiver, filter, RECEIVER_EXPORTED)
-        } else {
-            registerReceiver(gattServerBroadcastReceiver, filter)
-        }
-
-    }
+    // --- GATT-server debug connection notification (disabled; uncomment imports/constants, onCreate/onDestroy, and the large block before closeGattServerNotification) ---
+    // private fun registerGattServerReceiver() {
+    //     val filter = IntentFilter().apply {
+    //         addAction(ACTION_GATT_SERVER_DEBUG_CONNECTION)
+    //         addAction(ACTION_GATT_SERVER_REMOVE_NOTIFICATION)
+    //     }
+    //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    //         registerReceiver(gattServerBroadcastReceiver, filter, RECEIVER_EXPORTED)
+    //     } else {
+    //         registerReceiver(gattServerBroadcastReceiver, filter)
+    //     }
+    // }
 
     override fun onDestroy() {
         stopDiscovery()
@@ -373,10 +374,6 @@ class BluetoothService : LocalService<BluetoothService>() {
         } catch (_: IllegalArgumentException) {
         }
         try {
-            unregisterReceiver(gattServerBroadcastReceiver)
-        } catch (_: IllegalArgumentException) {
-        }
-        try {
             unregisterReceiver(bluetoothReceiver)
         } catch (_: IllegalArgumentException) {
         }
@@ -384,6 +381,8 @@ class BluetoothService : LocalService<BluetoothService>() {
             unregisterReceiver(locationReceiver)
         } catch (_: IllegalArgumentException) {
         }
+        // GATT-server debug notification (disabled):
+        // try { unregisterReceiver(gattServerBroadcastReceiver) } catch (_: IllegalArgumentException) {}
         try {
             unregisterReceiver(keyMissingAndEncryptionChangeReceiver)
         } catch (_: IllegalArgumentException) {
@@ -1093,9 +1092,11 @@ class BluetoothService : LocalService<BluetoothService>() {
 
             when (newState) {
                 BluetoothGatt.STATE_CONNECTED -> if (status == BluetoothGatt.GATT_SUCCESS) {
-                    if (gattServerCallback != null) {
-                        gattServerCallback?.onConnectionStateChange(device, status, newState)
-                    } else if (isNotificationEnabled) showDebugConnectionNotification(device)
+                    // GATT-server debug notification disabled; previous behavior:
+                    // if (gattServerCallback != null) {
+                    //     gattServerCallback?.onConnectionStateChange(device, status, newState)
+                    // } else if (isNotificationEnabled) showDebugConnectionNotification(device)
+                    gattServerCallback?.onConnectionStateChange(device, status, newState)
                 }
             }
         }
@@ -1242,116 +1243,102 @@ class BluetoothService : LocalService<BluetoothService>() {
         return devicesToIndicate[characteristicUuid] ?: emptySet()
     }
 
-    private fun getYesPendingIntent(device: BluetoothDevice): PendingIntent {
-        val intent = Intent(ACTION_GATT_SERVER_DEBUG_CONNECTION)
-        intent.putExtra(EXTRA_BLUETOOTH_DEVICE, device)
-
-        val pendingIntentFlag =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
-            else PendingIntent.FLAG_CANCEL_CURRENT
-
-        return PendingIntent.getBroadcast(
-            this,
-            GATT_SERVER_DEBUG_CONNECTION_REQUEST_CODE,
-            intent,
-            pendingIntentFlag
-        )
-    }
-
-    private fun getNoPendingIntent(): PendingIntent {
-        val intent = Intent(ACTION_GATT_SERVER_REMOVE_NOTIFICATION)
-        val pendingIntentFlag =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
-            else PendingIntent.FLAG_CANCEL_CURRENT
-
-        return PendingIntent.getBroadcast(
-            this,
-            GATT_SERVER_REMOVE_NOTIFICATION_REQUEST_CODE,
-            intent,
-            pendingIntentFlag
-        )
-    }
-
-    private fun getYesAndOpenPendingIntent(device: BluetoothDevice): PendingIntent {
-        val intent = Intent(this, PendingServerConnectionActivity::class.java).apply {
-            putExtra(EXTRA_BLUETOOTH_DEVICE, device)
-            flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-        }
-        val backIntent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        }
-
-        val pendingIntentFlag =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
-            else PendingIntent.FLAG_ONE_SHOT
-
-        return PendingIntent.getActivities(
-            this,
-            GATT_SERVER_OPEN_CONNECTION_REQUEST_CODE,
-            arrayOf(backIntent, intent),
-            pendingIntentFlag
-        )
-    }
-
-    private fun showDebugConnectionNotification(device: BluetoothDevice) {
-        val deviceName = device.name ?: getString(R.string.not_advertising_shortcut)
-        createNotificationChannel()
-
-        val notification = Notification.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.si_launcher)
-            .setContentTitle(
-                getString(
-                    R.string.notification_title_device_has_connected,
-                    deviceName
-                )
-            )
-            .setContentText(getString(R.string.notification_note_debug_connection))
-            .addAction(buildAction(getString(R.string.button_yes), getYesPendingIntent(device)))
-            /* .addAction(buildAction(getString(R.string.notification_button_yes_and_open), getYesAndOpenPendingIntent(device)))*/
-            .addAction(buildAction(getString(R.string.button_no), getNoPendingIntent()))
-            .build()
-
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(NOTIFICATION_ID, notification)
-    }
-
-    private fun createNotificationChannel() {
-        val name = getString(R.string.notification_channel_name)
-        val descriptionText = getString(R.string.notification_channel_description)
-        val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-            description = descriptionText
-        }
-
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    private fun buildAction(actionText: String, actionIntent: PendingIntent): Notification.Action {
-        return Notification.Action.Builder(
-            R.mipmap.si_launcher,
-            actionText,
-            actionIntent
-        ).build()
-    }
-
-    private val gattServerBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
-                ACTION_GATT_SERVER_DEBUG_CONNECTION -> {
-                    val device = intent.getParcelableExtra<BluetoothDevice>(EXTRA_BLUETOOTH_DEVICE)
-                    device?.let {
-                        connectGatt(device, false, null)
-                    }
-                    closeGattServerNotification()
-                }
-
-                ACTION_GATT_SERVER_REMOVE_NOTIFICATION -> closeGattServerNotification()
-            }
-        }
-    }
+    // private fun getYesPendingIntent(device: BluetoothDevice): PendingIntent {
+    //     val intent = Intent(ACTION_GATT_SERVER_DEBUG_CONNECTION)
+    //     intent.putExtra(EXTRA_BLUETOOTH_DEVICE, device)
+    //     val pendingIntentFlag =
+    //         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+    //         else PendingIntent.FLAG_CANCEL_CURRENT
+    //     return PendingIntent.getBroadcast(
+    //         this,
+    //         GATT_SERVER_DEBUG_CONNECTION_REQUEST_CODE,
+    //         intent,
+    //         pendingIntentFlag
+    //     )
+    // }
+    //
+    // private fun getNoPendingIntent(): PendingIntent {
+    //     val intent = Intent(ACTION_GATT_SERVER_REMOVE_NOTIFICATION)
+    //     val pendingIntentFlag =
+    //         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+    //         else PendingIntent.FLAG_CANCEL_CURRENT
+    //     return PendingIntent.getBroadcast(
+    //         this,
+    //         GATT_SERVER_REMOVE_NOTIFICATION_REQUEST_CODE,
+    //         intent,
+    //         pendingIntentFlag
+    //     )
+    // }
+    //
+    // private fun getYesAndOpenPendingIntent(device: BluetoothDevice): PendingIntent {
+    //     val intent = Intent(this, PendingServerConnectionActivity::class.java).apply {
+    //         putExtra(EXTRA_BLUETOOTH_DEVICE, device)
+    //         flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+    //     }
+    //     val backIntent = Intent(this, MainActivity::class.java).apply {
+    //         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    //     }
+    //     val pendingIntentFlag =
+    //         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) PendingIntent.FLAG_IMMUTABLE
+    //         else PendingIntent.FLAG_ONE_SHOT
+    //     return PendingIntent.getActivities(
+    //         this,
+    //         GATT_SERVER_OPEN_CONNECTION_REQUEST_CODE,
+    //         arrayOf(backIntent, intent),
+    //         pendingIntentFlag
+    //     )
+    // }
+    //
+    // private fun showDebugConnectionNotification(device: BluetoothDevice) {
+    //     val deviceName = device.name ?: getString(R.string.not_advertising_shortcut)
+    //     createNotificationChannel()
+    //     val notification = Notification.Builder(this, CHANNEL_ID)
+    //         .setSmallIcon(R.mipmap.si_launcher)
+    //         .setContentTitle(
+    //             getString(R.string.notification_title_device_has_connected, deviceName)
+    //         )
+    //         .setContentText(getString(R.string.notification_note_debug_connection))
+    //         .addAction(buildAction(getString(R.string.button_yes), getYesPendingIntent(device)))
+    //         // .addAction(buildAction(getString(R.string.notification_button_yes_and_open), getYesAndOpenPendingIntent(device)))
+    //         .addAction(buildAction(getString(R.string.button_no), getNoPendingIntent()))
+    //         .build()
+    //     val notificationManager =
+    //         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    //     notificationManager.notify(NOTIFICATION_ID, notification)
+    // }
+    //
+    // private fun createNotificationChannel() {
+    //     val name = getString(R.string.notification_channel_name)
+    //     val descriptionText = getString(R.string.notification_channel_description)
+    //     val importance = NotificationManager.IMPORTANCE_HIGH
+    //     val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+    //         description = descriptionText
+    //     }
+    //     val notificationManager: NotificationManager =
+    //         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    //     notificationManager.createNotificationChannel(channel)
+    // }
+    //
+    // private fun buildAction(actionText: String, actionIntent: PendingIntent): Notification.Action {
+    //     return Notification.Action.Builder(
+    //         R.mipmap.si_launcher,
+    //         actionText,
+    //         actionIntent
+    //     ).build()
+    // }
+    //
+    // private val gattServerBroadcastReceiver = object : BroadcastReceiver() {
+    //     override fun onReceive(context: Context?, intent: Intent?) {
+    //         when (intent?.action) {
+    //             ACTION_GATT_SERVER_DEBUG_CONNECTION -> {
+    //                 val device = intent.getParcelableExtra<BluetoothDevice>(EXTRA_BLUETOOTH_DEVICE)
+    //                 device?.let { connectGatt(it, false, null) }
+    //                 closeGattServerNotification()
+    //             }
+    //             ACTION_GATT_SERVER_REMOVE_NOTIFICATION -> closeGattServerNotification()
+    //         }
+    //     }
+    // }
 
     fun closeGattServerNotification() {
         val notificationManager =

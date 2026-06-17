@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:fontFamily="@font/stolzl_medium"
+    android:gravity="center_vertical|start"
+    android:includeFontPadding="false"
+    android:maxLines="2"
+    android:minHeight="36dp"
+    android:paddingStart="8dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="28dp"
+    android:paddingBottom="4dp"
+    android:textColor="@color/silabs_redtheme_subheader_text_color"
+    android:textSize="12sp" />

@@ -12,4 +12,39 @@
     <style name="DialogCorners">
         <item name="cornerFamily">rounded</item>
     </style>
+
+    <!-- Oven-RangeHood bottom sheet: top corners only rounded, edge-to-edge (no horizontal margin) -->
+    <style name="ThemeOverlay.OvenRangeHoodBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.App.OvenRangeHoodBottomSheet</item>
+    </style>
+
+    <style name="Widget.App.OvenRangeHoodBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.App.BottomSheetTopCornersOnly</item>
+    </style>
+
+    <!-- Only top-left and top-right corners rounded; bottom corners square (iOS-style) -->
+    <style name="ShapeAppearanceOverlay.App.BottomSheetTopCornersOnly" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+    </style>
+
+    <!-- Floating iOS-style modal: margins so sheet doesn't touch edges; transparent container so custom drawable shows -->
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet.Floating</item>
+    </style>
+
+    <style name="Widget.App.BottomSheet.Floating" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+
+    <!-- AutoComplete / dropdown list: pressed row + list selector use brand primary instead of blue -->
+    <style name="ThemeOverlay.Silabs.DropdownList" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorControlHighlight">@color/silabs_primary_color</item>
+        <item name="colorControlHighlight">@color/silabs_primary_color</item>
+    </style>
 </resources>
