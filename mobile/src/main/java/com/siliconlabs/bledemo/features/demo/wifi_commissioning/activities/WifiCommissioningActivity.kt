@@ -209,6 +209,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             disconnectProgressDialog =
                 ProgressDialog.show(this, getString(R.string.empty_description), message)
             applyProgressDialogMessageStyle(disconnectProgressDialog)
+            handler.postDelayed(disconnectionTimeoutHandler,timeout)
         }
     }
 
@@ -218,28 +219,51 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             progressDialog =
                 ProgressDialog.show(this, getString(R.string.empty_description), message)
             applyProgressDialogMessageStyle(progressDialog)
-            lifecycleScope.launch {
-               // delay(60_000) // 60 seconds
-                handler.postDelayed({
-                    if (progressDialog?.isShowing == true) {
-                        progressDialog?.dismiss()
-                        progressDialog = null
-                        DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
-                            .show()
-                        finish()
-                    } }, timeout)
+            handler.postDelayed(connectionTimeoutHandler,timeout)
 
-
-
-            }
         }
     }
+
+
+    private val connectionTimeoutHandler = Runnable {
+
+        lifecycleScope.launch {
+
+            if (progressDialog?.isShowing == true) {
+                progressDialog?.dismiss()
+                progressDialog = null
+                DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
+                    .show()
+                finish()
+
+            }
+
+        }
+    }
+
+    private val disconnectionTimeoutHandler = Runnable {
+
+        lifecycleScope.launch {
+
+            if (disconnectProgressDialog?.isShowing == true) {
+                disconnectProgressDialog?.dismiss()
+                disconnectProgressDialog = null
+                DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
+                    .show()
+                finish()
+
+            }
+
+        }
+    }
+
 
     private fun dismissProgressDialog() {
         runOnUiThread { progressDialog?.dismiss() }
     }
 
     private fun dismissDisconnectProgressDialog() {
+        handler.removeCallbacks(disconnectionTimeoutHandler)
         runOnUiThread { disconnectProgressDialog?.dismiss() }
     }
 
@@ -288,6 +312,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     }
 
     fun onAccessPointConnection(isSuccessful: Boolean) {
+        handler.removeCallbacks(connectionTimeoutHandler)
         dismissProgressDialog()
         if (isSuccessful) {
             println("DMP Connect Type : ${connectType}")
@@ -910,6 +935,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         progressDialog?.dismiss()
         handler.removeCallbacks(pullRefreshTimeoutRunnable)
         handler.removeCallbacks(timeoutRunnable)
+        handler.removeCallbacks(disconnectionTimeoutHandler)
         handler.removeCallbacksAndMessages(null)
     }
 
