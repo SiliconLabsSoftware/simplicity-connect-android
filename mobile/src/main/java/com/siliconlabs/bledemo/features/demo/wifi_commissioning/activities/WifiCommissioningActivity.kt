@@ -62,6 +62,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
 
     private lateinit var _binding: ActivityWifiCommissioningBinding
     private var progressDialog: ProgressDialog? = null
+    private var disconnectProgressDialog: ProgressDialog? = null
 
     private var accessPointsAdapter: AccessPointsAdapter? = null
     private val accessPoints = ArrayList<AccessPoint>()
@@ -84,7 +85,7 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     private lateinit var sharedPref: SharedPreferences
 
     var connectType = BluetoothService.GattConnectType.WIFI_COMMISSIONING;
-    private val twentySeconds = 60000L //60 seconds in milliseconds (btapp-2433)
+    private val timeout = 75000L
 
     private val handler = Handler(Looper.getMainLooper())
     private var isPullRefreshScan = false
@@ -202,6 +203,15 @@ class WifiCommissioningActivity : BaseDemoActivity() {
         }
     }
 
+    private fun showDisconnectProgressDialog(message: String) {
+        runOnUiThread {
+            disconnectProgressDialog?.dismiss()
+            disconnectProgressDialog =
+                ProgressDialog.show(this, getString(R.string.empty_description), message)
+            applyProgressDialogMessageStyle(disconnectProgressDialog)
+        }
+    }
+
     private fun showProgressDialogWithTimeout(message: String) {
         runOnUiThread {
             progressDialog?.dismiss()
@@ -209,20 +219,28 @@ class WifiCommissioningActivity : BaseDemoActivity() {
                 ProgressDialog.show(this, getString(R.string.empty_description), message)
             applyProgressDialogMessageStyle(progressDialog)
             lifecycleScope.launch {
-                delay(60_000) // 60 seconds
-                if (progressDialog?.isShowing == true) {
-                    progressDialog?.dismiss()
-                    progressDialog = null
-                    DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
-                        .show()
-                    finish()
-                }
+               // delay(60_000) // 60 seconds
+                handler.postDelayed({
+                    if (progressDialog?.isShowing == true) {
+                        progressDialog?.dismiss()
+                        progressDialog = null
+                        DynamicToast.make(this@WifiCommissioningActivity, "Timeout Expired", 3000)
+                            .show()
+                        finish()
+                    } }, timeout)
+
+
+
             }
         }
     }
 
     private fun dismissProgressDialog() {
         runOnUiThread { progressDialog?.dismiss() }
+    }
+
+    private fun dismissDisconnectProgressDialog() {
+        runOnUiThread { disconnectProgressDialog?.dismiss() }
     }
 
     private fun applyProgressDialogMessageStyle(dialog: ProgressDialog?) {
@@ -360,11 +378,12 @@ class WifiCommissioningActivity : BaseDemoActivity() {
     }
 
     fun onAccessPointDisconnection(isSuccessful: Boolean) {
-        dismissProgressDialog()
+        dismissDisconnectProgressDialog()
         if (isSuccessful) {
             showToastOnUi(getString(R.string.ap_disconnect_success))
             when (connectType) {
                 BluetoothService.GattConnectType.WIFI_COMMISSIONING -> {
+                    handler.removeCallbacks( timeoutRunnable)
                     connectedAccessPoint = null
                     scanForAccessPoints()
                     toggleMainView(isAccessPointConnected = false)
@@ -508,11 +527,12 @@ class WifiCommissioningActivity : BaseDemoActivity() {
             setCancelable(false)
             setMessage(dialogMessage)
             setPositiveButton(getString(R.string.yes)) { dialog: DialogInterface, _: Int ->
-                showProgressDialog(getString(R.string.disconnect_ap))
+                //showProgressDialog(getString(R.string.disconnect_ap))
+                showDisconnectProgressDialog(getString(R.string.disconnect_ap))
                 if (connectType == BluetoothService.GattConnectType.AWS_DEMO
                     || connectType == BluetoothService.GattConnectType.SMART_LOCK || connectType == BluetoothService.GattConnectType.LIGHT
                 ) {
-                    handler.postDelayed(timeoutRunnable, twentySeconds) // Schedule timeout
+                    handler.postDelayed(timeoutRunnable, timeout) // Schedule timeout
                     // handler.postDelayed({
                     writeCommand(BoardCommand.Send.DISCONNECTION)
                     dialog.cancel()

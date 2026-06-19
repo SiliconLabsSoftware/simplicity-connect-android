@@ -73,7 +73,7 @@ class ScanFragment : Fragment(), BluetoothService.ScanListener {
         viewModel.setIsScanningOn(false)
     }
 
-    fun setScanFragmentListener(listener: ScanFragmentListener) {
+    fun setScanFragmentListener(listener: ScanFragmentListener?) {
         scanFragmentListener = listener
     }
 
