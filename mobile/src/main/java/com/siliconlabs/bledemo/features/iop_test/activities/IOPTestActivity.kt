@@ -41,6 +41,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
@@ -916,7 +917,7 @@ class IOPTestActivity : AppCompatActivity() {
                 backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this@IOPTestActivity,
-                        R.color.silabs_blue
+                        R.color.silabs_red
                     )
                 )
             }
@@ -972,15 +973,19 @@ class IOPTestActivity : AppCompatActivity() {
     }
 
     private fun showBondingRemovedDialogIfNeeded() {
-        if (bondingRemovedDialogShownThisRun || isFinishing) {
-            return
+        try {
+            if (bondingRemovedDialogShownThisRun || isFinishing) {
+                return
+            }
+            bondingRemovedDialogShownThisRun = true
+            AlertDialog.Builder(this)
+                .setMessage(R.string.iop_test_bonding_removed_dialog_message)
+                .setPositiveButton(R.string.button_done) { dialog, _ -> dialog.dismiss() }
+                .setCancelable(false)
+                .show()
+        } catch (e: Exception) {
+
         }
-        bondingRemovedDialogShownThisRun = true
-        AlertDialog.Builder(this)
-            .setMessage(R.string.iop_test_bonding_removed_dialog_message)
-            .setPositiveButton(R.string.button_done) { dialog, _ -> dialog.dismiss() }
-            .setCancelable(false)
-            .show()
     }
 
     /**
@@ -1140,8 +1145,19 @@ class IOPTestActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
+            setDisplayShowHomeEnabled(false)
             title = getString(R.string.title_Interoperability_Test)
+        }
+        supportActionBar?.setHomeAsUpIndicator(
+            AppCompatResources.getDrawable(this, R.drawable.matter_back)
+        )
+        binding.toolbar.setNavigationOnClickListener {
+            val dialog =
+                supportFragmentManager.findFragmentByTag("select_device_tag") as? SelectDeviceDialog
+            if (dialog != null && dialog.isVisible) {
+                dialog.dismiss()
+            }
+            onBackPressed()
         }
         checkIfBluetoothIsSupported()
 
@@ -1477,9 +1493,10 @@ class IOPTestActivity : AppCompatActivity() {
     private fun setNotificationForCharacteristic(
         characteristic: BluetoothGattCharacteristic?,
         notifications: Notifications
-    ) {
-        setNotificationForCharacteristic(
-            mBluetoothGatt!!,
+    ): Boolean {
+        val gatt = mBluetoothGatt ?: return false
+        return setNotificationForCharacteristic(
+            gatt,
             characteristic,
             UuidConsts.CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR,
             notifications
@@ -2440,17 +2457,65 @@ class IOPTestActivity : AppCompatActivity() {
                     ((mByteNumReceived * 1000) / (mEndTimeThroughput - mStartTimeThroughput)).toInt()
                 Log.d(TAG, "set Notification disable for throughput")
                 Log.d(TAG, "Throughput is $mByteSpeed Bytes/sec")
-                try {
-                    setNotificationForCharacteristic(
-                        characteristicIOPPhase3Throughput,
-                        Notifications.DISABLED
-                    )
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error Notification disable for throughput")
-                }
-                mEndThroughputNotification = true
+                disableThroughputNotificationWithRetries()
             }, 5000)
         }
+    }
+
+    private fun disableThroughputNotificationWithRetries() {
+        fun tryAttempt(attempt: Int) {
+            try {
+                val success = setNotificationForCharacteristic(
+                    characteristicIOPPhase3Throughput,
+                    Notifications.DISABLED
+                )
+                if (success) {
+                    mEndThroughputNotification = true
+                    return
+                }
+                if (attempt >= THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS) {
+                    Log.e(
+                        TAG,
+                        "Error Notification disable for throughput after $THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS attempts"
+                    )
+                    mEndThroughputNotification = true
+                    return
+                }
+                Log.w(
+                    TAG,
+                    "Notification disable for throughput failed (attempt $attempt/$THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS), retrying"
+                )
+                val h = handler
+                if (h != null) {
+                    h.postDelayed(
+                        { tryAttempt(attempt + 1) },
+                        THROUGHPUT_NOTIFICATION_DISABLE_RETRY_DELAY_MS
+                    )
+                } else {
+                    mEndThroughputNotification = true
+                }
+            } catch (e: Exception) {
+                if (attempt >= THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS) {
+                    Log.e(
+                        TAG,
+                        "Error Notification disable for throughput after $THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS attempts",
+                        e
+                    )
+                    mEndThroughputNotification = true
+                } else {
+                    Log.w(
+                        TAG,
+                        "Notification disable for throughput exception (attempt $attempt), retrying",
+                        e
+                    )
+                    handler?.postDelayed(
+                        { tryAttempt(attempt + 1) },
+                        THROUGHPUT_NOTIFICATION_DISABLE_RETRY_DELAY_MS
+                    ) ?: run { mEndThroughputNotification = true }
+                }
+            }
+        }
+        tryAttempt(1)
     }
 
     private fun iopPhase3RunTestCaseLEPrivacy(isControl: Int) {
@@ -3791,7 +3856,8 @@ class IOPTestActivity : AppCompatActivity() {
 
             when (mIndexRunning) {
                 POSITION_TEST_SCANNER -> {
-                    if (device.name.equals(getSiliconLabsTestInfo().fwName, ignoreCase = true)) {
+                    if (device.name.equals(getSiliconLabsTestInfo().fwName, ignoreCase = true)
+                        && device.address.equals(getSiliconLabsTestInfo().deviceMacAddress,ignoreCase = true)) {
                         mBluetoothDevice = device
                         mDeviceAddress = device.address
                         scanLeDevice(false)
@@ -3848,6 +3914,9 @@ class IOPTestActivity : AppCompatActivity() {
     companion object {
         private const val FOLDER_NAME = "SiliconLabs_App"
         private const val TAG = "IOPTest"
+
+        private const val THROUGHPUT_NOTIFICATION_DISABLE_MAX_ATTEMPTS = 3
+        private const val THROUGHPUT_NOTIFICATION_DISABLE_RETRY_DELAY_MS = 200L
 
         private val ota_service = UUID.fromString("1d14d6ee-fd63-4fa1-bfa4-8f47b42119f0")
         private val ota_data = UUID.fromString("984227f3-34fc-4045-a5d0-2c581f81a153")

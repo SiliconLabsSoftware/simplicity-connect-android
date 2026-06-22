@@ -22,7 +22,7 @@ class CustomProgressDialog(context: Context) : Dialog(context) {
             binding.customProgressBar.visibility = View.GONE
             binding.customMessage.visibility = View.GONE
             binding.layoutMatterCommissioning.visibility = View.VISIBLE
-            binding.btnCancel.setOnClickListener {
+            binding.cancelBar.setOnClickListener {
                 cancelButtonClickListener?.invoke()
             }
         } else {

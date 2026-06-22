@@ -10,13 +10,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:fontFamily="@font/stolzl_medium"
+                android:textFontWeight="500"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/matter_5dp"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:text="@string/matter_window_open_close_cluster"
-                android:textSize="@dimen/text_size_XL"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <FrameLayout
@@ -55,9 +57,9 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_window_open"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
+                    style="@style/MatterWindowCoverActionButton"
+                    android:layout_width="@dimen/matter_window_cover_action_button_width"
+                    android:layout_height="@dimen/matter_window_cover_action_button_height"
                     android:layout_margin="@dimen/matter_10dp"
                     android:layout_weight="1"
                     android:textSize="@dimen/text_size_SM"
@@ -65,9 +67,9 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_window_close"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
+                    style="@style/MatterWindowCoverActionButton"
+                    android:layout_width="@dimen/matter_window_cover_action_button_width"
+                    android:layout_height="@dimen/matter_window_cover_action_button_height"
                     android:textSize="@dimen/text_size_SM"
                     android:layout_margin="@dimen/matter_10dp"
                     android:layout_weight="1"
@@ -82,14 +84,16 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <EditText
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:layout_weight="1"
-                    style="@style/MatterButtonBlue"
+                    style="@style/MatterWindowCoverTextField"
                     android:id="@+id/et_lift"
                     android:hint="@string/enter_lift_value"
                     android:background="@drawable/background_grey_box"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
-                    android:textSize="@dimen/text_size_SM"
+                    android:layout_width="@dimen/matter_window_cover_text_field_width"
+                    android:layout_height="@dimen/matter_window_cover_text_field_height"
+                    android:textSize="@dimen/matter_10dp"
                     android:maxLength="3"
                     android:layout_margin="@dimen/matter_10dp"
                     android:inputType="number"
@@ -97,12 +101,12 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_window_lift"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
+                    style="@style/MatterWindowCoverActionButton"
+                    android:layout_width="@dimen/matter_window_cover_action_button_width"
+                    android:layout_height="@dimen/matter_window_cover_action_button_height"
                     android:textSize="@dimen/text_size_SM"
                     android:layout_margin="@dimen/matter_10dp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/stolzl_medium"
                     android:layout_weight="1"
                     android:text="@string/lift" />
             </LinearLayout>
@@ -115,24 +119,26 @@
                 android:layout_marginLeft="@dimen/matter_10dp"
                 android:orientation="horizontal">
                 <EditText
+                    android:gravity="center"
+                    android:textAlignment="center"
                     android:layout_weight="1"
-                    style="@style/MatterButtonBlue"
+                    style="@style/MatterWindowCoverTextField"
                     android:id="@+id/et_tilt"
                     android:inputType="number"
                     android:maxLength="3"
                     android:hint="@string/enter_tilt_value"
                     android:background="@drawable/background_grey_box"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
-                    android:textSize="@dimen/text_size_SM"
+                    android:layout_width="@dimen/matter_window_cover_text_field_width"
+                    android:layout_height="@dimen/matter_window_cover_text_field_height"
+                    android:textSize="@dimen/matter_10dp"
                     android:layout_margin="@dimen/matter_10dp"
                     android:textColor="@color/black"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_window_tilt"
-                    style="@style/MatterButtonBlue"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_50dp"
+                    style="@style/MatterWindowCoverActionButton"
+                    android:layout_width="@dimen/matter_window_cover_action_button_width"
+                    android:layout_height="@dimen/matter_window_cover_action_button_height"
                     android:textSize="@dimen/text_size_SM"
                     android:layout_margin="@dimen/matter_10dp"
                     android:layout_weight="1"

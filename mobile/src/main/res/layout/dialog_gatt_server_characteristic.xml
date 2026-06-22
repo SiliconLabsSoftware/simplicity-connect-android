@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    style="@style/dialog_card"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dialog_margin_top"
-    android:layout_marginBottom="@dimen/dialog_margin_bottom"
-    style="@style/dialog_card">
+    android:layout_marginBottom="@dimen/dialog_margin_bottom">
 
     <LinearLayout
         style="@style/dialog_margins"
-        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
         android:minWidth="300dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_header"
@@ -24,9 +24,10 @@
             android:text="@string/gatt_configurator_title_add_a_gatt_characteristic" />
 
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:id="@+id/sv_characteristic_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -45,7 +46,8 @@
                         style="@style/EditTextSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/gatt_configurator_hint_characteristic_name" />
+                        android:hint="@string/gatt_configurator_hint_characteristic_name"
+                        android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
 
                     <AutoCompleteTextView
                         android:id="@+id/actv_characteristic_uuid"
@@ -55,7 +57,8 @@
                         android:layout_marginTop="8dp"
                         android:digits="0123456789ABCDEFabcdef-"
                         android:hint="@string/gatt_configurator_hint_16_128_bit_uuid"
-                        android:maxLength="36" />
+                        android:maxLength="36"
+                        android:popupTheme="@style/ThemeOverlay.Silabs.DropdownList" />
                 </LinearLayout>
 
                 <include
@@ -80,39 +83,46 @@
             android:id="@+id/ll_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/dialog_button_margin_top">
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dialog_button_margin_top"
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_clear"
-                style="@style/dialog_button_negative_action"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_clear"
+                app:cornerRadius="@dimen/silabs_btn_radius"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/button_clear" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel"
-                style="@style/dialog_button_negative_action"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/btn_clear"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:text="@string/button_cancel"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:layout_constraintStart_toEndOf="@id/btn_clear"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save"
-                style="@style/dialog_button_positive_action"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/btn_cancel"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginStart="@dimen/dialog_margin_between_buttons"
                 android:enabled="false"
-                android:text="@string/button_save" />
+                android:text="@string/button_save"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                app:textAllCaps="false"
+                app:backgroundTint="@color/gatt_configurator_save_button_background_tint"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

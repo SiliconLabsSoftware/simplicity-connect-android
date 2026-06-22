@@ -59,7 +59,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:minWidth="32dp"
+                    android:padding="0dp"
                     android:thumb="@drawable/sw_thumb"
+                    app:splitTrack="false"
+                    app:switchMinWidth="32dp"
                     app:track="@drawable/sw_track" />
 
             </LinearLayout>
@@ -143,7 +147,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
 
@@ -158,10 +162,9 @@
 
                     <TextView
                         android:id="@+id/tv_beacon_type"
-                        style="@style/list_item_card_view_text_info_ellipsized"
+                        style="@style/list_item_card_view_text_info_stat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
                         android:text="@string/advertiser_setting_beacon_unspecified" />
 
                 </LinearLayout>
@@ -175,7 +178,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
 
@@ -190,10 +193,9 @@
 
                     <TextView
                         android:id="@+id/tv_connectible"
-                        style="@style/list_item_card_view_text_info_ellipsized"
+                        style="@style/list_item_card_view_text_info_stat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         tools:text="Connectible" />
 
                 </LinearLayout>

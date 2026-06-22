@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.features.demo.awsiot.AWSIOTDemoActivity
 import com.siliconlabs.bledemo.features.demo.awsiot.listener.OnMqttGridItemClickListener
@@ -149,13 +150,13 @@ class GridAdapter(private var items: List<GridItem>,
         val yesBtn: TextView = devKitSensorDialog.findViewById(R.id.yes_opt)
         yesBtn.visibility = View.GONE
         val noBtn: TextView = devKitSensorDialog.findViewById(R.id.no_opt)
-        val onLEDBtn = devKitSensorDialog.findViewById<Button>(R.id.onButton)
+        val onLEDBtn = devKitSensorDialog.findViewById<MaterialButton>(R.id.onButton)
         onLEDBtn.visibility = View.GONE
-        val offLEDBtn = devKitSensorDialog.findViewById<Button>(R.id.offButton)
+        val offLEDBtn = devKitSensorDialog.findViewById<MaterialButton>(R.id.offButton)
         offLEDBtn.visibility = View.GONE
-        val redLEDBtn = devKitSensorDialog.findViewById<Button>(R.id.redButton)
-        val greenLEDBtn = devKitSensorDialog.findViewById<Button>(R.id.greenButton)
-        val blueLEDBtn = devKitSensorDialog.findViewById<Button>(R.id.blueButton)
+        val redLEDBtn = devKitSensorDialog.findViewById<MaterialButton>(R.id.redButton)
+        val greenLEDBtn = devKitSensorDialog.findViewById<MaterialButton>(R.id.greenButton)
+        val blueLEDBtn = devKitSensorDialog.findViewById<MaterialButton>(R.id.blueButton)
         val ledImageStatus = devKitSensorDialog.findViewById<ImageView>(R.id.imageLight)
 
         header.text = title + SPACE + context.getString(R.string.title_control)

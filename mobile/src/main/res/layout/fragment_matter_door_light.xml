@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/sl_light_grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,14 +14,15 @@
 
         <TextView
             android:id="@+id/txt_cluster_name"
+            style="@style/SilabsMatterDeviceScreenTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/matter_5dp"
             android:gravity="center"
             android:text="@string/matter_on_off_cluster_title"
-            android:textSize="@dimen/text_size_XL"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+             />
 
         <ImageView
             android:id="@+id/btn_matter_device_state"
@@ -31,8 +32,8 @@
             android:layout_marginTop="@dimen/matter_25dp"
             android:layout_marginBottom="@dimen/matter_18dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/image"
             android:background="@color/silabs_transparent"
+            android:contentDescription="@string/image"
             android:scaleType="fitCenter" />
 
 
@@ -43,25 +44,33 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_on"
-                style="@style/MatterButtonBlue"
+                android:drawableStart="@drawable/ic_btn_lock"
+                style="@style/button_add_data_outlined"
+                android:fontFamily="@font/stolzl_medium"
+                android:textStyle="normal"
+                android:textSize="@dimen/text_size_SM"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/matter_20dp"
                 android:layout_weight="1" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_off"
-                style="@style/MatterButtonBlue"
+                android:drawableStart="@drawable/ic_btn_unlock"
+                style="@style/button_add_data_outlined"
+                android:fontFamily="@font/stolzl_medium"
                 android:layout_width="match_parent"
+                android:textStyle="normal"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_SM"
                 android:layout_margin="@dimen/matter_20dp"
                 android:layout_weight="1" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_toggle"
-                style="@style/MatterButtonBlue"
+                style="@style/button_add_data_outlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/matter_20dp"

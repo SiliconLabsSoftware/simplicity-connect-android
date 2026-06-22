@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/dialog_card" >
+    android:layout_marginHorizontal="@dimen/space_S"
+    app:cardBackgroundColor="@color/silabs_white"
+    app:cardCornerRadius="@dimen/dialog_corner_radius"
+    app:cardElevation="2dp"
+    app:strokeColor="@color/silabs_divider"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         style="@style/dialog_margins"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             style="@style/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
-            android:text="@string/OTA_Device_Firmware_Update" />
+            android:fontFamily="@font/stolzl_bold"
+            android:gravity="start"
+            android:text="@string/OTA_Device_Firmware_Update"
+            android:textSize="@dimen/dialog_title_size" />
 
         <TextView
             style="@style/dialog_text_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_S"
+            android:gravity="start"
             android:text="@string/ota_dfu_description" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:fillViewport="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,117 +49,132 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.3"
-                        android:gravity="center_vertical"
-                        android:fontFamily="sans-serif"
-                        android:textSize="@dimen/ota_config_dialog_text_size"
-                        android:text="@string/type_colon" />
+                        android:fontFamily="@font/stolzl_bold"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/type_colon"
+                        android:textColor="@color/silabs_redtheme_header_text_color"
+                        android:textSize="@dimen/ota_config_dialog_text_size" />
 
                     <RadioGroup
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="0.7"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:buttonTint="@color/silabs_dark_blue"
                             android:id="@+id/rb_type_partial"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:buttonTint="@color/silabs_redtheme_primary_color"
                             android:checked="true"
-                            android:fontFamily="sans-serif"
-                            android:textSize="@dimen/ota_config_dialog_text_size"
-                            android:text="@string/ota_type_partial" />
+                            android:fontFamily="@font/stolzl_regular"
+                            android:text="@string/ota_type_partial"
+                            android:textColor="@color/silabs_redtheme_header_text_color"
+                            android:textSize="@dimen/ota_config_dialog_text_size" />
 
                         <RadioButton
-                            android:buttonTint="@color/silabs_dark_blue"
                             android:id="@+id/rb_type_full"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:textSize="@dimen/ota_config_dialog_text_size"
-                            android:text="@string/ota_type_full" />
+                            android:buttonTint="@color/silabs_redtheme_primary_color"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:text="@string/ota_type_full"
+                            android:textColor="@color/silabs_redtheme_header_text_color"
+                            android:textSize="@dimen/ota_config_dialog_text_size" />
                     </RadioGroup>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_S">
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.3"
-                        android:textSize="@dimen/ota_config_dialog_text_size"
-                        android:text="@string/Mode_colon" />
+                        android:fontFamily="@font/stolzl_bold"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/Mode_colon"
+                        android:textColor="@color/silabs_redtheme_header_text_color"
+                        android:textSize="@dimen/ota_config_dialog_text_size" />
 
                     <RadioGroup
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.7"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:buttonTint="@color/silabs_dark_blue"
                             android:id="@+id/reliability_radio_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:buttonTint="@color/silabs_redtheme_primary_color"
                             android:checked="true"
-                            android:fontFamily="sans-serif"
-                            android:textSize="@dimen/ota_config_dialog_text_size"
-                            android:text="@string/Reliability" />
+                            android:fontFamily="@font/stolzl_regular"
+                            android:text="@string/Reliability"
+                            android:textColor="@color/silabs_redtheme_header_text_color"
+                            android:textSize="@dimen/ota_config_dialog_text_size" />
 
                         <RadioButton
-                            android:buttonTint="@color/silabs_dark_blue"
                             android:id="@+id/speed_radio_button"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:textSize="@dimen/ota_config_dialog_text_size"
-                            android:text="@string/Speed" />
+                            android:buttonTint="@color/silabs_redtheme_primary_color"
+                            android:fontFamily="@font/stolzl_regular"
+                            android:text="@string/Speed"
+                            android:textColor="@color/silabs_redtheme_header_text_color"
+                            android:textSize="@dimen/ota_config_dialog_text_size" />
                     </RadioGroup>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginVertical="@dimen/space_XS"
-                    android:background="@color/divider_line"/>
+                    android:layout_marginVertical="@dimen/space_S"
+                    android:background="@color/divider_line" />
 
                 <LinearLayout
+                    android:layout_gravity="start"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/space_XS" >
+                    android:layout_marginBottom="@dimen/space_XS">
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.3"
-                        android:gravity="center_vertical"
-                        android:fontFamily="sans-serif"
-                        android:textSize="@dimen/ota_config_dialog_text_size"
-                        android:text="@string/Application_colon" />
+                        android:fontFamily="@font/stolzl_bold"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/Application_colon"
+                        android:textColor="@color/silabs_redtheme_header_text_color"
+                        android:textSize="@dimen/ota_config_dialog_text_size" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/select_app_file_btn"
-                        style="@style/button_external_link"
+                        style="@style/ota_config_file_link_button"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.7"
-                        android:text="@string/select_application_gbl_file" />
+                        android:gravity="center"
+                        android:minHeight="48dp"
+                        android:text="@string/ota_config_choose_file" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -160,21 +186,25 @@
 
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.3"
-                        android:gravity="center_vertical"
-                        android:fontFamily="sans-serif"
-                        android:textSize="@dimen/ota_config_dialog_text_size"
-                        android:text="@string/Apploader_colon" />
+                        android:fontFamily="@font/stolzl_bold"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/Apploader_colon"
+                        android:textColor="@color/silabs_redtheme_header_text_color"
+                        android:textSize="@dimen/ota_config_dialog_text_size" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/select_apploader_file_btn"
-                        style="@style/button_external_link"
+                        style="@style/ota_config_file_link_button"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="0.7"
-                        android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="@string/select_apploader_gbl_file" />
+                        android:minHeight="48dp"
+                        android:text="@string/ota_config_choose_file" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -183,29 +213,48 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
-            android:layout_marginHorizontal="@dimen/dialog_button_margin_end"
-            android:gravity="end">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <Button android:id="@+id/ota_cancel"
-                style="@style/dialog_button_negative_action"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_cancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:layout_marginEnd="@dimen/space_S"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="48dp"
+                android:text="@string/button_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_primary_color"
+                android:textSize="@dimen/text_size_M"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_white"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:strokeColor="@color/silabs_primary_color"
+                app:strokeWidth="1dp" />
 
-            <Button android:id="@+id/ota_proceed"
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_proceed"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_S"
+                android:layout_weight="1"
                 android:enabled="false"
-                android:fontFamily="sans-serif-medium"
-                style="@style/dialog_button_positive_action"
-                android:text="@string/btn_upload" />
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="48dp"
+                android:text="@string/btn_upload"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_primary_color"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
-
+</com.google.android.material.card.MaterialCardView>

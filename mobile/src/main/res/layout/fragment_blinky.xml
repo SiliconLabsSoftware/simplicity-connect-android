@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/modal_bg"
     android:fillViewport="true">
 
     <RelativeLayout
@@ -24,9 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_light_bulb"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="64dp"
+            android:fontFamily="@font/stolzl_medium"
+            android:textSize="@dimen/text_size_SM"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
             android:gravity="center_horizontal"
             android:text="@string/blinky_note_light" />
 
@@ -45,10 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="64dp"
+            android:fontFamily="@font/stolzl_medium"
+            android:textSize="@dimen/text_size_SM"
             android:layout_marginBottom="48dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
             android:gravity="center_horizontal"
             android:text="@string/blinky_note_button" />
 

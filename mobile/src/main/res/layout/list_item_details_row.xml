@@ -23,20 +23,20 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/ScannerDeviceTitle"
             android:layout_marginTop="@dimen/space_S"
             android:layout_marginBottom="@dimen/details_row_between_margin"
-            android:textColor="@color/silabs_black"
             android:textStyle="bold"
-            android:textSize="@dimen/details_row_text_size"
+            android:textSize="@dimen/text_size_SM"
             tools:text="0x1234 - Service" />
 
         <TextView
             android:id="@+id/tv_details"
+            style="@style/ScannerDeviceBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_S"
-            android:textColor="@color/silabs_black"
-            android:textSize="@dimen/details_row_text_size"
+            android:textSize="@dimen/text_size_SM"
             tools:text="0 Characteristics" />
 
     </LinearLayout>

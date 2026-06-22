@@ -2,122 +2,108 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/matter_popup_background"
-    android:gravity="center"
-    android:padding="@dimen/matter_2dp"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/matter_20dp">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/SilabsMatterDeviceTitle"
         android:gravity="center"
         android:text="@string/matter_wifi_configuration_alert_title"
+        android:textColor="@color/black"
         android:textSize="@dimen/text_size_M"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/matter_10dp"
+        style="@style/SilabsMatterDeviceBody"
         android:gravity="center"
         android:text="@string/matter_wifi_configuration_input_alert_title"
+        android:textColor="@color/black"
         android:textSize="@dimen/text_size_SM" />
 
+    <!-- Single white field group with inner divider (screenshot) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/matter_15dp"
-        android:layout_marginTop="@dimen/matter_5dp"
-        android:layout_marginEnd="@dimen/matter_15dp"
-        android:background="@drawable/stroke_box"
-        android:padding="@dimen/matter_0dp">
+        android:layout_marginTop="@dimen/matter_15dp"
+        android:background="@drawable/wifi_config_inputs_group"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:paddingHorizontal="@dimen/matter_15dp"
+            android:paddingVertical="@dimen/matter_12dp"
+            app:boxBackgroundMode="none"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/grey"
+            app:hintEnabled="false">
 
-            <LinearLayout
-                android:id="@+id/ll_wifi"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editNetworkSSID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:layout_margin="@dimen/matter_5dp"
-                android:gravity="left"
-                android:padding="@dimen/matter_10dp">
+                android:autofillHints="username"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|start"
+                android:hint="@string/matter_network_ssid"
+                android:inputType="text"
+                android:lines="1"
+                style="@style/SilabsMatterDeviceBody"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/text_size_SM" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editNetworkSSID"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|left"
-                    android:autofillHints=""
-                    android:background="@drawable/rounded_background"
-                    android:gravity="center|left"
-                    android:hint="@string/matter_network_ssid"
-                    android:lines="1"
-                    android:textSize="@dimen/text_size_SM" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/matter_1dp"
+            android:background="@color/silabs_divider" />
 
-            </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/matter_15dp"
+            android:paddingVertical="@dimen/matter_12dp"
+            app:boxBackgroundMode="none"
+            app:endIconContentDescription="@string/password_toggle_content_description"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/matter_wifi_password_toggle_icon_tint"
+            app:hintEnabled="false">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/grey" />
-
-            <LinearLayout
-                android:id="@+id/ll_thread"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editWiFiPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/matter_5dp"
-                android:background="@drawable/rounded_background"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/matter_10dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/passwordTextInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:hintEnabled="false"
-                    android:gravity="right|center"
-                    app:endIconMode="password_toggle"
-                    app:endIconContentDescription="@string/password_toggle_content_description"
-                    app:endIconDrawable="@drawable/baseline_remove_red_eye_24"
-                    app:boxBackgroundMode="outline"
-                    app:boxStrokeColor="@color/blue_primary"
-                    app:boxStrokeWidth="1dp"
-                    app:boxStrokeWidthFocused="2dp"
-                    app:boxBackgroundColor="@color/sl_light_grey">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editWiFiPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:autofillHints=""
-                        android:background="@android:color/transparent"
-                        android:gravity="center|left"
-                        android:hint="@string/matter_network_password"
-                        android:inputType="textPassword"
-                        android:textSize="@dimen/text_size_SM"
-                        android:lines="1"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/grey" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-        </LinearLayout>
+                android:autofillHints="password"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|start"
+                android:hint="@string/matter_network_password"
+                android:inputType="textPassword"
+                android:lines="1"
+                style="@style/SilabsMatterDeviceBody"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="@dimen/text_size_SM" />
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_marginTop="@dimen/matter_20dp"
+        android:background="@color/silabs_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -126,21 +112,32 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/negativeBtn"
-            style="@style/MatterButtonBlue"
+            style="@style/button_add_data_outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:text="@string/matter_cancel" />
+            android:layout_marginEnd="32dp"
+            android:textStyle="normal"
+            android:layout_marginVertical="@dimen/space_S"
+            android:textSize="@dimen/text_size_ML"
+            android:text="@string/button_cancel"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
 
-        <androidx.appcompat.widget.AppCompatButton
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/positiveBtn"
-            style="@style/MatterButtonBlue"
+            style="@style/Widget.MaterialComponents.Button"
+            android:fontFamily="@font/stolzl_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:text="@string/button_send" />
-
+            android:layout_marginVertical="@dimen/space_S"
+            android:text="@string/button_send"
+            android:textColor="@color/silabs_white"
+            android:textSize="@dimen/text_size_ML"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
     </LinearLayout>
 </LinearLayout>

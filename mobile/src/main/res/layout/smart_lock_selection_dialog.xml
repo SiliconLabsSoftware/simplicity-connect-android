@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_SM"
-            android:fontFamily="sans-serif-medium"/>
+            android:fontFamily="@font/stolzl_medium"/>
 
         <LinearLayout
             android:layout_width="match_parent"

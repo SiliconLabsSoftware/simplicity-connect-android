@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.databinding.DialogDeviceInforamtionBinding
+import com.siliconlabs.bledemo.utils.DisplayUtils
 
 
 class DeviceInformationDialog : DialogFragment() {
@@ -46,7 +47,7 @@ class DeviceInformationDialog : DialogFragment() {
             dialog.setCanceledOnTouchOutside(false)
             dialog.window!!
                 .setLayout(
-                    (getScreenWidth(requireActivity()) * DIA_WINDOW_SIZE).toInt(),
+                    (DisplayUtils.getScreenWidth(requireActivity()) * DIA_WINDOW_SIZE).toInt(),
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
         }
@@ -182,7 +183,7 @@ class DeviceInformationDialog : DialogFragment() {
             binding.wideColorGamutInfo.text = if (wideColorGamut) "Supported" else "Not Supported"
         }
         binding.highDynamicRangeInfo.text =
-            if (isHRDSupport() == true) "Supported" else "Not Supported"
+            if (isHRDSupport()) "Supported" else "Not Supported"
         binding.sizeInfo.text = activity?.let { screenSupport(it) }
         binding.aspectInfo.text = if (isAspectLongSupported() == true) "Long" else "Not Long"
     }
@@ -356,12 +357,6 @@ class DeviceInformationDialog : DialogFragment() {
         }
     }
 
-    private fun getScreenWidth(activity: Activity): Int {
-        val size = Point()
-        activity.windowManager.defaultDisplay.getSize(size)
-        return size.x
-    }
-
     private fun pxToDp(px: Int): Int {
         return (px / resources.displayMetrics.density).toInt()
     }
@@ -511,20 +506,19 @@ class DeviceInformationDialog : DialogFragment() {
         }
     }
 
-    private fun isHRDSupport(): Boolean? {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val dm = requireActivity().getSystemService(DisplayManager::class.java)
-            val display = dm?.getDisplay(Display.DEFAULT_DISPLAY)
-            val hrdSupported = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                display?.mode?.supportedHdrTypes
-            } else {
-                display?.hdrCapabilities?.supportedHdrTypes
-            }
-            //val supportedHRDpes = hrdSupported
-            println("HRD Supported Types: $hrdSupported")
-            return hrdSupported?.isNotEmpty()
+    private fun isHRDSupport(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return false
         }
-        return false
+        val dm = requireActivity().getSystemService(DisplayManager::class.java) ?: return false
+        val display = dm.getDisplay(Display.DEFAULT_DISPLAY) ?: return false
+        // Display.Mode.supportedHdrTypes exists from API 34; on API 24–33 use HdrCapabilities.
+        val hdrTypes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            display.mode?.supportedHdrTypes
+        } else {
+            display.hdrCapabilities?.supportedHdrTypes
+        }
+        return hdrTypes?.isNotEmpty() == true
     }
 
     private fun isAspectLongSupported(): Any {

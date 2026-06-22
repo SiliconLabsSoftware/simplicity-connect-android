@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_floating_sheet">
+
+    <TextView
+        android:id="@+id/tv_picker_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/matter_16dp"
+        android:paddingEnd="@dimen/matter_16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="12dp"
+        android:gravity="center"
+        android:text="@string/matter_oven_select_range_hood"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_L"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/list_range_hoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="280dp"
+        android:divider="@color/silabs_divider"
+        android:dividerHeight="1dp"
+        android:paddingBottom="16dp" />
+</LinearLayout>

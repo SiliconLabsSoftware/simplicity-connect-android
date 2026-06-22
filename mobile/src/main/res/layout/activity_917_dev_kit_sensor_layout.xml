@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/modal_bg"
     android:orientation="vertical"
     tools:context=".features.demo.devkitsensor917.activities.DevKitSensor917Activity">
 
@@ -13,36 +14,56 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"
-        app:layout_constraintBottom_toTopOf="@+id/appBarLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         app:title="@string/dev_kit_sensor_917_title"
-        app:titleTextColor="#ffff"
+        app:titleTextColor="@color/silabs_white"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-
-    <LinearLayout
-        android:id="@+id/placeholder"
+    <!-- Fills space below toolbar; placeholder overlays centered when active -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/env_grid_place">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:id="@+id/env_grid_place"
+            style="@style/match"
+            android:fillViewport="true">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/env_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/iodemo_margin"
+                android:paddingTop="@dimen/iodemo_margin"
+                android:paddingRight="@dimen/iodemo_margin"
+                android:paddingBottom="@dimen/iodemo_margin"
+                android:visibility="gone"
+                grid:columnCount="3"
+                grid:layout_columnWeight="1" />
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/matter_24dp"
+            android:visibility="gone"
+            tools:visibility="visible">
 
         <TextView
             android:layout_width="match_parent"
@@ -50,44 +71,20 @@
             android:gravity="center"
             android:padding="@dimen/adapter_item_padding"
             android:text="@string/matter_scanner_adapter_empty_list_title"
+            android:fontFamily="@font/stolzl_regular"
             android:textColor="@color/adapter_item_title_color"
             android:textSize="@dimen/text_size_L" />
 
-        <TextView
-            android:id="@+id/tv_empty_scan_action_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/dev_kit_sensor_empty"
-            android:textColor="@color/adapter_item_title_color"
-            android:textSize="@dimen/text_size_SM" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/env_grid_place"
-        style="@style/match"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
-
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/env_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/iodemo_margin"
-            android:paddingTop="@dimen/iodemo_margin"
-            android:paddingRight="@dimen/iodemo_margin"
-            android:paddingBottom="@dimen/iodemo_margin"
-            android:visibility="gone"
-            grid:columnCount="3"
-            grid:layout_columnWeight="1">
-
-        </androidx.gridlayout.widget.GridLayout>
-
-    </ScrollView>
+            <TextView
+                android:id="@+id/tv_empty_scan_action_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/dev_kit_sensor_empty"
+                android:textColor="@color/adapter_item_title_color"
+                android:textSize="@dimen/text_size_SM" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

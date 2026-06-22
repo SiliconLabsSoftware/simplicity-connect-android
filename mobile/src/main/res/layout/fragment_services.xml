@@ -4,6 +4,7 @@
     android:id="@+id/swipe_refresh_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/modal_bg"
     tools:context=".features.scan.browser.fragments.ServicesFragment">
 
     <ScrollView

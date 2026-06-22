@@ -324,6 +324,7 @@ class DebugModeDeviceAdapter(
             return ContextCompat.getDrawable(
                 context, when (manufacturer) {
                     BluetoothDeviceInfo.DeviceManufacturer.WINDOWS -> R.drawable.redesign_ic_scanned_device_windows
+                    BluetoothDeviceInfo.DeviceManufacturer.ANDROID -> R.drawable.redesign_ic_scanned_device_android
                     BluetoothDeviceInfo.DeviceManufacturer.UNKNOWN -> R.drawable.redesign_ic_bluetooth_with_background
                 }
             )

@@ -1,16 +1,43 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="MainAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="android:windowBackground">@color/gallery</item>
 
-        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimary">@color/silabs_redtheme_tool_bar_color</item>
         <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorPrimaryDark">@color/blue_primary</item>
-        <item name="colorSecondary">@color/blue_primary</item>
+        <item name="colorPrimaryDark">@color/silabs_redtheme_tool_bar_color</item>
+        <item name="colorSecondary">@color/silabs_redtheme_tool_bar_color</item>
 
         <item name="bottomNavigationStyle">@style/BottomNavigationView</item>
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="actionBarStyle">@style/Widget.App.ActionBar</item>
         <item name="extendedFloatingActionButtonStyle">@style/ExtendedFloatingActionButton</item>
         <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.Silabs.ActionMenu</item>
+    </style>
+
+    <style name="TextAppearance.Silabs.Tab" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="Widget.App.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorColor">@color/silabs_redtheme_primary_color</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Silabs.Tab</item>
+        <item name="tabTextColor">@color/tab_selector</item>
+    </style>
+
+    <style name="TextAppearance.ScanViewPager.Tab" parent="TextAppearance.Silabs.Tab">
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.Silabs.HelveticaNeue" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">@font/helvetica_neue</item>
+        <item name="android:fontFamily">@font/helvetica_neue</item>
     </style>
 
     <style name="CustomSplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -42,19 +69,29 @@
 
     <style name="Subhead" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textSize">@dimen/text_size_subhead</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:lines">1</item>
         <item name="android:ellipsize">none</item>
+        <item name="android:textColor">@color/silabs_redtheme_header_text_color</item>
+    </style>
+
+    <style name="SelectDeviceBody" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textSize">@dimen/text_size_subhead</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:lines">1</item>
+        <item name="android:ellipsize">none</item>
+        <item name="android:textColor">@color/silabs_redtheme_body_text_color</item>
     </style>
 
     <style name="ThermoLabelText" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">@dimen/thermo_label_text_size</item>
         <item name="android:color">@color/boulder</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="SwitchText" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">@dimen/empty_thermo_subheader_text_size</item>
         <item name="android:textColor">@color/blue_primary</item>
         <item name="android:textAllCaps">true</item>
@@ -78,6 +115,7 @@
         <item name="android:paddingBottom">@dimen/bottom_navigation_bottom_padding</item>
         <item name="itemBackground">@drawable/bottom_navigation_ripple</item>
         <item name="itemIconTint">@drawable/nav_bar_selector</item>
+        <item name="itemTextColor">@color/bottom_navigation_item_text_color</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationViewActive
         </item>
         <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationViewInactive
@@ -86,7 +124,9 @@
 
     <style name="TextAppearance.BottomNavigationView" parent="">
         <item name="android:textSize">@dimen/bottom_navigation_text_size</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
     </style>
 
     <style name="TextAppearance.BottomNavigationViewInactive" parent="TextAppearance.BottomNavigationView">
@@ -94,42 +134,187 @@
     </style>
 
     <style name="TextAppearance.BottomNavigationViewActive" parent="TextAppearance.BottomNavigationView">
-        <item name="android:textColor">@color/blue_primary</item>
+        <item name="android:textColor">@color/silabs_redtheme_bottom_navigation_active_text</item>
     </style>
 
-    <style name="TextAppearance.ToolbarTitle" parent="">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">@dimen/toolbar_title_size</item>
+    <style name="TextAppearance.ToolbarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_toolbar_text_color</item>
+    </style>
+
+    <style name="Widget.App.ActionBar" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/TextAppearance.ToolbarTitle</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="titleTextAppearance">@style/TextAppearance.ToolbarTitle</item>
+        <item name="titleTextColor">@color/silabs_white</item>
+    </style>
+
+    <style name="RangeTestToolbarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/stolzl_bold</item>
+        <item name="fontFamily">@font/stolzl_bold</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
         <item name="android:textColor">@color/silabs_white</item>
+    </style>
+
+    <style name="TextAppearance.ReflectorToolbarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.ReflectorDashboardToolbarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearance.Silabs.ActionMenu" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
     </style>
 
     <style name="MatterButtonBlue" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:background">@drawable/btn_rounded_blue</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/btn_rounded_red</item>
         <item name="android:capitalize">none</item>
         <item name="textAllCaps">true</item>
     </style>
 
+    <!-- Open / Close / Lift / Tilt on Window Covering Cluster screen only -->
+    <style name="MatterWindowCoverActionButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/matter_window_cover_outline_button_bg</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:paddingLeft">@dimen/matter_window_cover_action_button_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/matter_window_cover_action_button_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/matter_0dp</item>
+        <item name="android:paddingBottom">@dimen/matter_0dp</item>
+        <item name="android:minWidth">@dimen/matter_window_cover_action_button_min_width</item>
+        <item name="android:minHeight">@dimen/matter_window_cover_action_button_height</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="SmartLockOperateButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/matter_window_cover_outline_button_bg</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:paddingLeft">@dimen/matter_window_cover_action_button_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/matter_window_cover_action_button_padding_horizontal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:minWidth">@dimen/matter_window_cover_action_button_min_width</item>
+        <item name="android:minHeight">@dimen/matter_window_cover_action_button_height</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="SmartLockAwsSendButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/smart_lock_aws_send_button_bg</item>
+        <item name="android:textColor">@color/silabs_dark_gray_text</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingLeft">@dimen/smart_lock_aws_send_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/smart_lock_aws_send_padding_horizontal</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:minWidth">@dimen/smart_lock_aws_send_width</item>
+        <item name="android:minHeight">@dimen/smart_lock_aws_command_row_height</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- Lift % / Tilt % fields on Window Covering Cluster screen only -->
+    <style name="MatterWindowCoverTextField" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/matter_window_cover_text_field_text_size</item>
+        <item name="android:textColorHint">@color/silabs_dark_gray_text</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/matter_window_cover_text_field_bg</item>
+        <item name="android:paddingStart">@dimen/matter_window_cover_text_field_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/matter_window_cover_text_field_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/matter_0dp</item>
+        <item name="android:paddingBottom">@dimen/matter_0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:includeFontPadding">false</item>
+        <!-- Override theme minHeight (often 48dp) so 30dp layout is not vertically clipped -->
+        <item name="android:minHeight">@dimen/matter_window_cover_text_field_height</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+    </style>
+
+
     <style name="ButtonBlue" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:background">@drawable/btn_rounded_blue</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/btn_rounded_red</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="RangeTestStartStopButton" parent="ButtonBlue">
+        <item name="android:background">@drawable/btn_range_test_start_stop</item>
+    </style>
+
+    <style name="SilabsButtonRebranding" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textSize">@dimen/text_size_SM</item>
+        <item name="android:textColor">@color/silabs_white</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/btn_rounded_red</item>
         <item name="textAllCaps">false</item>
     </style>
 
     <style name="ButtonBorderlessBlue" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/silabs_blue</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:background">@drawable/btn_blue_ripple_effect</item>
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="SilabsRebrandingButtonBorderless" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/btn_blue_ripple_effect</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- iOS-style action sheet: red text, transparent background, ripple -->
+    <style name="ButtonBorderlessRed" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/silabs_red</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- iOS-style action sheet: blue text, transparent background, ripple -->
+    <style name="ButtonBorderlessBlueActionSheet" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
     <style name="TitleSmall" parent="android:Widget.TextView">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/silabs_primary_text</item>
     </style>
@@ -139,47 +324,50 @@
     </style>
 
     <style name="TitleMedium" parent="android:Widget.TextView">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/silabs_primary_text</item>
     </style>
 
     <style name="TitleBig" parent="android:Widget.TextView">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/silabs_primary_text</item>
     </style>
 
     <style name="TitleLarge" parent="android:Widget.TextView">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
     </style>
 
     <style name="TextSmall" parent="android:Widget.TextView">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
     </style>
 
     <style name="TextMedium" parent="android:Widget.TextView">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
     </style>
 
     <style name="TextBig" parent="android:Widget.TextView">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
     </style>
 
     <style name="TextViewNoteWarning" parent="android:Widget.TextView">
         <item name="android:textColor">@color/silabs_red</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">12sp</item>
     </style>
 
     <style name="TextViewNoteInfo" parent="android:Widget.TextView">
         <item name="android:textColor">@color/silabs_inactive_light</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
         <item name="android:textSize">12sp</item>
     </style>
 
@@ -195,12 +383,26 @@
         <item name="android:background">@drawable/et_background</item>
     </style>
 
+    <style name="SilabsRebrandingEditTextNormal" parent="android:Widget.EditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/text_state_color</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:background">@drawable/et_background</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+    </style>
+
     <style name="EditTextNormalMedium" parent="EditTextNormal">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
     </style>
 
     <style name="EditTextSmall" parent="android:Widget.EditText">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/text_size_S</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textColor">@drawable/text_state_color</item>
         <item name="android:padding">8dp</item>
         <item name="android:maxLines">1</item>
@@ -212,9 +414,17 @@
     <style name="CustomSpinner" parent="Widget.AppCompat.Spinner">
         <item name="android:background">@drawable/spinner_background</item>
         <item name="android:layout_height">36dp</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
     </style>
 
-    <!-- Thunderboard general -->
+    <style name="CustomSpinnerRangeTest" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/range_test_spinner_background</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/silabs_primary_text</item>
+    </style>
     <style name="wrap">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -257,49 +467,66 @@
         <item name="android:textColor">@color/tb_blue</item>
     </style>
 
+    <style name="tb_text_color_red" parent="wrap">
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
+    </style>
+
     <style name="tb_text_color_white" parent="wrap">
         <item name="android:textColor">@color/silabs_white</item>
     </style>
 
     <style name="tb_robo_medium_18dp" parent="tb_text_color_black">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
         <item name="android:textSize">@dimen/text_size_ML</item>
     </style>
 
     <style name="tb_robo_medium_18dp_white" parent="tb_text_color_white">
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">@dimen/text_size_ML</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
     <style name="tb_robo_regular_14dp_grey" parent="tb_text_color_grey">
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
         <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
     <style name="tb_robo_regular_12dp_grey" parent="tb_text_color_grey">
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textSize">@dimen/text_size_S</item>
+        <item name="android:textColor">@color/silabs_redtheme_checkbox_text_color</item>
+    </style>
+
+    <style name="tb_hn_med_12dp_grey" parent="tb_text_color_grey">
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
         <item name="android:textSize">@dimen/text_size_S</item>
     </style>
 
     <style name="tb_robo_regular_12dp" parent="tb_text_color_black">
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">@dimen/text_size_S</item>
     </style>
 
     <style name="tb_robo_medium_14dp" parent="tb_text_color_black">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
     <style name="tb_robo_medium_14dp_blue" parent="tb_text_color_blue">
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
+    </style>
+
+    <style name="tb_hn_medium_14dp_red" parent="tb_text_color_red">
+        <item name="android:fontFamily">@font/helvetica_neue_bold</item>
         <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
     <!-- REDESIGN 07/22 -->
     <style name="full_page_info">
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">@dimen/full_screen_info_text_size</item>
-        <item name="android:textColor">@color/full_screen_info</item>
+        <item name="android:textColor">@color/silabs_redtheme_iop_full_screen_txt_color</item>
+
     </style>
 
     <style name="ExtendedFloatingActionButton.Shape">
@@ -312,17 +539,44 @@
     </style>
 
     <style name="filter_fragment_setting_header">
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/filter_header_bold_text_size</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="android:textSize">@dimen/text_size_M</item>
+        <item name="android:textColor">@color/silabs_redtheme_header_text_color</item>
     </style>
 
     <style name="filter_fragment_status_setting_choices">
         <item name="android:layoutDirection">rtl</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
         <item name="android:textSize">@dimen/filter_checkbox_text_size</item>
         <item name="android:textColor">@color/silabs_black</item>
         <item name="android:paddingVertical">@dimen/space_S</item>
         <item name="android:layout_marginEnd">@dimen/space_XS</item>
+    </style>
+
+    <!-- Apply Filters: typography, padding, insets; stroke/corners/colors on view in fragment_filter.xml -->
+    <style name="FilterApplyFiltersButton" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:minWidth">122dp</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:paddingBottom">7dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.02143</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <!-- Dialog styles -->
@@ -336,14 +590,16 @@
     </style>
 
     <style name="dialog_title">
-        <item name="android:textSize">@dimen/dialog_title_size</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textSize">@dimen/dialog_text_info_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="android:textColor">@color/silabs_redtheme_header_text_color</item>
     </style>
 
     <style name="dialog_text_info">
-        <item name="android:textSize">@dimen/dialog_text_info_size</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textSize">@dimen/dialog_text_note_size</item>
+        <item name="android:textColor">@color/silabs_redtheme_body_text_color</item>
     </style>
 
     <style name="dialog_text_note">
@@ -353,8 +609,10 @@
 
     <style name="dialog_button_positive_action" parent="@style/Widget.AppCompat.Button">
         <item name="android:backgroundTint">@color/dialog_positive_button_selector</item>
+        <item name="android:background">@drawable/silabs_redtheme_red_button_bg</item>
         <item name="android:textColor">@color/silabs_white</item>
         <item name="android:textSize">@dimen/dialog_button_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -367,14 +625,28 @@
 
     <style name="dialog_button_neutral_action" parent="@style/Widget.AppCompat.Button">
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="backgroundTint">@color/silabs_dark_blue</item>
+        <item name="backgroundTint">@color/silabs_redtheme_button_fill_color</item>
+        <item name="android:background">@drawable/silabs_redtheme_red_button_bg</item>
         <item name="android:textSize">@dimen/dialog_button_text_size</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="dialog_button_negative_action" parent="@style/Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/blue_primary</item>
+    <style name="dialog_button_negative_action" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/silabs_redtheme_navi_red_bar</item>
         <item name="android:textSize">@dimen/dialog_button_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/silabs_btn_red_outline</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="dialog_button_negative_action_redtheme_outlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/silabs_redtheme_button_outline_color</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="backgroundTint">@color/silabs_redtheme_button_outline_color</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
+        <item name="android:textSize">@dimen/dialog_button_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -393,21 +665,31 @@
         <item name="android:textSize">@dimen/filter_rssi_min_max_text_size</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/rssi_min_max_text_border</item>
+        <item name="android:background">@drawable/background_grey_box</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="radio_button_bg">
-        <item name="android:buttonTint">@color/silabs_dark_blue</item>
+        <item name="android:buttonTint">@color/silabs_redtheme_primary_color</item>
     </style>
+
     <style name="full_line_checkbox_view">
-        <item name="buttonTint">@color/silabs_dark_blue</item>
+        <item name="buttonTint">@color/filter_fragment_checkbox_button_tint</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:layoutDirection">rtl</item>
-        <item name="android:background">@drawable/beacon_filter_background</item>
+        <item name="android:background">@color/add_data_button_background</item>
         <item name="android:gravity">start|center_vertical</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+    </style>
 
+    <style name="ota_config_file_link_button" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
+        <item name="android:textSize">@dimen/ota_config_dialog_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
     </style>
 
     <style name="button_external_link" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
@@ -419,24 +701,57 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/silabs_white</item>
         <item name="backgroundTint">@color/dialog_positive_button_selector</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="button_add_data_outlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/add_data_button_text</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
         <item name="backgroundTint">@color/add_data_button_background</item>
         <item name="strokeColor">@color/add_data_button_outline</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="button_with_states" parent="@style/Widget.MaterialComponents.Button">
-        <item name="android:backgroundTint">@color/main_action_button_selector</item>
+        <item name="android:background">@color/main_action_button_selector</item>
         <item name="android:textSize">@dimen/connect_button_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
+    </style>
+
+    <style name="button_browser_device_connect" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="backgroundTint">@color/browser_device_connect_background_tint</item>
+        <item name="strokeColor">@color/silabs_redtheme_button_outline_color</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textSize">@dimen/connect_button_text_size</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/browser_device_connect_button_text_color</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="button_connected_device_disconnect" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/silabs_redtheme_button_outline_color</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="backgroundTint">@color/silabs_redtheme_button_inner_color</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_outline_color</item>
+        <item name="android:textSize">@dimen/connect_button_text_size</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ThroughputStartStopButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/silabs_redtheme_button_outline_color</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="backgroundTint">@color/silabs_redtheme_button_inner_color</item>
+        <item name="android:textColor">@color/silabs_redtheme_button_text_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="card_view_action_icon">
@@ -448,7 +763,7 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_bar_action_size</item>
         <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:padding">@dimen/info_bar_padding</item>
     </style>
 
@@ -469,28 +784,41 @@
         <item name="android:background">@android:color/transparent
         </item> <!-- to remove default "underscore" -->
         <item name="android:textSize">@dimen/edit_text_text_size</item>
-        <item name="android:textColor">@color/blue_primary</item>
-        <item name="android:textColorHint">@color/blue_primary</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
+        <item name="android:textColorHint">@color/silabs_redtheme_filer_hint_text_color</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+    </style>
+
+    <style name="silabs_rb_edit_text_content">
+        <item name="android:background">@android:color/transparent
+        </item> <!-- to remove default "underscore" -->
+        <item name="android:textSize">@dimen/edit_text_text_size</item>
+        <item name="android:textColor">@color/silabs_redtheme_checkbox_text_color</item>
+        <item name="android:textColorHint">@color/silabs_redtheme_filer_hint_text_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
     </style>
 
     <style name="property_text_view">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
         <item name="android:textSize">@dimen/property_icon_text_size</item>
         <item name="android:textColor">@color/silabs_black</item>
     </style>
 
     <style name="configurator_property_text_view">
         <item name="android:textSize">@dimen/property_icon_text_size</item>
-        <item name="android:textColor">@color/blue_primary</item>
+        <item name="android:textColor">@color/silabs_redtheme_primary_color</item>
         <item name="android:drawablePadding">4dp</item>
-        <item name="drawableTint">@color/blue_primary</item>
+        <item name="drawableTint">@color/silabs_redtheme_primary_color</item>
     </style>
 
     <!-- List items -->
     <style name="list_item_card_view_box">
         <item name="cardCornerRadius">@dimen/card_view_corner_radius</item>
-        <item name="android:background">@color/list_item_card_view_box</item>
+        <item name="android:background">@color/silabs_redtheme_scanner_bg_color</item>
     </style>
 
     <style name="list_item_card_view_container_margins">
@@ -504,8 +832,8 @@
 
     <style name="list_item_card_view_title">
         <item name="android:textSize">@dimen/card_view_title_size</item>
-        <item name="android:textColor">@color/blue_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_header_text_color</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
@@ -513,41 +841,76 @@
     <style name="list_item_card_view_title_not_ellipsized">
         <item name="android:textSize">@dimen/card_view_title_size</item>
         <item name="android:textColor">@color/blue_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
     </style>
 
     <style name="list_item_card_view_text_info">
         <item name="android:textSize">@dimen/card_view_text_info_size</item>
-        <item name="android:textColor">@color/silabs_primary_text</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/silabs_redtheme_body_text_color</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
     </style>
 
     <style name="list_item_card_view_text_info_ellipsized" parent="list_item_card_view_text_info">
         <item name="android:maxLines">1</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/silabs_redtheme_body_text_color</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <!-- Beacon type / connectibility labels (e.g. Unspecified, Connectible, Non-Connectible). -->
+    <style name="list_item_card_view_text_info_stat" parent="list_item_card_view_text_info">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:lineSpacingMultiplier">0.9</item>
     </style>
 
     <style name="list_item_card_view_text_info_subtle">
         <item name="android:textSize">@dimen/card_view_text_info_size</item>
         <item name="android:textColor">@color/silabs_subtle_text</item>
-        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+    </style>
+
+    <style name="DemoMenuTileTitle">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="fontFamily">@font/stolzl_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_header_text_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+
+    <style name="DemoMenuTileBody">
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_body_text_color</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- END OF REDESIGN -->
 
     <style name="settings_subtitle">
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@color/silabs_redtheme_checkbox_text_color</item>
         <item name="android:textSize">@dimen/settings_subtitle_size</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="settings_link_button">
-        <item name="backgroundTint">@color/blue_primary</item>
+        <item name="backgroundTint">@color/silabs_redtheme_primary_color</item>
         <item name="android:layout_width">@dimen/settings_link_button_width</item>
         <item name="android:layout_height">@dimen/settings_link_button_height</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
         <item name="android:layout_marginHorizontal">8dp</item>
         <item name="android:textColor">@color/silabs_white</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_size_SM</item>
     </style>
 
     <style name="matter_theme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -570,18 +933,18 @@
     <style name="AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
-        <item name="android:textColor">@color/silabs_blue</item>
-        <item name="colorAccent">@color/silabs_blue</item>
-        <item name="android:colorPrimary">@color/silabs_dark_blue</item>
+        <item name="android:textColor">@color/silabs_redtheme_iop_full_screen_txt_color</item>
+        <item name="colorAccent">@color/silabs_background</item>
+        <item name="android:colorPrimary">@color/silabs_black</item>
         <item name="android:textColorPrimary">@color/silabs_black</item>
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/silabs_blue</item>
+        <item name="android:textColor">@color/silabs_rebranding_2373_hyperlink_text_color</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/silabs_blue</item>
+        <item name="android:textColor">@color/silabs_rebranding_2373_hyperlink_text_color</item>
     </style>
 
     <style name="AlertMatterProgressTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
@@ -593,13 +956,13 @@
     </style>
 
     <style name="SubTitle">
-        <item name="fontFamily">sans-serif-medium</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/blue_primary</item>
     </style>
 
     <style name="DevKitSensorData">
-        <item name="fontFamily">sans-serif-light</item>
+        <item name="fontFamily">@font/stolzl_medium</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/blue_primary</item>
     </style>
@@ -607,7 +970,7 @@
     <style name="DevKitButtonBlack" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:background">@drawable/btn_rounded_black</item>
         <item name="textAllCaps">false</item>
     </style>
@@ -615,7 +978,7 @@
     <style name="DevKitButtonRed" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:background">@drawable/btn_rounded_red</item>
         <item name="textAllCaps">false</item>
     </style>
@@ -623,7 +986,7 @@
     <style name="DevKitButtonGreen" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:background">@drawable/btn_rounded_green</item>
         <item name="textAllCaps">false</item>
     </style>
@@ -631,8 +994,8 @@
     <style name="DevKitButtonBlue" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/silabs_white</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:background">@drawable/btn_rounded_blue</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:background">@drawable/btn_rounded_red</item>
         <item name="textAllCaps">false</item>
     </style>
 
@@ -641,7 +1004,7 @@
         <item name="android:layout_width">@dimen/matter_90dp</item>
         <item name="android:textSize">@dimen/text_size_ML</item>
         <item name="android:textColor">@color/blue_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -653,7 +1016,7 @@
     <style name="WifiButtonWhite" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textSize">@dimen/text_size_SM</item>
         <item name="android:textColor">@color/button_blue</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:background">@drawable/btn_rounded_white</item>
         <item name="android:capitalize">none</item>
         <item name="textAllCaps">true</item>
@@ -662,14 +1025,14 @@
     <style name="ErrorAlertTitle">
         <item name="android:textSize">@dimen/text_size_ML</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ErrorAlertBody">
         <item name="android:textSize">@dimen/text_size_M</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">normal</item>
     </style>
@@ -685,13 +1048,14 @@
         <item name="colorPrimary">@color/button_red</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
+
     <style name="settings_header">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/help_text_size</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="MainAppTheme.NoActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Required to prevent decor ActionBar -->
+
+    <style name="MainAppTheme.NoActionBar" parent="MainAppTheme">
         <item name="windowActionBar">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -701,12 +1065,92 @@
     <style name="Theme.SiConnectApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/blue_primary</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.Silabs.ActionMenu</item>
     </style>
+
     <style name="CustomToggleButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">@color/toggle_button_text_selector</item>
         <item name="backgroundTint">@color/toggle_button_bg_selector</item>
         <item name="android:gravity">center_vertical|center_horizontal|center|end</item>
-        <item name="textAllCaps">true</item>
+        <item name="textAllCaps">false</item>
     </style>
 
+    <!-- Smart Lock BLE/AWS segmented control labels -->
+    <style name="SmartLockSegmentLabel">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:lineHeight">13sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/silabs_redtheme_checkbox_text_color</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">none</item>
+    </style>
+
+    <style name="ScannerDeviceTitle">
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+    </style>
+
+    <style name="ScannerDeviceBody">
+        <item name="android:fontFamily">@font/helvetica_neue_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_body_text_color</item>
+    </style>
+
+    <style name="SilabsMatterDeviceTitle">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+    </style>
+
+    <!-- Matter device list row (default): matches pre-rebrand list item typography -->
+    <style name="SilabsMatterDeviceListItemTitle">
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_ML</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+    </style>
+
+    <!-- Window cover row — Figma: Stolzl 700, 14px, line-height 16px, #525252 -->
+    <style name="SilabsMatterWindowCoverListLabel">
+        <item name="android:fontFamily">@font/stolzl_bold</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="SilabsMatterDeviceScreenTitle">
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+    </style>
+
+    <style name="SilabsMatterDeviceBody">
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_body_text_color</item>
+    </style>
+
+
+    <style name="Silabs_Rebranding_Title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/stolzl_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_header_text_color</item>
+    </style>
+
+    <style name="Silabs_Rebranding_Body">
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">@font/helvetica_neue_regular</item>
+        <item name="android:textColor">@color/silabs_redtheme_scanner_body_text_color</item>
+    </style>
+
+
+    <style name="Silabs_Rebranding_Floating_Button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/stolzl_medium</item>
+        <item name="android:textColor">@color/silabs_rebranding_2373_floating_button_text_color</item>
+    </style>
 </resources>

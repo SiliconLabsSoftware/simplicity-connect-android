@@ -5,5 +5,5 @@
     android:viewportHeight="960">
   <path
       android:pathData="m393,795 l279,-335L492,460l36,-286 -253,366h154l-36,255ZM320,880 L360,600L160,600l360,-520h80l-40,320h240L400,880h-80ZM474,484Z"
-      android:fillColor="#0F62FE"/>
+      android:fillColor="@color/silabs_rebranding_2373_hyperlink_text_color"/>
 </vector>

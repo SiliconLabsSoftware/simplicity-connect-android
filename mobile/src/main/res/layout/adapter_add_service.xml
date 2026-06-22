@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_service"
+        style="@style/button_add_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/button_add_data"
+        android:layout_marginBottom="16dp"
         android:paddingHorizontal="24dp"
         android:paddingVertical="16dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/button_add_service"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
 
-</RelativeLayout>
+</LinearLayout>

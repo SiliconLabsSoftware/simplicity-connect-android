@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/matter_18dp"
@@ -10,6 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Silabs_Rebranding_Title"
         android:gravity="center"
         android:padding="@dimen/matter_5dp"
         android:text="@string/wifi_provisioning_provisioning_success_title"
@@ -20,23 +22,25 @@
         android:id="@+id/tvBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Silabs_Rebranding_Body"
         android:gravity="center"
         android:padding="@dimen/matter_5dp"
         android:text="@string/wifi_provisioning_provisioning_success_body"
-        android:textSize="@dimen/text_size_S" />
+        android:textSize="@dimen/text_size_SM" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/matter_1dp"
         android:background="@color/silabs_divider" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
-        style="@style/MatterButtonBlue"
+        style="@style/button_add_data_outlined"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/matter_18dp"
+        app:cornerRadius="14dp"
         android:text="@string/button_ok" />
 
 </LinearLayout>

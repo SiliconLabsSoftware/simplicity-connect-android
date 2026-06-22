@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="false"
+    android:background="@color/silabs_background">
+
+    <!-- Fake Status Bar View for edge-to-edge support -->
+    <View
+        android:id="@+id/fakeStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/silabs_redtheme_primary_color" />
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/silabs_primary_color"
+        android:fontFamily="@font/stolzl_regular"
+        app:navigationIcon="@drawable/matter_back"
+        app:navigationIconTint="@android:color/white"
+        app:title="@string/reflector_pairing_title"
+        app:titleTextAppearance="@style/TextAppearance.ReflectorToolbarTitle"
+        app:titleTextColor="@android:color/white" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Pairing Visual -->
+            <LinearLayout
+                android:id="@+id/pairing_visual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="32dp">
+
+                <!-- Phone Icon -->
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/rounded_box_background">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/reflector_pairing_phone_icon"
+                        android:src="@drawable/redesign_ic_smartphone"
+                        app:tint="@color/silabs_redtheme_primary_color" />
+                </FrameLayout>
+
+                <!-- Connection Animation -->
+                <FrameLayout
+                    android:layout_width="60dp"
+                    android:layout_height="4dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="@color/silabs_divider">
+
+                    <ProgressBar
+                        android:id="@+id/connection_progress"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/silabs_redtheme_primary_color" />
+                </FrameLayout>
+
+                <!-- Lock Icon -->
+                <FrameLayout
+                    android:id="@+id/lock_icon_container"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/rounded_box_background">
+
+                    <ImageView
+                        android:id="@+id/lock_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/reflector_pairing_lock_icon"
+                        android:src="@drawable/door_lock"
+                        app:tint="@color/silabs_redtheme_primary_color" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- Pairing Title -->
+            <TextView
+                android:fontFamily="@font/stolzl_medium"
+                android:id="@+id/pairing_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reflector_pairing_connecting"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Pairing Subtitle -->
+            <TextView
+                android:fontFamily="@font/stolzl_regular"
+                android:id="@+id/pairing_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textColor="@color/silabs_subtle_text"
+                android:textSize="12sp"
+                tools:text="Establishing secure connection with Silabs Example" />
+
+            <!-- Progress Steps Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Step 1: Device Found -->
+                    <include
+                        android:id="@+id/step1"
+                        layout="@layout/item_pairing_step" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/silabs_background" />
+
+                    <!-- Step 2: Pairing & Bonding -->
+                    <include
+                        android:id="@+id/step2"
+                        layout="@layout/item_pairing_step" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/silabs_background" />
+
+                    <!-- Step 3: Channel Sounding Setup -->
+                    <include
+                        android:id="@+id/step3"
+                        layout="@layout/item_pairing_step" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/silabs_background" />
+
+                    <!-- Step 4: Digital Key Ready -->
+                    <include
+                        android:id="@+id/step4"
+                        layout="@layout/item_pairing_step" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Action Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_action"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:padding="14dp"
+                android:text="@string/reflector_pairing_in_progress"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textSize="16sp"
+                app:backgroundTint="@color/silabs_divider"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
+
+            <!-- Success Content (hidden initially) -->
+            <LinearLayout
+                android:id="@+id/success_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/circle_background_green">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/reflector_pairing_success"
+                        android:src="@drawable/ic_check"
+                        app:tint="@android:color/white" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reflector_pairing_digital_key_ready"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/reflector_pairing_success_message"
+                    android:textColor="@color/silabs_subtle_text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

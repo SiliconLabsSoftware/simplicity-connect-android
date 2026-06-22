@@ -1,14 +1,29 @@
+<!--
+  ~ Copyright (C) 2026 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/card_view_main_icon_dimension"
-    android:height="@dimen/card_view_main_icon_dimension"
-    android:viewportWidth="37"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
     android:viewportHeight="36">
   <path
       android:strokeWidth="1"
-      android:pathData="M35.9737,18C35.9737,27.6588 28.0388,35.5 18.2368,35.5C8.4349,35.5 0.5,27.6588 0.5,18C0.5,8.3412 8.4349,0.5 18.2368,0.5C28.0388,0.5 35.9737,8.3412 35.9737,18Z"
+      android:pathData="M18,0.5L18,0.5A17.5,17.5 0,0 1,35.5 18L35.5,18A17.5,17.5 0,0 1,18 35.5L18,35.5A17.5,17.5 0,0 1,0.5 18L0.5,18A17.5,17.5 0,0 1,18 0.5z"
       android:fillColor="#00000000"
-      android:strokeColor="#0F62FE"/>
+      android:strokeColor="#D91E1E"/>
   <path
-      android:pathData="M15.1972,26H21.2761V28H15.1972V26ZM23.2072,19.712C24.2507,18.506 25.3287,17.259 25.3287,15C25.3287,11.141 22.1464,8 18.2366,8C14.3269,8 11.1445,11.141 11.1445,15C11.1445,17.285 12.2256,18.528 13.2732,19.73C13.6359,20.148 14.0118,20.581 14.3714,21.079C14.5173,21.285 14.7564,22.075 14.9702,23H14.184V25H22.2893V23H21.5051C21.7209,22.073 21.961,21.281 22.1059,21.075C22.4625,20.572 22.8414,20.135 23.2072,19.712ZM20.4473,19.925C20.0076,20.542 19.6409,22 19.4281,23H17.0462C16.8344,21.998 16.4667,20.537 16.0219,19.92C15.6417,19.4043 15.2373,18.9065 14.8101,18.428C13.8233,17.294 13.1708,16.544 13.1708,15C13.1708,12.243 15.4434,10 18.2366,10C21.0299,10 23.3024,12.243 23.3024,15C23.3024,16.521 22.651,17.274 21.6662,18.413C21.2883,18.851 20.8597,19.346 20.4473,19.925Z"
-      android:fillColor="#0F62FE"/>
+      android:pathData="M15,26H21V28H15V26ZM22.906,19.712C23.936,18.506 25,17.259 25,15C25,11.141 21.859,8 18,8C14.141,8 11,11.141 11,15C11,17.285 12.067,18.528 13.101,19.73C13.459,20.148 13.83,20.581 14.185,21.079C14.329,21.285 14.565,22.075 14.776,23H14V25H22V23H21.226C21.439,22.073 21.676,21.281 21.819,21.075C22.171,20.572 22.545,20.135 22.906,19.712ZM20.182,19.925C19.748,20.542 19.386,22 19.176,23H16.825C16.616,21.998 16.253,20.537 15.814,19.92C15.439,19.404 15.04,18.906 14.618,18.428C13.644,17.294 13,16.544 13,15C13,12.243 15.243,10 18,10C20.757,10 23,12.243 23,15C23,16.521 22.357,17.274 21.385,18.413C21.012,18.851 20.589,19.346 20.182,19.925Z"
+      android:fillColor="#D91E1E"/>
 </vector>

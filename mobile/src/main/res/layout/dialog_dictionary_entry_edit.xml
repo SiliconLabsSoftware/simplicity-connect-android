@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/dialog_card"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/dialog_card">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/dialog_margins"
-        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
         android:orientation="vertical">
 
-        <TextView android:id="@+id/tv_mapping_type"
+        <TextView
+            android:id="@+id/tv_mapping_type"
             style="@style/dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_XS"
             android:text="@string/rename_characteristic" />
 
-        <TextView android:id="@+id/tv_uuid"
+        <TextView
+            android:id="@+id/tv_uuid"
             style="@style/dialog_text_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/space_S"
             android:text="@string/UUID_label" />
 
-        <LinearLayout android:id="@+id/search_packet_name_container"
+        <LinearLayout
+            android:id="@+id/search_packet_name_container"
             style="@style/edit_text_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/space_XS" >
+            android:layout_marginVertical="@dimen/space_XS">
 
-            <EditText android:id="@+id/et_name_hint"
-                style="@style/edit_text_content"
+            <EditText
+                android:id="@+id/et_name_hint"
+                style="@style/silabs_rb_edit_text_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -45,23 +50,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_cancel"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:text="@string/button_cancel"
+                android:textSize="@dimen/text_size_SM"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_save"
-                style="@style/dialog_button_positive_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_button_margin_end"
-                android:text="@string/button_save" />
+                android:text="@string/button_save"
+                android:textAllCaps="false"   android:textSize="@dimen/text_size_SM"
+
+                app:backgroundTint="@color/silabs_primary_color"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
 
         </LinearLayout>
     </LinearLayout>

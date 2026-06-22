@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/fragment_main_view"
@@ -15,6 +15,7 @@
     <com.siliconlabs.bledemo.features.configure.gatt_configurator.views.ExportBar
         android:id="@+id/bottom_bar_export"
         android:layout_width="match_parent"
+        style="@style/Silabs_Rebranding_Floating_Button"
         android:layout_height="wrap_content"
         android:visibility="gone"
         tools:visibility="visible" />

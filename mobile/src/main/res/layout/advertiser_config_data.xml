@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -26,29 +27,33 @@
 
         <Spinner
             android:id="@+id/sp_advertising_data"
-            style="@style/ButtonBlue"
+            style="@style/SilabsButtonRebranding"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="8dp"
-            android:background="@color/silabs_transparent" />
+            android:background="@color/silabs_transparent"
+            android:fontFamily="@font/stolzl_medium"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:listitem="@layout/spinner_item_advertiser_config_type" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_advertising_data"
             style="@style/button_add_data_outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginHorizontal="16dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="3dp"
             android:text="@string/advertiser_button_add_data_type" />
 
         <TextView
             android:id="@+id/tv_adv_data_available_bytes"
+            style="@style/Silabs_Rebranding_Body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/silabs_inactive_light"
             android:textSize="12sp" />
 
@@ -72,9 +77,9 @@
             style="@style/TitleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/advertiser_title_scan_response_data" />
 
         <include
@@ -85,26 +90,26 @@
             android:id="@+id/sp_scan_response_data"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:background="@color/silabs_transparent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_scan_response_data"
+            style="@style/button_add_data_outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginHorizontal="16dp"
             android:layout_gravity="center_horizontal"
-            style="@style/button_add_data_outlined"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="3dp"
             android:text="@string/advertiser_button_add_data_type" />
 
         <TextView
             android:id="@+id/tv_scan_resp_available_bytes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/silabs_inactive_light"
             android:textSize="12sp" />
 

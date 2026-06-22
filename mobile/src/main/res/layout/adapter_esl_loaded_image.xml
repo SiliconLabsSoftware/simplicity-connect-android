@@ -15,13 +15,16 @@
             android:id="@+id/esl_image_loaded"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:background="@drawable/channel_sounding_btn_reset_bg"
             app:srcCompat="@color/silabs_click_grey" />
 
 
         <TextView
+            android:fontFamily="@font/stolzl_bold"
+            android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/silabs_redtheme_iop_full_screen_txt_color"
             android:id="@+id/tv_image_no_specifiers"
-            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"

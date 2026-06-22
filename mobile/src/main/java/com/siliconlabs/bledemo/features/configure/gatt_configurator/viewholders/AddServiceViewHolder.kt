@@ -30,7 +30,11 @@ class AddServiceViewHolder(
             parent: ViewGroup,
             addServiceListener: AddServiceListener
         ): AddServiceViewHolder {
-            val binding = AdapterAddServiceBinding.inflate(LayoutInflater.from(parent.context))
+            val binding = AdapterAddServiceBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
 
             return AddServiceViewHolder(binding, addServiceListener)
         }

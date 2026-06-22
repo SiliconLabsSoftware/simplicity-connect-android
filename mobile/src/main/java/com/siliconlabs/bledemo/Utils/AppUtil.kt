@@ -22,8 +22,10 @@ object AppUtil {
         window.statusBarColor = Color.TRANSPARENT
         window.navigationBarColor = Color.TRANSPARENT
         WindowInsetsControllerCompat(window, window.decorView).let { controller ->
-            controller.isAppearanceLightStatusBars = true // adjust for dark/light icons
-            controller.isAppearanceLightNavigationBars = true
+            // Status bar background is dark (#333333), so icons must be rendered in white.
+            // isAppearanceLightStatusBars = false => white (light) icons on dark background.
+            controller.isAppearanceLightStatusBars = false
+            controller.isAppearanceLightNavigationBars = false
         }
 
         activity.findViewById<View>(R.id.fakeStatusBar)?.let { fakeStatusBar ->

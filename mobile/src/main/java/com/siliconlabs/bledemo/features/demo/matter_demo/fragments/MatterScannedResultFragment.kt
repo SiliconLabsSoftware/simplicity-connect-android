@@ -1,14 +1,13 @@
 package com.siliconlabs.bledemo.features.demo.matter_demo.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
@@ -17,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import chip.devicecontroller.ChipDeviceController
@@ -27,10 +27,13 @@ import com.siliconlabs.bledemo.features.demo.matter_demo.activities.MatterDemoAc
 import com.siliconlabs.bledemo.features.demo.matter_demo.adapters.MatterScannedResultAdapter
 import com.siliconlabs.bledemo.features.demo.matter_demo.dishwasher_demo.view.MatterDishwasherFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.dishwasher_demo.view.MatterDishwasherFragment.Companion.DISHWASHER_PREF
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterOvenFragment
+import com.siliconlabs.bledemo.features.demo.matter_demo.fragments.MatterRangeHoodFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.evse.ui.EVFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.model.MatterScannedResultModel
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.ChipClient
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.FragmentUtils
+import com.siliconlabs.bledemo.features.demo.matter_demo.utils.MatterTextAlertDialogFragment
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.RecyclerViewMargin
 import com.siliconlabs.bledemo.features.demo.matter_demo.utils.SharedPrefsUtils
 import com.siliconlabs.bledemo.utils.CustomToastManager
@@ -115,6 +118,11 @@ class MatterScannedResultFragment : Fragment() {
                 val intent = Intent(Intent.ACTION_VIEW, uri)
                 startActivity(intent)
             }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = ContextCompat.getColor(requireContext(), R.color.silabs_rebranding_2373_hyperlink_text_color)
+            }
         }
         spannableString.setSpan(
             clickableSpan,
@@ -151,7 +159,7 @@ class MatterScannedResultFragment : Fragment() {
             binding.recyclerViewScannedDevices.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             binding.recyclerViewScannedDevices.adapter = matterAdapter
             binding.recyclerViewScannedDevices.addItemDecoration(
-                RecyclerViewMargin(resources.getDimensionPixelSize(R.dimen.matter_margin))
+                RecyclerViewMargin(resources.getDimensionPixelSize(R.dimen.matter_0dp))
             )
             matterAdapter.notifyDataSetChanged()
             matterAdapter.setOnClickListener(object : MatterScannedResultAdapter.OnClickListener {
@@ -164,17 +172,13 @@ class MatterScannedResultFragment : Fragment() {
                     Timber.tag(TAG).d("Unpair")
                     deviceId = model.deviceId
                     pos = position
-                    val builder = AlertDialog.Builder(context, R.style.AlertDialogTheme)
-                    val alertMessageStart =
+                    val dialog = MatterTextAlertDialogFragment.newInstance(
+                        requireContext().getString(R.string.matter_delete_alert_title),
                         requireContext().getString(R.string.matter_delete_message)
-                    val alertTitle = requireContext().getString(R.string.matter_delete_alert_title)
-                    val cancel = requireContext().getString(R.string.matter_cancel)
-                    val ok = requireContext().getString(R.string.matter_alert_ok)
-
-                    builder.setTitle(alertTitle)
-                    builder.setMessage(alertMessageStart)
-                        .setPositiveButton(ok, dialogClickListener)
-                        .setNegativeButton(cancel, dialogClickListener).show()
+                    )
+                    dialog.onPositiveClick = { performDeleteConfirmed() }
+                    dialog.onNegativeClick = { }
+                    dialog.show(parentFragmentManager, TAG_DELETE_DEVICE_DIALOG)
                 }
             })
         } else {
@@ -184,37 +188,25 @@ class MatterScannedResultFragment : Fragment() {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
-    var dialogClickListener =
-        DialogInterface.OnClickListener { dialog, which ->
-
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-
-                    Timber.tag(TAG).d("deviceList   $deviceList")
-                    deviceList.removeAt(pos)
-                    binding.recyclerViewScannedDevices.adapter?.notifyItemRemoved(pos)
-                    Timber.tag(TAG).d("deviceList removed elem $deviceList")
-                    scope.launch {
-                        deviceController.unpairDeviceCallback(deviceId, ChipUnpairDeviceCallback())
-                    }
-
-                    matterAdapter.notifyDataSetChanged()
-                    SharedPrefsUtils.saveDevicesToPref(mPrefs, deviceList)
-                    if (null != dishwasherPref) {
-                        SharedPrefsUtils.clearDishwasherSharedPreferences(dishwasherPref)
-                    }
-                    if (deviceList.isEmpty()) {
-                        requireActivity().finish()
-                    }
-                    setListDisplay()
-                }
-
-                DialogInterface.BUTTON_NEGATIVE -> {
-                    dialog.dismiss()
-                }
-            }
+    private fun performDeleteConfirmed() {
+        Timber.tag(TAG).d("deviceList   $deviceList")
+        deviceList.removeAt(pos)
+        binding.recyclerViewScannedDevices.adapter?.notifyItemRemoved(pos)
+        Timber.tag(TAG).d("deviceList removed elem $deviceList")
+        scope.launch {
+            deviceController.unpairDeviceCallback(deviceId, ChipUnpairDeviceCallback())
         }
+
+        matterAdapter.notifyDataSetChanged()
+        SharedPrefsUtils.saveDevicesToPref(mPrefs, deviceList)
+        if (null != dishwasherPref) {
+            SharedPrefsUtils.clearDishwasherSharedPreferences(dishwasherPref)
+        }
+        if (deviceList.isEmpty()) {
+            requireActivity().finish()
+        }
+        setListDisplay()
+    }
 
 
     private fun navigateToDemos(model: MatterScannedResultModel) {
@@ -292,6 +284,22 @@ class MatterScannedResultFragment : Fragment() {
                     this@MatterScannedResultFragment,
                     Callback::class.java
                 ).navigateToDemo(matterDishwasherFragment, model)
+            }
+
+            OVEN -> {
+                val matterOvenFragment = MatterOvenFragment.newInstance()
+                FragmentUtils.getHost(
+                    this@MatterScannedResultFragment,
+                    Callback::class.java
+                ).navigateToDemo(matterOvenFragment, model)
+            }
+
+            RANGE_HOOD -> {
+                val matterRangeHoodFragment = MatterRangeHoodFragment.newInstance()
+                FragmentUtils.getHost(
+                    this@MatterScannedResultFragment,
+                    Callback::class.java
+                ).navigateToDemo(matterRangeHoodFragment, model)
             }
 
             AIR_QUALITY_SENSOR_TYPE -> {
@@ -386,6 +394,7 @@ class MatterScannedResultFragment : Fragment() {
     companion object {
         private const val ARG_DEVICE_LIST = "device_list"
         private const val TAG = "MatterScannedResultFragment"
+        private const val TAG_DELETE_DEVICE_DIALOG = "MatterDeleteDeviceDialog"
         private const val MATTER_URL = "https://docs.silabs.com/matter/2.1.0/matter-overview"
 
 
@@ -454,6 +463,7 @@ class MatterScannedResultFragment : Fragment() {
         const val DISHWASHER_TYPE = 117
         const val MICROWAVE_OVEN = 121
         const val OVEN = 123
+        const val RANGE_HOOD = 122
 
         //Energy EVSE
         const

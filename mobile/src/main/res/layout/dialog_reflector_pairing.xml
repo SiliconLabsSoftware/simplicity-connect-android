@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_dialog_background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/pairing_dialog_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/silabs_redtheme_primary_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_key"
+            app:tint="@android:color/white"
+            android:contentDescription="@string/reflector_pairing_title" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reflector_pairing_title"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/redesign_ic_close"
+            android:contentDescription="@string/button_cancel"
+            app:tint="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/pairing_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/silabs_subtle_text"
+        android:textSize="14sp"
+        tools:text="Establishing secure connection with Silabs Example" />
+
+    <!-- Pairing Visual (simplified) -->
+    <LinearLayout
+        android:id="@+id/pairing_visual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingVertical="16dp">
+
+        <!-- Phone Icon -->
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/rounded_box_background">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/reflector_pairing_phone_icon"
+                android:src="@drawable/redesign_ic_smartphone"
+                app:tint="@color/silabs_redtheme_primary_color" />
+        </FrameLayout>
+
+        <!-- Connection Animation -->
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="3dp"
+            android:layout_marginHorizontal="8dp"
+            android:background="@color/silabs_divider">
+
+            <ProgressBar
+                android:id="@+id/connection_progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/silabs_redtheme_primary_color" />
+        </FrameLayout>
+
+        <!-- Lock Icon -->
+        <FrameLayout
+            android:id="@+id/lock_icon_container"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/rounded_box_background">
+
+            <ImageView
+                android:id="@+id/lock_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/reflector_pairing_lock_icon"
+                android:src="@drawable/door_lock"
+                app:tint="@color/silabs_redtheme_primary_color" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Pairing Title -->
+    <TextView
+        android:id="@+id/pairing_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:text="@string/reflector_pairing_connecting"
+        android:textColor="@color/silabs_primary_text"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Progress Steps -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@drawable/rounded_box_background">
+
+        <!-- Step 1: Device Found -->
+        <include
+            android:id="@+id/step1"
+            layout="@layout/item_pairing_step" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/silabs_divider" />
+
+        <!-- Step 2: Pairing & Bonding -->
+        <include
+            android:id="@+id/step2"
+            layout="@layout/item_pairing_step" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/silabs_divider" />
+
+        <!-- Step 3: Channel Sounding Setup -->
+        <include
+            android:id="@+id/step3"
+            layout="@layout/item_pairing_step" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/silabs_divider" />
+
+        <!-- Step 4: Digital Key Ready -->
+        <include
+            android:id="@+id/step4"
+            layout="@layout/item_pairing_step" />
+
+    </LinearLayout>
+
+    <!-- Action Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_action"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:enabled="false"
+        android:padding="12dp"
+        android:text="@string/reflector_pairing_in_progress"
+        android:textAllCaps="false"
+        android:textColor="@color/silabs_white"
+        android:textSize="14sp"
+        app:backgroundTint="@color/silabs_divider"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
+
+</LinearLayout>

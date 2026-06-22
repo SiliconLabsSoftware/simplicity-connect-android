@@ -1,109 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/modal_bg"
     android:orientation="vertical">
-    <!-- Fake Status Bar View -->
+
+    <!-- Matches app edge-to-edge inset handling (see MotionActivity / AppUtil) -->
     <View
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
 
-    <!-- Toolbar just below fake status bar -->
-    <androidx.appcompat.widget.Toolbar
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
+
+    <!-- Figma: title start-aligned next to back affordance (not centered) -->
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:background="@color/silabs_redtheme_tool_bar_color"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:navigationIconTint="@color/silabs_white"
+        app:titleCentered="false"
+        app:titleTextAppearance="@style/TextAppearance.ToolbarTitle"
+        app:titleTextColor="@color/silabs_white" />
+
+    <!-- Figma: empty space below card — card anchored top + horizontal center -->
     <FrameLayout
-        android:background="@drawable/motion_rounded_bg"
-        android:id="@+id/car_animation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_XS"
-        android:layout_marginBottom="@dimen/space_XS"
-        android:layout_weight="0.6"
-        android:paddingLeft="@dimen/iodemo_margin"
-        android:paddingRight="@dimen/iodemo_margin" />
+        android:layout_weight="1">
 
-    <ScrollView
-        android:id="@+id/scrollerViewParent"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:layout_gravity="center"
-        android:layout_weight="0.4"
-        android:fillViewport="true"
-        android:gravity="center">
-
-        <LinearLayout
-            android:id="@+id/llParent"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="@dimen/motion_card_height"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_margin="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="@dimen/motion_card_corner_radius"
+            app:cardElevation="@dimen/motion_card_elevation">
 
-            <RelativeLayout
-                android:id="@+id/rlParent"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/space_L"
-                android:paddingRight="@dimen/space_L">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/motion_card_inner_padding_horizontal"
+                android:paddingTop="@dimen/motion_card_inner_padding_top"
+                android:paddingEnd="@dimen/motion_card_inner_padding_horizontal"
+                android:paddingBottom="@dimen/motion_card_inner_padding_bottom">
 
-                <include
-                    android:id="@+id/motionDemoOrientationParent"
-                    layout="@layout/motiondemo_orientation"
-                    android:layout_width="wrap_content"
+                <!-- GDX board scene — white matte matches Figma card interior -->
+                <FrameLayout
+                    android:id="@+id/car_animation"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:minHeight="140dp"
+                    android:background="@android:color/transparent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/divider"
-                    android:layout_marginEnd="@dimen/space_M"
-                    android:gravity="end" />
+                    android:layout_marginTop="@dimen/space_S"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/main_background" />
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-                <include
-                    android:id="@+id/motionDemoAccelerationParent"
-                    layout="@layout/motiondemo_acceleration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@id/divider"
-                    android:layout_marginStart="@dimen/space_M" />
+                        <include
+                            android:id="@+id/motionDemoOrientationParent"
+                            layout="@layout/motiondemo_orientation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal" />
+                    </FrameLayout>
 
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="@dimen/motion_column_divider_width"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/space_XS"
+                        android:layout_marginEnd="@dimen/space_XS"
+                        android:background="@color/silabs_inactive_light" />
 
-            </RelativeLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-        </LinearLayout>
+                        <include
+                            android:id="@+id/motionDemoAccelerationParent"
+                            layout="@layout/motiondemo_acceleration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal" />
+                    </FrameLayout>
+                </LinearLayout>
 
-    </ScrollView>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/calibrate"
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/space_XS">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/calibrate"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/blue_primary"
-            android:paddingStart="@dimen/space_M"
-            android:paddingTop="@dimen/space_XXS"
-            android:paddingEnd="@dimen/space_M"
-            android:paddingBottom="@dimen/space_XXS"
-            android:text="@string/motion_calibrate"
-            android:textAllCaps="false"
-            style="@style/tb_robo_medium_18dp_white" />
-
-    </LinearLayout>
+                    android:layout_gravity="center_horizontal|center_vertical|center"
+                    android:layout_width="122dp"
+                    android:layout_height="@dimen/matter_30dp"
+                    android:layout_marginTop="@dimen/space_M"
+                    android:layout_marginBottom="@dimen/matter_20dp"
+                    android:background="@drawable/motion_calibrate_button_bg"
+                    android:minHeight="@dimen/motion_calibrate_min_height"
+                    android:text="@string/motion_calibrate"
+                    android:textAllCaps="false"
+                    style="@style/tb_robo_medium_18dp_white" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </LinearLayout>
-

@@ -39,7 +39,11 @@ class TestFragment : BaseServiceDependentMainMenuFragment(), DialogInterface.OnD
     private fun initMainViewValues() {
         viewBinding.fragmentMainView.fullScreenInfo.apply {
             image.setImageResource(R.drawable.redesign_ic_main_view_iop)
-            textPrimary.text = getString(R.string.iop_test_full_page_info)
+            textPrimary.apply {
+                text = getString(R.string.iop_test_full_page_info)
+                gravity = Gravity.CENTER_HORIZONTAL
+                layoutParams = layoutParams.apply { width = ViewGroup.LayoutParams.MATCH_PARENT }
+            }
             textSecondary.visibility = View.GONE
         }
         viewBinding.fragmentMainView.extendedFabMainView.text = getString(R.string.iop_test_select_device_btn)

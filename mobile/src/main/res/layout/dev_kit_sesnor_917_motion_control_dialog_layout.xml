@@ -4,214 +4,283 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/matter_25dp"
-    android:orientation="vertical">
+    android:background="@drawable/dev_kit_motion_dialog_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/matter_16dp"
+    android:paddingTop="@dimen/matter_16dp"
+    android:paddingBottom="@dimen/matter_16dp">
 
     <TextView
         android:id="@+id/header"
-        style="@style/settings_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:gravity="center" />
+        android:fontFamily="@font/stolzl_bold"
+        android:gravity="center"
+        android:textColor="@color/silabs_primary_text"
+        android:textSize="@dimen/text_size_SM"
+        tools:text="Motion Sensor" />
 
-    <RelativeLayout
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/matter_16dp"
+        android:contentDescription="@string/motion_orientation"
+        android:src="@drawable/ic_motion_container" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/matter_8dp"
+        android:fontFamily="@font/stolzl_regular"
+        android:text="@string/dev_kit_sensor_917_motion"
+        android:textColor="@color/silabs_primary_text"
+        android:textSize="@dimen/text_size_S" />
+
+    <LinearLayout
         android:id="@+id/parentOrientLay"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="@dimen/matter_10dp"
-        android:layout_marginTop="@dimen/matter_10dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/matter_20dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/matter_12dp">
 
             <TextView
-                style="@style/tb_robo_medium_14dp"
-                android:layout_gravity="start"
-                android:textStyle="bold"
-                android:text="@string/motion_orientation" />
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stolzl_bold"
+                android:text="@string/motion_orientation"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="@dimen/text_size_SM"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S"
+                android:layout_marginTop="@dimen/matter_12dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/orient_x_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_x"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/orient_x"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="-175°" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S">
+                android:layout_marginTop="@dimen/matter_8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/orient_y_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_y"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/orientation_y"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="6°" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S">
+                android:layout_marginTop="@dimen/matter_8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/orientation_z_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_z"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/orientation_z"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="8°" />
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:id="@+id/divider"
-            android:layout_width="2dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@color/main_background" />
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/matter_4dp"
+            android:background="@color/silabs_divider" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/divider"
-            android:layout_marginStart="@dimen/space_M"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/matter_12dp">
 
             <TextView
-                style="@style/tb_robo_medium_14dp"
-                android:layout_gravity="start"
-                android:textStyle="bold"
-                android:text="@string/motion_acceleration" />
+                android:maxLines="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stolzl_bold"
+                android:text="@string/motion_acceleration"
+                android:textColor="@color/silabs_primary_text"
+                android:textSize="@dimen/text_size_SM"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S"
+                android:layout_marginTop="@dimen/matter_12dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/accelo_x_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_x"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/accelo_x"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="0.13 g" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S">
+                android:layout_marginTop="@dimen/matter_8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/accelo_y_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_y"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/accelo_y"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="0.02 g" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_S">
+                android:layout_marginTop="@dimen/matter_8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/accelo_z_label"
-                    style="@style/tb_robo_regular_12dp_grey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/motion_z"
-                    android:textStyle="bold" />
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM" />
 
                 <TextView
                     android:id="@+id/accelo_z"
-                    style="@style/tb_robo_regular_12dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_S"
-                    android:fontFamily="sans-serif-light" />
+                    android:fontFamily="@font/stolzl_medium"
+                    android:textColor="@color/silabs_primary_text"
+                    android:textSize="@dimen/text_size_SM"
+                    tools:text="-1.01 g" />
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="@dimen/matter_250dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/matter_10dp"
+        android:layout_marginTop="@dimen/matter_24dp"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/yes_opt"
-            style="@style/SensorText"
-            android:layout_alignParentEnd="true"
-            android:paddingRight="20dp"
-            android:text="@string/refresh"
-            android:textAllCaps="false" />
-
-
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/no_opt"
-            style="@style/SensorText"
-            android:layout_alignParentStart="true"
+            style="@style/button_add_data_outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/stolzl_bold"
+            android:minHeight="48dp"
             android:text="@string/close"
-            android:textAllCaps="false" />
-    </RelativeLayout>
+            android:textAllCaps="false"
+            android:textColor="@color/silabs_redtheme_button_text_color"
+            android:textSize="@dimen/text_size_SM"
+            android:textStyle="bold"
+            app:backgroundTint="@color/silabs_white"
+            app:cornerRadius="@dimen/silabs_btn_radius"
+            app:strokeColor="@color/silabs_redtheme_button_outline_color"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/yes_opt"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/stolzl_bold"
+            android:minHeight="48dp"
+            android:text="@string/refresh"
+            android:textAllCaps="false"
+            android:textColor="@color/silabs_white"
+            android:textSize="@dimen/text_size_SM"
+            android:textStyle="bold"
+            app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
+    </LinearLayout>
+
 </LinearLayout>

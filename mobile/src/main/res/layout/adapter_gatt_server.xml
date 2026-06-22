@@ -5,20 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/space_ML"
         android:visibility="visible"
+        app:buttonCompat="@drawable/throughput_rb_notifications_square_selector"
         tools:visibility="gone" />
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/list_item_card_view_box"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        style="@style/list_item_card_view_box">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,21 +35,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:src="@drawable/redesign_ic_gatt_server"
-                        android:contentDescription="@string/content_desc_gatt_server_icon" />
+                        android:contentDescription="@string/content_desc_gatt_server_icon"
+                        android:src="@drawable/redesign_ic_gatt_server" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/space_S"
                         android:layout_weight="1"
-                        android:orientation="vertical"
                         android:gravity="center_vertical"
-                        android:layout_marginStart="@dimen/space_S" >
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_gatt_server_name"
@@ -71,7 +72,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:minWidth="32dp"
+                        android:padding="0dp"
                         android:thumb="@drawable/sw_thumb"
+                        app:splitTrack="false"
+                        app:switchMinWidth="32dp"
                         app:track="@drawable/sw_track" />
 
                 </LinearLayout>
@@ -126,9 +131,9 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/content_desc_dropdown_arrow"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:contentDescription="@string/content_desc_dropdown_arrow"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

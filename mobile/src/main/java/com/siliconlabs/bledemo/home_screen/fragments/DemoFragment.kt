@@ -2,6 +2,7 @@ package com.siliconlabs.bledemo.home_screen.fragments
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.res.ColorStateList
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -12,13 +13,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.bluetooth.services.BluetoothService
 import com.siliconlabs.bledemo.databinding.FragmentDemoBinding
+import com.siliconlabs.bledemo.features.demo.channel_sounding.activities.ReflectorDashboardActivity
 import com.siliconlabs.bledemo.features.demo.channel_sounding.utils.ChannelSoundingDetectorUtils
+import com.siliconlabs.bledemo.features.demo.channel_sounding.utils.ReflectorSessionPreferences
 import com.siliconlabs.bledemo.features.demo.energyharvesting.EnergyHarvestingActivity
 import com.siliconlabs.bledemo.features.demo.matter_demo.activities.MatterDemoActivity
 import com.siliconlabs.bledemo.features.demo.range_test.activities.RangeTestActivity
@@ -32,6 +36,7 @@ import com.siliconlabs.bledemo.home_screen.adapters.DemoAdapter
 import com.siliconlabs.bledemo.home_screen.base.BaseServiceDependentMainMenuFragment
 import com.siliconlabs.bledemo.home_screen.base.BluetoothDependent
 import com.siliconlabs.bledemo.home_screen.base.LocationDependent
+import com.siliconlabs.bledemo.home_screen.dialogs.ChannelSoundingModeDialog
 import com.siliconlabs.bledemo.home_screen.dialogs.SelectDeviceDialog
 import com.siliconlabs.bledemo.home_screen.menu_items.AWSIOTDemo
 import com.siliconlabs.bledemo.home_screen.menu_items.Blinky
@@ -52,6 +57,7 @@ import com.siliconlabs.bledemo.home_screen.menu_items.Throughput
 import com.siliconlabs.bledemo.home_screen.menu_items.WiFiProvisioning
 import com.siliconlabs.bledemo.home_screen.menu_items.WiFiThroughput
 import com.siliconlabs.bledemo.home_screen.menu_items.WifiCommissioning
+import com.google.android.material.button.MaterialButton
 import com.siliconlabs.bledemo.utils.BLEUtils
 import com.siliconlabs.bledemo.utils.CustomToastManager
 import java.io.File
@@ -242,6 +248,18 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
         initRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (pendingReflectorPairingFlow) {
+            pendingReflectorPairingFlow = false
+            view?.post {
+                if (isAdded && isBluetoothOperationPossible()) {
+                    startReflectorModeScan()
+                }
+            }
+        }
+    }
+
     private fun initRecyclerView() {
         demoAdapter = DemoAdapter(list, this@DemoFragment)
         binding.rvDemoMenu.apply {
@@ -345,24 +363,91 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
             } else {
                 CustomToastManager.show(requireContext(), getString(R.string.turn_on_wifi), 5000)
             }
-        } else {
-
+        } else if (demoItem.connectType == BluetoothService.GattConnectType.CHANNEL_SOUNDING_DEMO) {
+            // Channel Sounding Demo - Show mode selection dialog (Phase 2)
             val csSupported =
                 ChannelSoundingDetectorUtils.isBleChannelSoundingSupported(requireContext())
-            if (!csSupported && demoItem.connectType == BluetoothService.GattConnectType.CHANNEL_SOUNDING_DEMO) {
+            if (!csSupported) {
                 CustomToastManager.showError(
                     requireContext(),
                     "Channel Sounding Demo is not supported in this Device"
                 )
                 return
             }
+            showChannelSoundingModeDialog()
+        } else {
             BLEUtils.GATT_DEVICE_SELECTED = demoItem.connectType
             // Prevent multiple dialogs
             val existingDialog = childFragmentManager.findFragmentByTag("select_device_dialog")
             if (existingDialog == null || !existingDialog.isVisible) {
-                selectDeviceDialog = SelectDeviceDialog.newDialog(demoItem.connectType)
+                selectDeviceDialog = SelectDeviceDialog.newDialog(
+                    demoItem.connectType,
+                    showProtocolIcon = demoItem is ConnectedLighting,
+                )
                 selectDeviceDialog?.show(childFragmentManager, "select_device_dialog")
             }
+        }
+    }
+
+    /**
+     * Shows the Channel Sounding mode selection dialog.
+     * User can choose between Initiator mode (existing flow) or Reflector mode (Phase 2 Digital Key).
+     */
+    private fun showChannelSoundingModeDialog() {
+        val existingDialog = childFragmentManager.findFragmentByTag(ChannelSoundingModeDialog.TAG)
+        if (existingDialog != null && existingDialog.isVisible) {
+            return // Dialog already showing
+        }
+
+        val modeDialog = ChannelSoundingModeDialog.newInstance(object : ChannelSoundingModeDialog.Callback {
+            override fun onInitiatorModeSelected() {
+                // Continue with existing initiator flow
+                BLEUtils.GATT_DEVICE_SELECTED = BluetoothService.GattConnectType.CHANNEL_SOUNDING_DEMO
+                selectDeviceDialog = SelectDeviceDialog.newDialog(BluetoothService.GattConnectType.CHANNEL_SOUNDING_DEMO)
+                selectDeviceDialog?.show(childFragmentManager, "select_device_dialog")
+            }
+
+            override fun onReflectorModeSelected() {
+                openReflectorDashboardOrStartScan()
+            }
+
+            override fun onCancelled() {
+                // User cancelled - do nothing
+            }
+        })
+        modeDialog.show(childFragmentManager, ChannelSoundingModeDialog.TAG)
+    }
+
+    /**
+     * Returning users skip scan/pairing and open the dashboard with the saved Digital Key device.
+     * First-time users go through [SelectDeviceDialog] and [ReflectorPairingDialog].
+     */
+    private fun openReflectorDashboardOrStartScan() {
+        val context = requireContext()
+        val paired = ReflectorSessionPreferences.getPairedDevice(context)
+        if (paired != null && ReflectorSessionPreferences.hasActivePairedSession(context)) {
+            startActivity(
+                ReflectorDashboardActivity.createIntent(context, paired.first, paired.second)
+            )
+            return
+        }
+        if (paired != null) {
+            ReflectorSessionPreferences.clearPairedDevice(context)
+        }
+        startReflectorModeScan()
+    }
+
+    /**
+     * Starts scanning for CS Initiator devices for Reflector mode (Phase 2).
+     * Uses the existing SelectDeviceDialog to scan for "Silabs Example" devices.
+     * When a device is selected, shows ReflectorPairingDialog for the 4-step pairing flow.
+     */
+    private fun startReflectorModeScan() {
+        // Use the existing SelectDeviceDialog with reflector mode enabled
+        val existingDialog = childFragmentManager.findFragmentByTag("select_device_dialog")
+        if (existingDialog == null || !existingDialog.isVisible) {
+            selectDeviceDialog = SelectDeviceDialog.newReflectorDialog()
+            selectDeviceDialog?.show(childFragmentManager, "select_device_dialog")
         }
     }
 
@@ -478,20 +563,15 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
         otaProgressDialog?.dataRate?.visibility = View.INVISIBLE
         otaProgressDialog?.dataSize?.text = getString(R.string.iop_test_n_percent, 0)
         otaProgressDialog?.steps?.visibility = View.INVISIBLE
-        otaProgressDialog?.uploadImage?.visibility = View.VISIBLE
 //        otaProgressDialog?.btnOtaEnd?.isEnabled = false
-        otaProgressDialog?.btnOtaEnd?.setBackgroundColor(
-            getColor(
-                requireContext(),
-                R.color.silabs_red
-            )
-        )
+        (otaProgressDialog?.btnOtaEnd as? MaterialButton)?.backgroundTintList =
+            ColorStateList.valueOf(getColor(requireContext(), R.color.silabs_redtheme_button_fill_color))
         otaProgressDialog?.btnOtaEnd?.text = getString(R.string.button_cancel)
         otaProgressDialog?.firmwareStatus?.text = getString(R.string.waiting_for_client_to_connect)
         otaProgressDialog?.firmwareStatus?.setTextColor(
             getColor(
                 requireContext(),
-                R.color.silabs_dark_blue
+                R.color.silabs_redtheme_button_fill_color
             )
         )
     }
@@ -510,7 +590,6 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
                 getLocalIpAddress(),
                 portId.toString()
             )
-            animateLoading()
 
         }
         //Start OTA_data Upload in another thread
@@ -569,11 +648,10 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
                 otaProgressDialog?.firmwareStatus?.setTextColor(
                     getColor(
                         requireContext(),
-                        R.color.silabs_red
+                        R.color.silabs_primary_color
                     )
                 )
 //                otaProgressDialog?.btnOtaEnd?.isEnabled = true
-                otaProgressDialog?.uploadImage?.visibility = View.GONE
             }
         }
     }
@@ -696,19 +774,18 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
             otaProgressDialog?.firmwareStatus?.setTextColor(
                 getColor(
                     requireContext(),
-                    R.color.silabs_dark_blue
+                    R.color.silabs_primary_color
                 )
             )
 
             if (packetCount == totalPackets) {
 //                otaProgressDialog?.btnOtaEnd?.isEnabled = true
                 otaProgressDialog?.btnOtaEnd?.text = getString(R.string.done)
-                otaProgressDialog?.btnOtaEnd?.setBackgroundColor(
-                    getColor(
+                (otaProgressDialog?.btnOtaEnd as? MaterialButton)?.backgroundTintList =
+                    ContextCompat.getColorStateList(
                         requireContext(),
                         R.color.dialog_positive_button_selector
                     )
-                )
                 otaProgressDialog?.firmwareStatus?.text =
                     getString(R.string.firmware_update_completed)
                 otaProgressDialog?.firmwareStatus?.setTextColor(
@@ -717,17 +794,6 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
                         R.color.silabs_green
                     )
                 )
-                otaProgressDialog?.uploadImage?.visibility = View.GONE
-            }
-        }
-    }
-
-    private fun animateLoading() {
-        if (otaProgressDialog?.uploadImage != null) {
-            otaProgressDialog?.uploadImage?.visibility = View.GONE
-
-            if (otaProgressDialog?.isShowing!!) {
-                otaProgressDialog?.uploadImage?.visibility = View.VISIBLE
             }
         }
     }
@@ -766,5 +832,12 @@ class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoI
         private const val RPS_FILE_CHOICE_REQUEST_CODE = 202
         private const val RPS_HEADER: Byte = 0x01
         private const val RPS_DATA: Byte = 0x00
+
+        @Volatile
+        private var pendingReflectorPairingFlow: Boolean = false
+
+        fun requestReflectorPairingOnNextResume() {
+            pendingReflectorPairingFlow = true
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.siliconlabs.bledemo.features.demo.thunderboard_demos.demos.blinky_thunderboard.activities
 
-//import kotlinx.android.synthetic.main.activity_blinky_thunderboard.*
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
@@ -9,7 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.cardview.widget.CardView
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.siliconlabs.bledemo.R
@@ -27,12 +26,9 @@ import com.siliconlabs.bledemo.home_screen.dialogs.SelectDeviceDialog
 import com.siliconlabs.bledemo.utils.AppUtil
 import java.util.UUID
 
-import com.siliconlabs.bledemo.utils.ApppUtil
-import java.util.*
-
 class BlinkyThunderboardActivity : ThunderboardActivity(), ColorLEDControlListener {
 
-    private lateinit var ledsControl: CardView
+    private lateinit var ledsControl: View
     private lateinit var colorLEDControl: ColorLEDControl
 
     private lateinit var viewModel: BlinkyThunderboardViewModel
@@ -42,6 +38,15 @@ class BlinkyThunderboardActivity : ThunderboardActivity(), ColorLEDControlListen
         super.onCreate(savedInstanceState)
 
         binding = ActivityBlinkyThunderboardBinding. inflate(LayoutInflater.from(this), null, false)
+
+        binding.led0.apply {
+            thumbTintList = null
+            trackTintList = null
+        }
+        binding.led1.apply {
+            thumbTintList = null
+            trackTintList = null
+        }
 
         colorLEDControl = binding.colorLedControl  // make the view gone (if necessary) before it can be showed
         ledsControl = binding.ledsControl
@@ -60,12 +65,13 @@ class BlinkyThunderboardActivity : ThunderboardActivity(), ColorLEDControlListen
 
     private fun prepareToolBar() {
         AppUtil.setEdgeToEdge(window, this)
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.matter_back)
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.title = this.getString(R.string.title_Blinky)
+            actionBar.title = getString(R.string.title_Blinky)
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -3,36 +3,78 @@
     <item
         android:state_enabled="true"
         android:state_checked="true">
-        <shape android:shape="rectangle">
-            <size android:height="@dimen/switch_height" />
-            <solid android:color="@color/silabs_blue" />
-            <corners android:radius="@dimen/switch_corner_radius" />
-
-        </shape>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="18dp" />
+                    <solid android:color="@color/silabs_transparent" />
+                </shape>
+            </item>
+            <item
+                android:bottom="3dp"
+                android:top="2dp">
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="13dp" />
+                    <solid android:color="@color/silabs_red" />
+                    <corners android:radius="7dp" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <item
         android:state_enabled="true"
         android:state_checked="false">
-        <shape android:shape="rectangle">
-            <size android:height="@dimen/switch_height" />
-            <solid android:color="@color/silabs_white" />
-            <corners android:radius="@dimen/switch_corner_radius" />
-            <stroke
-                android:width="@dimen/switch_border_width"
-                android:color="@color/silabs_ripple_blue"/>
-        </shape>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="18dp" />
+                    <solid android:color="@color/silabs_transparent" />
+                </shape>
+            </item>
+            <item
+                android:bottom="3dp"
+                android:top="2dp">
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="13dp" />
+                    <solid android:color="@color/silabs_inactive_light" />
+                    <corners android:radius="7dp" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
     <item
         android:state_enabled="false"
         android:state_checked="false">
-        <shape android:shape="rectangle">
-            <size android:height="@dimen/switch_height" />
-            <solid android:color="@color/track_disabled" />
-            <corners android:radius="@dimen/switch_corner_radius" />
-        </shape>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="18dp" />
+                    <solid android:color="@color/silabs_transparent" />
+                </shape>
+            </item>
+            <item
+                android:bottom="3dp"
+                android:top="2dp">
+                <shape android:shape="rectangle">
+                    <size
+                        android:width="32dp"
+                        android:height="13dp" />
+                    <solid android:color="@color/track_disabled" />
+                    <corners android:radius="7dp" />
+                </shape>
+            </item>
+        </layer-list>
     </item>
-
-
 </selector>

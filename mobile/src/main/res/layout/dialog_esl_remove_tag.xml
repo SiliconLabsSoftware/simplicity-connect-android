@@ -37,31 +37,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/esl_remove_dialog_title" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/esl_remove_confirm"
-            style="@style/dialog_button_positive_action"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/esl_remove_button_bar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_S"
-            android:layout_marginEnd="@dimen/space_XS"
-            android:text="@string/remove_dialog_confirm"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/esl_remove_dialog_message" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/esl_remove_cancel"
-            style="@style/dialog_button_negative_action"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_S"
-            android:layout_marginTop="@dimen/space_S"
-            android:text="@string/button_cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/esl_remove_confirm"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/esl_remove_dialog_message" />
+            app:layout_constraintTop_toBottomOf="@id/esl_remove_dialog_message">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/esl_remove_cancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
+                android:fontFamily="@font/stolzl_medium"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/button_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_primary_color"
+                android:textSize="@dimen/dialog_button_text_size"
+                app:backgroundTint="@color/silabs_white"
+                app:cornerRadius="@dimen/matter_10dp"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                app:minWidth="0dp"
+                app:strokeColor="@color/silabs_redtheme_primary_color"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/esl_remove_confirm"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/remove_dialog_confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dialog_button_text_size"
+                app:backgroundTint="@color/dialog_positive_button_selector"
+                app:cornerRadius="@dimen/matter_10dp"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
+                app:minWidth="0dp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

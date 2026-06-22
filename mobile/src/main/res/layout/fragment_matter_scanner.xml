@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@color/silabs_white"
-    android:layout_margin="@dimen/matter_15dp"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/matter_15dp">
 
     <TextView
         android:id="@+id/header"
+        style="@style/SilabsMatterDeviceTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -33,11 +33,13 @@
 
     <TextView
         android:id="@+id/InstructionTextView"
+        style="@style/SilabsMatterDeviceBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/matter_10dp"
         android:text="@string/matter_scanner_instruction"
-        android:textSize="@dimen/text_size_ML"
+        android:textSize="@dimen/text_size_M"
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cameraView" />
@@ -53,6 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/InstructionTextView">
 
         <TextView
+            style="@style/SilabsMatterDeviceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/matter_scanner_info"
@@ -66,28 +69,34 @@
 
             <EditText
                 android:id="@+id/manualCodeEditText"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/matter_200dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/matter_5dp"
                 android:layout_weight="1"
-                android:background="@drawable/stroke_box"
+                style="@style/SilabsMatterDeviceTitle"
+                android:background="@drawable/stroke_box_white_fill"
                 android:hint="@string/matter_manual_qr_code"
                 android:padding="@dimen/matter_10dp"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_M" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/submitEntry"
-                style="@style/MatterButtonBlue"
-                android:layout_width="match_parent"
+                style="@style/button_add_data_outlined"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/matter_5dp"
                 android:layout_weight="3"
+                android:textStyle="normal"
+                android:layout_marginVertical="@dimen/space_S"
+                android:textSize="@dimen/text_size_ML"
                 android:text="@string/matter_submit"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="12dp"/>
         </LinearLayout>
 
         <TextView
+            style="@style/SilabsMatterDeviceBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/matter_example_mt_yk" />

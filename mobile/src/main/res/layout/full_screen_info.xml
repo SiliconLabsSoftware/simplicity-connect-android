@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
     android:id="@+id/full_screen_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
     android:orientation="vertical"
     android:gravity="center"
+    android:layout_gravity="center"
     android:layout_marginBottom="@dimen/full_screen_info_margin">
 
     <ImageView
@@ -20,10 +19,12 @@
 
     <TextView
         android:id="@+id/text_primary"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/space_S"
+        android:paddingHorizontal="@dimen/space_M"
         android:gravity="center"
+        android:textAlignment="center"
         style="@style/full_page_info"
         tools:text="@string/text_gatt_configurator_purpose_explanation" />
 

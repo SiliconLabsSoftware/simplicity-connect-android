@@ -40,6 +40,9 @@
 
                 <TextView
                     android:id="@+id/tv_light_bulb_hint"
+                    android:fontFamily="@font/stolzl_regular"
+                    android:textSize="@dimen/text_size_S"
+                    android:textColor="@color/silabs_rebranding_2373_connected_light_text_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -88,7 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="sans-serif-medium"
+                    android:textSize="@dimen/text_size_S"
+                    android:textColor="@color/silabs_rebranding_2373_connected_light_text_color"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/light_demo_title_last_event" />
 
                 <TextView
@@ -97,8 +102,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
-                    android:textColor="@color/silabs_primary_text"
-                    android:textSize="16sp"
+                    android:fontFamily="@font/stolzl_regular"
+                    android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                    android:textSize="@dimen/text_size_SM"
                     tools:text="Light On" />
 
                 <include layout="@layout/horizontal_separator" />
@@ -108,7 +114,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="sans-serif-medium"
+                    android:textSize="@dimen/text_size_S"
+                    android:textColor="@color/silabs_rebranding_2373_connected_light_text_color"
+                    android:fontFamily="@font/stolzl_regular"
                     android:text="@string/light_demo_title_source" />
 
                 <TextView
@@ -117,8 +125,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="16dp"
-                    android:textColor="@color/silabs_primary_text"
-                    android:textSize="16sp"
+                    android:fontFamily="@font/stolzl_regular"
+                    android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                    android:textSize="@dimen/text_size_SM"
                     tools:text="00:00:00:00:00:00:00:00" />
             </LinearLayout>
 

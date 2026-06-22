@@ -2,27 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/main_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/sl_light_grey">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/matter_15dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:gravity="top|center_vertical"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
         <TextView
+            android:textColor="#525252"
+            android:textFontWeight="500"
+            android:fontFamily="@font/stolzl_medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/matter_5dp"
             android:gravity="center"
             android:text="@string/matter_light_switch_control"
-            android:textSize="@dimen/text_size_XL"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/lightNodeLabel"
@@ -142,50 +146,76 @@
         <LinearLayout
             android:id="@+id/layout_switch_bind"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/btn_rounded_white"
+            android:background="@drawable/matter_switch_bind_row_bg"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp">
 
             <ImageView
                 android:id="@+id/icon_switch"
-                android:layout_width="@dimen/matter_45dp"
-                android:layout_height="@dimen/matter_45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="mattter switch icon"
-                android:src="@drawable/ic_matter_switch_off" />
+                android:src="@drawable/ic_light_switch_off" />
 
             <TextView
+                android:textFontWeight="700"
+                android:fontFamily="@font/stolzl_bold"
                 android:id="@+id/tv_switch_label"
                 android:layout_width="0dp"
+                android:layout_marginStart="@dimen/matter_10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Switch"
-                android:textColor="@color/silabs_black"
-                android:textSize="20sp"
+                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                android:textSize="14sp"
+                android:lineHeight="16dp"
                 android:textStyle="bold" />
 
-            <!--<androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_bind"
-                android:enabled="false"
-                android:clickable="false"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_background_grey_box"
-                android:text="Bind" />-->
+
 
             <TextView
+                android:layout_marginEnd="@dimen/matter_20dp"
+                android:lineHeight="16sp"
+                android:textSize="14sp"
+                android:textFontWeight="500"
+                android:fontFamily="@font/stolzl_medium"
                 android:textColor="@color/white"
                 android:id="@+id/tv_show_bind_info"
+                android:clickable="true"
+                android:focusable="true"
                 android:paddingVertical="5dp"
                 android:paddingHorizontal="5dp"
-                android:background="@drawable/button_background_grey_box"
+                android:background="@drawable/channel_sounding_btn_reset_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_marginEnd="@dimen/matter_20dp"
+                android:visibility="gone"
+                android:id="@+id/unBindLightBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/channel_sounding_btn_reset_bg"
+                android:fontFamily="@font/stolzl_medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:stateListAnimator="@null"
+                android:text="Unbind"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_primary_color"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -196,49 +226,75 @@
         <!-- No Device Message -->
         <LinearLayout
             android:visibility="visible"
-            android:id="@+id/layout_no_device"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="48dp"
             android:layout_weight="1"
             android:background="@drawable/btn_rounded_white"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_no_device_title"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_select_devices_to_bind_header"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="No active light device detected."
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_no_device_subtext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="Please commission the light device to\nenable control operations."
-                android:textColor="#444444"
+                android:fontFamily="@font/stolzl_medium"
+                android:gravity="start"
+                android:includeFontPadding="false"
+                android:letterSpacing="0"
+                android:lineHeight="14sp"
+                android:paddingHorizontal="@dimen/matter_15dp"
+                android:paddingTop="@dimen/matter_15dp"
+                android:paddingBottom="@dimen/matter_10dp"
+                android:text="@string/matter_select_devices_to_bind"
+                android:textColor="#525252"
+                android:textFontWeight="500"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/layout_no_device"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_no_device_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="No active light device detected."
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_no_device_subtext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Please commission the light device to\nenable control operations."
+                    android:textColor="#444444"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <!--UI Light Switch -->
+
+            <include
+                android:id="@+id/layout_view_light_bind"
+                android:visibility="gone"
+                layout="@layout/layout_light_binding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </include>
         </LinearLayout>
 
 
 
 
-        <!--UI Light Switch -->
-
-        <include
-            android:id="@+id/layout_view_light_bind"
-            android:visibility="gone"
-            layout="@layout/layout_light_binding"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </include>
 
     </LinearLayout>
 </RelativeLayout>

@@ -92,12 +92,12 @@ class RemoteServicesFragment(private val onScrollChangeListener: View.OnScrollCh
     private fun updatePropertyView(container: PropertyContainerBinding?, isEnabled: Boolean) {
         container?.apply {
             propertyText.setTextColor(ContextCompat.getColor(requireContext(),
-                    if (isEnabled) R.color.silabs_blue
+                    if (isEnabled) R.color.silabs_redtheme_primary_color
                     else R.color.silabs_black)
             )
             ImageViewCompat.setImageTintList(
                     propertyIcon, ColorStateList.valueOf(ContextCompat.getColor(requireContext(),
-                        if (isEnabled) R.color.blue_primary
+                        if (isEnabled) R.color.silabs_redtheme_primary_color
                         else R.color.silabs_dark_gray_icon
             )))
         }

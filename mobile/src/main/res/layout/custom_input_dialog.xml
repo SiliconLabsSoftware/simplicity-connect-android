@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/matter_progress_shape"
-    android:gravity="center"
+    android:background="@drawable/custom_input_dialog_background"
+    android:gravity="start"
     android:orientation="vertical"
-    android:padding="@dimen/matter_15dp">
+    android:paddingHorizontal="@dimen/matter_20dp"
+    android:paddingTop="@dimen/matter_20dp"
+    android:paddingBottom="@dimen/matter_16dp">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/matter_5dp"
-        android:gravity="center"
+        android:fontFamily="@font/stolzl_bold"
+        android:gravity="start"
+        android:text="@string/add_device_name"
+        android:textAlignment="viewStart"
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
         android:textSize="@dimen/text_size_ML"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="@string/add_device_name" />
 
     <TextView
         android:id="@+id/tv_sub_title"
+        style="@style/SilabsMatterDeviceBody"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/matter_5dp"
-        android:gravity="center"
-        android:textSize="@dimen/text_size_SM" />
+        android:layout_marginTop="@dimen/matter_8dp"
+        android:gravity="start"
+        android:textAlignment="viewStart"
+        android:textSize="@dimen/text_size_SM"
+        tools:text="@string/add_device_subtitle" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/matter_8dp"
-        android:background="@drawable/edit_text_border"
-        android:hint="@string/matter_custom_alert_enter_text"
+        android:layout_marginTop="@dimen/matter_16dp"
+        android:background="@drawable/matter_add_device_name_input_bg"
+        android:fontFamily="@font/stolzl_regular"
+        android:gravity="center_vertical|start"
+        android:hint="@string/matter_add_device_name_hint"
+        android:importantForAutofill="no"
         android:inputType="text"
-        android:padding="@dimen/matter_10dp" />
+        android:paddingHorizontal="@dimen/matter_12dp"
+        android:paddingVertical="@dimen/matter_12dp"
+        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+        android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+        android:textSize="@dimen/text_size_ML" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
-        style="@style/ButtonBlue"
+        style="@style/button_add_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/matter_8dp"
-        android:onClick="onOkButtonClick"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/matter_20dp"
+        android:gravity="center"
+        android:minWidth="@dimen/matter_100dp"
         android:text="@string/matter_custom_alert_add"
-        android:textColor="@color/white" />
+        android:textSize="@dimen/text_size_ML"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/silabs_btn_radius" />
 
 </LinearLayout>

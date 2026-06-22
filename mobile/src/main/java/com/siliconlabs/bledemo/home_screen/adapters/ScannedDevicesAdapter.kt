@@ -18,7 +18,9 @@ import kotlin.math.max
 
 class ScannedDevicesAdapter(
         private var scannedDemoDevices: MutableList<BluetoothDeviceInfo>,
-        private val demoDeviceCallback: DemoDeviceCallback
+        private val demoDeviceCallback: DemoDeviceCallback,
+        /** When true (Connected Device demo), show protocol icon ([android.R.id.icon2]) beside RSSI ([android.R.id.icon]). */
+        private val showProtocolIcon: Boolean = false,
 ) : RecyclerView.Adapter<ScannedDevicesAdapter.ViewHolder>()
 {
 
@@ -36,7 +38,7 @@ class ScannedDevicesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val viewBinding = AdapterScannedDeviceBinding.inflate(LayoutInflater.from(parent.context))
         localParentContext = parent.context
-        return ViewHolder(viewBinding,localParentContext!!).apply {
+        return ViewHolder(viewBinding, localParentContext!!, showProtocolIcon).apply {
             viewBinding.root.setOnClickListener {
                 RecyclerViewUtils.withProperAdapterPosition(this) { pos ->
                     demoDeviceCallback.onDemoDeviceClicked(scannedDemoDevices[pos])
@@ -119,12 +121,16 @@ class ScannedDevicesAdapter(
         fun onDemoDeviceClicked(deviceInfo: BluetoothDeviceInfo)
     }
 
-    class ViewHolder(private val viewBinding: AdapterScannedDeviceBinding,val context: Context) : RecyclerView.ViewHolder(viewBinding
-            .root) {
+    class ViewHolder(
+        private val viewBinding: AdapterScannedDeviceBinding,
+        val context: Context,
+        private val showProtocolIcon: Boolean,
+    ) : RecyclerView.ViewHolder(viewBinding.root) {
 
         @SuppressLint("SetTextI18n")
         fun bind(info: BluetoothDeviceInfo) {
             viewBinding.apply {
+                itemBottomDivider.visibility = View.VISIBLE
                 title.text = info.scanInfo?.getDisplayName()
                 address.text = info.scanInfo?.device?.address
                 tvRssiLabel.text = String.format(getString(context,R.string.unit_value_dbm), info.scanInfo?.rssi)
@@ -132,40 +138,46 @@ class ScannedDevicesAdapter(
 
                 icon.setImageLevel(getRssiIconValue(info.rssi))
 
-                info.scanInfo?.scanRecord?.serviceUuids?.let {
-                    icon2.apply { when {
-                        it.contains(ParcelUuid(GattService.ZigbeeLightService.number)) -> {
-                            setImageResource(R.drawable.icon_zigbee)
-                            visibility = View.VISIBLE
+                if (!showProtocolIcon) {
+                    icon2.visibility = View.GONE
+                } else {
+                    info.scanInfo?.scanRecord?.serviceUuids?.let {
+                        icon2.apply {
+                            when {
+                                it.contains(ParcelUuid(GattService.ZigbeeLightService.number)) -> {
+                                    setImageResource(R.drawable.icon_zigbee)
+                                    visibility = View.VISIBLE
+                                }
+                                it.contains(ParcelUuid(GattService.ProprietaryLightService.number)) -> {
+                                    setImageResource(R.drawable.icon_proprietary)
+                                    visibility = View.VISIBLE
+                                }
+                                it.contains(ParcelUuid(GattService.ConnectLightService.number)) -> {
+                                    setImageResource(R.drawable.icon_connect)
+                                    visibility = View.VISIBLE
+                                }
+                                it.contains(ParcelUuid(GattService.ThreadLightService.number)) -> {
+                                    setImageResource(R.drawable.icon_thread)
+                                    visibility = View.VISIBLE
+                                }
+                                it.contains(ParcelUuid(GattService.TheDMP.number)) -> {
+                                    setImageResource(R.drawable.ic_aws_iot_icon)
+                                    visibility = View.VISIBLE
+                                    clipToOutline = true
+                                }
+                                it.contains(ParcelUuid(GattService.TheAmazonSideWalk.number)) -> {
+                                    setImageResource(R.drawable.ic_side_walk_icon)
+                                    visibility = View.VISIBLE
+                                    clipToOutline = true
+                                }
+                                else -> {
+                                    visibility = View.GONE
+                                }
+                            }
                         }
-                        it.contains(ParcelUuid(GattService.ProprietaryLightService.number)) -> {
-                            setImageResource(R.drawable.icon_proprietary)
-                            visibility = View.VISIBLE
-                        }
-                        it.contains(ParcelUuid(GattService.ConnectLightService.number)) -> {
-                            setImageResource(R.drawable.icon_connect)
-                            visibility = View.VISIBLE
-                        }
-                        it.contains(ParcelUuid(GattService.ThreadLightService.number)) -> {
-                            setImageResource(R.drawable.icon_thread)
-                            visibility = View.VISIBLE
-                        }
-                        it.contains(ParcelUuid(GattService.TheDMP.number)) -> {
-                            setBackgroundResource(R.drawable.btn_rounded_blue)
-                            setImageResource(R.mipmap.ic_aws_iot_icon)
-                            visibility = View.VISIBLE
-                            clipToOutline = true
-                        }
-                        it.contains(ParcelUuid(GattService.TheAmazonSideWalk.number)) -> {
-                            setBackgroundResource(R.drawable.btn_rounded_blue)
-                            setImageResource(R.mipmap.ic_side_walk_icon)
-                            visibility = View.VISIBLE
-                            clipToOutline = true
-                        }
-                        else -> {
-                            visibility = View.GONE
-                        }
-                    } }
+                    } ?: run {
+                        icon2.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -174,6 +186,10 @@ class ScannedDevicesAdapter(
         fun showChanges(payloads: List<Any>) {
             val oldState = (payloads.first() as PayloadChange).oldItem
             val newState = (payloads.last() as PayloadChange).newItem
+
+            if (!showProtocolIcon) {
+                viewBinding.icon2.visibility = View.GONE
+            }
 
             if (!isRssiIconLevelSame(getRssiIconValue(oldState.rssi), getRssiIconValue(newState.rssi))) {
                 viewBinding.tvRssiLabel.text = String.format(getString(context,R.string.unit_value_dbm), newState.rssi)

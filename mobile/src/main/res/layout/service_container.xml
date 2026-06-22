@@ -20,58 +20,58 @@
             android:layout_marginBottom="@dimen/card_view_margin_vertical"
             android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/service_title"
-                        style="@style/list_item_card_view_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        tools:text="@string/services_list_service_name_default" />
-
-                    <TextView
-                        android:id="@+id/tv_rename_service"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center"
-                        android:layout_alignParentEnd="true"
-                        app:drawableStartCompat="@drawable/redesign_ic_card_view_action_icon_rename"
-                        app:drawableTint="@color/blue_primary"
-                        android:drawablePadding="@dimen/property_icon_text_padding"
-                        android:textSize="@dimen/card_view_text_info_size"
-                        android:textColor="@color/blue_primary"
-                        android:fontFamily="sans-serif"
-                        android:text="@string/rename"
-                        android:contentDescription="@string/content_desc_rename_icon"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-
-                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/service_uuid"
-                    style="@style/list_item_card_view_text_info_ellipsized"
-                    android:layout_width="match_parent"
+                    android:id="@+id/service_title"
+                    style="@style/Silabs_Rebranding_Title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/default_uuid_of_service" />
+                    android:layout_gravity="center_vertical"
+                    tools:text="@string/services_list_service_name_default" />
 
-                <View
-                    android:id="@+id/characteristics_separator"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    android:layout_marginVertical="@dimen/space_S"
-                    android:layout_marginHorizontal="@dimen/space_XXS" />
+                <TextView
+                    android:id="@+id/tv_rename_service"
+                    style="@style/Silabs_Rebranding_Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/content_desc_rename_icon"
+                    android:drawablePadding="@dimen/property_icon_text_padding"
+                    android:gravity="center"
+                    android:text="@string/rename"
+                    android:textSize="@dimen/card_view_text_info_size"
+
+                    android:visibility="gone"
+                    app:drawableStartCompat="@drawable/redesign_ic_card_view_action_icon_rename"
+                    app:drawableTint="@color/silabs_redtheme_primary_color"
+                    tools:visibility="visible" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/service_uuid"
+                style="@style/list_item_card_view_text_info_ellipsized"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/default_uuid_of_service" />
+
+            <View
+                android:id="@+id/characteristics_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/space_XXS"
+                android:layout_marginVertical="@dimen/space_S"
+                android:background="?android:attr/listDivider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
                 android:id="@+id/container_more_less_info"
-                android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_no_characteristics"
@@ -86,6 +86,7 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tv_more_info"
+                    style="@style/Silabs_Rebranding_Body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/more_info"

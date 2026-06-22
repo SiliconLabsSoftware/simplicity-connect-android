@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
+import timber.log.Timber
 import java.util.UUID
 import kotlin.coroutines.resume
 
@@ -67,7 +68,8 @@ class BluetoothManager : BleCallback {
         }
 
         val scanner = bluetoothAdapter.bluetoothLeScanner ?: run {
-            Log.e(TAG, "No bluetooth scanner found")
+            // Log.e(TAG, "No bluetooth scanner found")
+            Timber.tag(TAG).e("No Bluetooth Scanner Found")
             return null
         }
 
@@ -90,11 +92,13 @@ class BluetoothManager : BleCallback {
                             )
                         } else {
                             this@callbackFlow.trySend(device).isSuccess
+                            // offer(device)
                         }
                     }
 
                     override fun onScanFailed(errorCode: Int) {
-                        Log.e(TAG, "Scan failed $errorCode")
+                        //  Log.e(TAG, "Scan failed $errorCode")
+                        Timber.tag(TAG).e("Scan Failed $errorCode")
                     }
                 }
 
@@ -114,7 +118,8 @@ class BluetoothManager : BleCallback {
                     .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                     .build()
 
-                Log.i(TAG, "Starting Bluetooth scan")
+                //  Log.i(TAG, "Starting Bluetooth scan")
+                Timber.tag(TAG).i("Starting Bluetooth scan")
                 scanner.startScan(listOf(scanFilter), scanSettings, scanCallback)
                 awaitClose { scanner.stopScan(scanCallback) }
             }.first()
@@ -129,7 +134,8 @@ class BluetoothManager : BleCallback {
         return suspendCancellableCoroutine { continuation ->
             val bluetoothGattCallback = getBluetoothGattCallback(context, continuation)
 
-            Log.i(TAG, "Connecting")
+            // Log.i(TAG, "Connecting")
+            Timber.tag(TAG).i("Connecting")
             bleGatt = device.connectGatt(context, false, bluetoothGattCallback)
 
             connectionId =
@@ -156,6 +162,8 @@ class BluetoothManager : BleCallback {
                 newState: Int
             ) {
                 super.onConnectionStateChange(gatt, status, newState)
+                Timber.tag(TAG)
+                    .i("${gatt?.device?.name}.onConnectionStateChange status = $status, newState=$newState")
                 Log.i(
                     TAG,
                     "${gatt?.device?.name}.onConnectionStateChange status = $status, newState=$newState"
@@ -170,16 +178,18 @@ class BluetoothManager : BleCallback {
 
             @SuppressLint("MissingPermission")
             override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-                Log.d(TAG, "${gatt?.device?.name}.onServicesDiscovered status = $status")
+                Timber.tag(TAG).d(
+                    "${gatt?.device?.name}.onServicesDiscovered status = $status"
+                )
                 wrappedCallback.onServicesDiscovered(gatt, status)
 
-                Log.i("$TAG|onServicesDiscovered", "Services Discovered")
+                Timber.tag("$TAG|onServicesDiscovered").i("Services Discovered")
                 gatt?.requestMtu(247);
             }
 
             @SuppressLint("MissingPermission")
             override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
-                Log.d(TAG, "${gatt?.device?.name}.onMtuChanged: connecting to CHIP device")
+               Timber.tag(TAG).d("${gatt?.device?.name}.onMtuChanged: connecting to CHIP device")
                 super.onMtuChanged(gatt, mtu, status)
                 wrappedCallback.onMtuChanged(gatt, mtu, status)
                 if (coroutineContinuation.isActive) {
@@ -192,7 +202,7 @@ class BluetoothManager : BleCallback {
                 gatt: BluetoothGatt,
                 characteristic: BluetoothGattCharacteristic
             ) {
-                Log.d(TAG, "${gatt.device.name}.onCharacteristicChanged: ${characteristic.uuid}")
+               Timber.tag(TAG).d("${gatt.device.name}.onCharacteristicChanged: ${characteristic.uuid}")
                 wrappedCallback.onCharacteristicChanged(gatt, characteristic)
             }
 

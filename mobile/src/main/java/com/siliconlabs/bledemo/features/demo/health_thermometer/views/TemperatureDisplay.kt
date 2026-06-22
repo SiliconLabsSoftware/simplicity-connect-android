@@ -2,14 +2,16 @@ package com.siliconlabs.bledemo.features.demo.health_thermometer.views
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.siliconlabs.bledemo.features.demo.health_thermometer.models.TemperatureReading
 import com.siliconlabs.bledemo.R
+import java.util.Locale
 import kotlin.math.round
 
 class TemperatureDisplay : LinearLayout {
@@ -52,36 +54,41 @@ class TemperatureDisplay : LinearLayout {
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        val accent = ContextCompat.getColor(context, R.color.silabs_redtheme_primary_color)
         mainTempText = findViewById(R.id.temp_display_primary)
         mainTempText?.let {
-            it.setTextSize(TypedValue.COMPLEX_UNIT_PX, largeTextSize)
-            it.setTextColor(context.getColor(R.color.blue_primary))
+           // it.setTextSize(TypedValue.COMPLEX_UNIT_PX, largeTextSize)
+            it.setTextColor(accent)
+            it.includeFontPadding = false
         }
         degreeSymbol = findViewById(R.id.temp_degree_symbol)
         degreeSymbol?.let {
-            it.setTextSize(TypedValue.COMPLEX_UNIT_PX, largeTextSize)
-            it.setTextColor(context.getColor(R.color.blue_primary))
+            val degreePx = smallTextSize * 0.42f
+           // it.setTextSize(TypedValue.COMPLEX_UNIT_PX, degreePx)
+            it.setTextColor(accent)
+            it.includeFontPadding = false
         }
         decimalText = findViewById(R.id.temp_display_secondary)
         decimalText?.let {
-            it.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize)
-            it.setTextColor(context.getColor(R.color.blue_primary))
+           // it.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize)
+            it.setTextColor(accent)
+            it.includeFontPadding = false
+        }
+        val thin = ResourcesCompat.getFont(context, R.font.helvetica_neue_thin)
+        if (thin != null) {
+            mainTempText?.typeface = thin
+            decimalText?.typeface = thin
+            degreeSymbol?.typeface = thin
         }
     }
 
     @SuppressLint("SetTextI18n")
     private fun setTemperature(temperature: Double) {
         val rounded = round(temperature * 10) / 10
-        mainTempText?.text = (rounded.toString().split(".").elementAtOrNull(0) ?: "0") + "."
-        decimalText?.text = (rounded.toString().split(".").elementAtOrNull(1) ?: "0")
-
-    }
-
-    fun setFontFamily(familyName: String?, style: Int) {
-        val typeface = Typeface.create(familyName, style)
-        mainTempText?.typeface = typeface
-        decimalText?.typeface = typeface
-        degreeSymbol?.typeface = typeface
+        val parts = String.format(Locale.US, "%.1f", rounded).split(".")
+        mainTempText?.text = parts.elementAtOrNull(0) ?: "0"
+        val frac = parts.elementAtOrNull(1) ?: "0"
+        decimalText?.text = ".$frac"
     }
 
     fun setTemperature(reading: TemperatureReading?) {

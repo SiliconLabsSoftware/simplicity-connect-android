@@ -12,8 +12,8 @@
     <!-- Health thermometer mode-->
     <dimen name="thermo_graph_padding">36dp</dimen>
     <dimen name="thermo_graph_time_text_size">16sp</dimen>
-    <dimen name="thermo_large_temp_primary_text_size">112sp</dimen>
-    <dimen name="thermo_large_temp_secondary_text_size">56sp</dimen>
+    <dimen name="thermo_large_temp_primary_text_size">131sp</dimen>
+    <dimen name="thermo_large_temp_secondary_text_size">65sp</dimen>
     <dimen name="thermo_label_text_size">16sp</dimen>
     <dimen name="thermo_value_text_size">24sp</dimen>
     <dimen name="empty_thermo_subheader_text_size">24sp</dimen>

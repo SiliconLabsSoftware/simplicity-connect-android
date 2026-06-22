@@ -6,17 +6,18 @@ import kotlin.math.sign
 import kotlin.math.sqrt
 
 /**
- * DistanceKalmanFilter (Kotlin) ΓÇö Minimal, efficient hybrid
+ * DistanceKalmanFilter (Kotlin) — Minimal, efficient hybrid
  *
  * Final pipeline:
- *   RAW  ΓåÆ  Median(5)  ΓåÆ  Adaptive Outlier Rejection (innovation-sigma)  ΓåÆ  Kalman (random-walk)  ΓåÆ  OUTPUT
+ *   RAW  →  Median(5)  →  Adaptive Outlier Rejection (innovation-sigma)  →  Kalman (random-walk)  →  OUTPUT
  *
  * Notes:
  *  - First-sample initializes to the median value (no ramp from zero).
+ *  - BLE near-range sentinel (0.0 m) bypasses median/outlier rejection and updates toward zero.
  *  - processNoise (Q) is scaled with dt for time-consistent behavior.
  *  - Adaptive outlier: if |z-x| > outlierSigma * sqrt(p + R), use R_eff = R * outlierNoiseMultiplier.
  *  - Tuned for aggressive outlier rejection at the cost of increased latency.
- *  - No calibration, rate limiter, trend boosts, spike telemetry, or EMA hereΓÇökept intentionally out
+ *  - No calibration, rate limiter, trend boosts, spike telemetry, or EMA here—kept intentionally out
  *    for accuracy + speed. If needed, add them upstream/downstream, not inside the estimator core.
  */
 class DistanceKalmanFilter(
@@ -26,7 +27,7 @@ class DistanceKalmanFilter(
     var initialEstimateError: Double = Defaults.initialEstimateError, // P0
 
     // Adaptive outlier rejection (innovation-sigma gate)
-    var outlierSigma: Double = Defaults.outlierSigma,                  // e.g., 3╧â
+    var outlierSigma: Double = Defaults.outlierSigma,                  // e.g., 3σ
     var outlierNoiseMultiplier: Double = Defaults.outlierNoiseMultiplier, // inflate R on outliers
 
     // Median(5)
@@ -35,18 +36,19 @@ class DistanceKalmanFilter(
 
     object Defaults {
         // Tuned for aggressive outlier rejection (accepts more latency)
-        const val processNoise: Double = 0.006      // Q (per second) ΓåÆ lower = smoother, more latency
-        const val measurementNoise: Double = 0.08   // R ΓåÆ higher = trust measurements less
+        const val processNoise: Double = 0.006      // Q (per second) → lower = smoother, more latency
+        const val measurementNoise: Double = 0.08   // R → higher = trust measurements less
         const val initialEstimateError: Double = 2.0
 
-        // Stricter outlier gate (2╧â rejects more measurements than 3╧â)
+        // Stricter outlier gate (2σ rejects more measurements than 3σ)
         const val outlierSigma: Double = 2.0
         const val outlierNoiseMultiplier: Double = 25.0  // Heavy damping on outliers
 
         // Larger median pre-filter window (more impulse noise rejection)
         const val medianFilterWindowSize: Int = 5
 
-        // Validity
+        // Validity (0.0 is the BLE "too close" sentinel — handled separately, not as invalid)
+        const val nearRangeSentinel: Double = 0.0
         const val minValidDistance: Double = 0.01
         const val maxValidDistance: Double = 100.0
 
@@ -98,7 +100,18 @@ class DistanceKalmanFilter(
         val dt = max(dtSeconds, Defaults.eps)
         lastDt = dt
 
-        // Validity gate
+        // BLE near-range sentinel: 0.0 means "too close" — trust it, don't hold last estimate
+        if (rawMeasurement == Defaults.nearRangeSentinel) {
+            zWindow.clear()
+            return kalmanUpdate(
+                z = Defaults.nearRangeSentinel,
+                rawMeasurement = rawMeasurement,
+                dt = dt,
+                skipOutlierRejection = true
+            )
+        }
+
+        // Validity gate (0.0 handled above; reject NaN/inf, negative, and sub-minimum readings)
         if (!rawMeasurement.isFinite() ||
             rawMeasurement < Defaults.minValidDistance ||
             rawMeasurement > Defaults.maxValidDistance
@@ -123,6 +136,15 @@ class DistanceKalmanFilter(
         zWindow.add(rawMeasurement)
         val z = median(zWindow.values())
 
+        return kalmanUpdate(z = z, rawMeasurement = rawMeasurement, dt = dt)
+    }
+
+    private fun kalmanUpdate(
+        z: Double,
+        rawMeasurement: Double,
+        dt: Double,
+        skipOutlierRejection: Boolean = false
+    ): UpdateResult {
         // --- First-sample initialization (no ramp from zero) ---
         if (!initialized) {
             x = z
@@ -144,13 +166,13 @@ class DistanceKalmanFilter(
         }
 
         // --- Predict ---
-        val qEff = processNoise * dt               // scale Q with dt
+        val qEff = processNoise * dt
         val pPred = p + qEff
 
         // --- Adaptive Outlier Rejection (innovation-sigma gate) ---
         val innovation = abs(z - x)
         val sigma = sqrt(pPred + measurementNoise)
-        val isOutlier = innovation > outlierSigma * sigma
+        val isOutlier = !skipOutlierRejection && innovation > outlierSigma * sigma
         val rEff = if (isOutlier) measurementNoise * outlierNoiseMultiplier else measurementNoise
 
         // --- Update ---

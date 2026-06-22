@@ -50,6 +50,7 @@
         android:visibility="gone"
         android:textColor="@color/silabs_black"
         android:maxLines="1"
+        android:fontFamily="@font/stolzl_regular"
         android:ellipsize="end"
         tools:text="> 50 dBm, connectible"
         tools:visibility="visible" />
@@ -59,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/silabs_background">
+        android:background="@drawable/modal_bg">
 
         <include
             android:id="@+id/looking_for_devices_background"
@@ -90,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
+                android:fontFamily="@font/stolzl_medium"
                 android:layout_margin="@dimen/extended_fab_margin"
                 android:visibility="gone"
                 tools:visibility="visible"

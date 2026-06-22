@@ -19,8 +19,8 @@ class LogAdapter(private var logList: List<Log>) : RecyclerView.Adapter<LogViewH
 
         fun bind(log: Log, position: Int) {
             logContainer.setBackgroundColor(itemView.context.getColor(
-                    if (position.rem(2) == 0) R.color.silabs_white
-                    else R.color.silabs_ripple_blue
+                    if (position.rem(2) == 0) R.color.silabs_alternate_log_color_p2
+                    else R.color.silabs_alternate_log_color_p1
             ))
             tvInfo.text = log.logInfo
             tvTime.text = log.logTime

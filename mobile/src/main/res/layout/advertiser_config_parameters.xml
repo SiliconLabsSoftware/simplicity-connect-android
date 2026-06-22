@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
         style="@style/TitleLarge"
-        android:layout_marginBottom="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="@string/advertiser_title_advertising_parameters" />
 
     <LinearLayout
@@ -31,9 +31,11 @@
 
         <Spinner
             android:id="@+id/sp_primary_phy"
-            tools:listitem="@layout/spinner_item_layout_medium"
             style="@style/CustomSpinner"
-            android:layout_width="110dp" />
+            android:layout_width="110dp"
+            android:fontFamily="@font/stolzl_medium"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:listitem="@layout/spinner_item_layout_medium" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,8 +57,10 @@
         <Spinner
             android:id="@+id/sp_secondary_phy"
             style="@style/CustomSpinner"
-            tools:listitem="@layout/spinner_item_layout_medium"
-            android:layout_width="110dp" />
+            android:layout_width="110dp"
+            android:fontFamily="@font/stolzl_medium"
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+            tools:listitem="@layout/spinner_item_layout_medium" />
 
     </LinearLayout>
 
@@ -71,8 +75,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -92,12 +96,12 @@
         <EditText
             android:id="@+id/et_advertising_interval"
             style="@style/EditTextNormalMedium"
-            tools:text="250"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:background="@drawable/et_background"
             android:inputType="number"
-            android:maxLength="8" />
+            android:maxLength="8"
+            tools:text="250" />
 
     </LinearLayout>
 
@@ -112,8 +116,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -133,20 +137,20 @@
         <EditText
             android:id="@+id/et_tx_power"
             style="@style/EditTextNormalMedium"
-            tools:text="250"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:background="@drawable/et_background"
             android:inputType="numberSigned"
-            android:maxLength="4" />
+            android:maxLength="4"
+            tools:text="250" />
 
     </LinearLayout>
 
     <TextView
         style="@style/TextSmall"
-        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/advertiser_note_tx_power" />
 
     <include
@@ -163,8 +167,8 @@
         android:text="@string/advertiser_label_advertising_time_limit" />
 
     <RadioButton
-        style="@style/radio_button_bg"
         android:id="@+id/rb_no_limit"
+        style="@style/radio_button_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -179,8 +183,8 @@
         android:orientation="horizontal">
 
         <RadioButton
-            style="@style/radio_button_bg"
             android:id="@+id/rb_time_limit"
+            style="@style/radio_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -191,13 +195,13 @@
         <EditText
             android:id="@+id/et_time_limit"
             style="@style/EditTextNormalMedium"
-            tools:text="250"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:layout_gravity="center_vertical"
+            android:enabled="false"
             android:inputType="number"
-            android:maxLength="6" />
+            android:maxLength="6"
+            tools:text="250" />
     </LinearLayout>
 
     <LinearLayout
@@ -207,8 +211,8 @@
         android:orientation="horizontal">
 
         <RadioButton
-            style="@style/radio_button_bg"
             android:id="@+id/rb_event_limit"
+            style="@style/radio_button_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -219,13 +223,13 @@
         <EditText
             android:id="@+id/et_event_limit"
             style="@style/EditTextNormalMedium"
-            tools:text="250"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:layout_gravity="center_vertical"
+            android:enabled="false"
             android:inputType="number"
             android:maxLength="3"
-            android:maxLines="1" />
+            android:maxLines="1"
+            tools:text="250" />
     </LinearLayout>
 </LinearLayout>

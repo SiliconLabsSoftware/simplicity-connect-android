@@ -42,10 +42,11 @@ import com.siliconlabs.bledemo.features.demo.smartlock.dialogs.SmartLockConfigur
 import com.siliconlabs.bledemo.features.demo.smartlock.dialogs.SmartLockSelectionDialog
 import com.siliconlabs.bledemo.features.demo.smartlock.models.LockState
 import com.siliconlabs.bledemo.features.demo.smartlock.repository.SmartLockConnectionResult
+import com.siliconlabs.bledemo.features.demo.smartlock.utils.DebouncedUpdater
 import com.siliconlabs.bledemo.features.demo.smartlock.viewmodels.SmartLockAwsViewModel
 import com.siliconlabs.bledemo.features.demo.smartlock.viewmodels.SmartLockBleViewModel
 import com.siliconlabs.bledemo.features.demo.wifi_commissioning.activities.WifiCommissioningActivity
-import com.siliconlabs.bledemo.utils.ApppUtil
+import com.siliconlabs.bledemo.utils.AppUtil
 import com.siliconlabs.bledemo.utils.BLEUtils
 import com.siliconlabs.bledemo.utils.GattQueue
 import com.siliconlabs.bledemo.utils.Notifications
@@ -92,6 +93,7 @@ class SmartLockActivity : BaseDemoActivity(),
     private var smartLockFilePath: String? = null
     private var connDevice: List<ConnectedDeviceInfo>? = null
     private val pendingWrites = mutableMapOf<UUID, CompletableDeferred<Boolean>>()
+    private lateinit var awsLockUiDebouncer: DebouncedUpdater<Boolean>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,7 +103,7 @@ class SmartLockActivity : BaseDemoActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         DynamicToast.Config.getInstance().setTextSize(18)
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        ApppUtil.setEdgeToEdge(window, this)
+        AppUtil.setEdgeToEdge(window, this)
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -111,6 +113,11 @@ class SmartLockActivity : BaseDemoActivity(),
         binding.awsPlaceHolder.visibility = View.VISIBLE
         viewModelBle = ViewModelProvider(this).get(SmartLockBleViewModel::class.java)
         viewModelAws = ViewModelProvider(this).get(SmartLockAwsViewModel::class.java)
+        awsLockUiDebouncer = DebouncedUpdater(
+            lifecycleScope,
+            LOCK_UI_DEBOUNCE_MS,
+            LOCK_COMMAND_SUPPRESS_MS
+        )
         initSmartLockAWSObservers()
         initBleConnection()
         setupToolbarIconListener()
@@ -434,32 +441,20 @@ class SmartLockActivity : BaseDemoActivity(),
 
                     onAWSSmartLockWakeUpCmd()
 
-                    viewModelAws.smartLockAwsMessageLiveData.observe(this, Observer {
+                    viewModelAws.smartLockAwsMessageLiveData.observe(this, Observer { message ->
+                        if (connectType != AWS_CONNECTION) return@Observer
                         removeSmartLockProgress()
                         binding.placeholder.visibility = View.GONE
                         binding.smartLockPlaceHolder.visibility = View.VISIBLE
-                        Timber.tag(TAG).e("SMART Lock AWS IOT MESSAGES: $it")
-
-                        val jsonString = it.toString() // Replace with real JSON source
-
-                        if (!jsonString.isEmpty()) {
-                            if (getFragmentRefreshListener() != null) {
-                                println("SMART LOCK JSON: $jsonString")
-
-                                jsonString.contains(
-                                    "UNLOCK", ignoreCase = true
-                                ).let { unlock ->
-                                    getFragmentRefreshListener()?.onAwsSmartLockRefresh(
-                                        unlock,
-                                        connectType
-                                    )
-                                }
-                            }
-                        } else {
-                            // do not do anything
-                            Timber.tag(TAG)
-                                .e("Received empty or null message from AWS SMART LOCK")
+                        val payload = message.orEmpty().trim()
+                        if (payload.isEmpty()) return@Observer
+                        if (isAwsMqttCommandEcho(payload)) {
+                            Timber.tag(TAG).d("AWS MQTT ignored echo: $payload")
+                            return@Observer
                         }
+                        Timber.tag(TAG).d("AWS MQTT status: $payload")
+                        val unlocked = parseAwsLockUnlocked(payload) ?: return@Observer
+                        refreshAwsLockUi(unlocked)
                     })
                 }
 
@@ -597,35 +592,94 @@ class SmartLockActivity : BaseDemoActivity(),
     }
 
     fun onAWSSmartLockButtonClicked() {
-        Timber.tag(TAG).d("onAWSSmartUnlockButtonClicked: $connectType")
-        if (isMqttConfigValid() && connectType == AWS_CONNECTION) {
-            val mqttMessage = LOCK_CMD
-            viewModelAws.publish(topic = smartLockPublishTopic, message = mqttMessage)
-        } else {
-            runOnUiThread {
-                if (!this.isFinishing || !this.isDestroyed) {
-                    showAwsNotConfiguredAlert()
-                }
-            }
-        }
+        Timber.tag(TAG).d("onAWSSmartLockButtonClicked: $connectType")
+        publishAwsControlCommand(unlocked = false)
     }
 
     fun onAWSSmartUnlockButtonClicked() {
         Timber.tag(TAG).d("onAWSSmartUnlockButtonClicked: $connectType")
-        if (isMqttConfigValid() && connectType == AWS_CONNECTION) {
-            val mqttMessage = UNLOCK_CMD
-            viewModelAws.publish(topic = smartLockPublishTopic, message = mqttMessage)
+        publishAwsControlCommand(unlocked = true)
+    }
+
+    private fun publishAwsControlCommand(unlocked: Boolean) {
+        if (!isMqttConfigValid() || connectType != AWS_CONNECTION) {
+            if (!isFinishing && !isDestroyed) {
+                showAwsNotConfiguredAlert()
+            }
+            return
+        }
+        refreshAwsLockUi(unlocked, fromUserCommand = true)
+        val command = if (unlocked) UNLOCK_CMD else LOCK_CMD
+        viewModelAws.publish(topic = smartLockPublishTopic, message = command)
+    }
+
+    private fun refreshAwsLockUi(unlocked: Boolean, fromUserCommand: Boolean = false) {
+        if (connectType != AWS_CONNECTION) return
+        val apply: (Boolean) -> Unit = { value ->
+            Timber.tag(TAG).d("AWS UI update: unlocked=$value")
+            getFragmentRefreshListener()?.onAwsSmartLockRefresh(value, connectType)
+        }
+        if (fromUserCommand) {
+            awsLockUiDebouncer.applyUserCommand(unlocked, apply)
         } else {
-            runOnUiThread {
-                if (!this.isFinishing || !this.isDestroyed) {
-                    showAwsNotConfiguredAlert()
+            awsLockUiDebouncer.scheduleIncoming(unlocked, apply)
+        }
+    }
+
+    private fun isAwsMqttCommandEcho(message: String): Boolean {
+        val lower = message.trim().lowercase()
+        return lower.contains(" from ble") ||
+            lower.contains(" from mqtt") ||
+            lower.contains(" is active")
+    }
+
+    private fun parseAwsLockUnlocked(message: String): Boolean? {
+        val lower = message.trim().lowercase()
+        if (isAwsMqttCommandEcho(lower)) {
+            return null
+        }
+        return when {
+            lower == "query" || lower == "lock" || lower == "unlock" -> null
+            lower == "unlocked" -> true
+            lower == "locked" -> false
+            lower.contains("\"state\"") && Regex("\\bunlocked\\b").containsMatchIn(lower) -> true
+            lower.contains("\"state\"") && Regex("\\blocked\\b").containsMatchIn(lower) -> false
+            Regex("\\bunlocked\\b").containsMatchIn(lower) -> true
+            Regex("\\blocked\\b").containsMatchIn(lower) -> false
+            else -> null
+        }
+    }
+
+    private fun applyAwsLockStateFromBle(characteristic: BluetoothGattCharacteristic?) {
+        if (connectType != AWS_CONNECTION) return
+        val valueArray = characteristic?.value ?: return
+        if (valueArray.isEmpty()) return
+
+        val unlocked = when {
+            valueArray.size == 1 -> when (valueArray[0].toInt()) {
+                0 -> false
+                1 -> true
+                else -> null
+            }
+            else -> {
+                val value0 = valueArray.getOrNull(0)?.toInt()
+                val value1 = valueArray.getOrNull(1)?.toInt()
+                val value2 = valueArray.getOrNull(2)?.toInt()
+                when {
+                    (value0 == 9 || value0 == 11) && value1 == 1 && value2 == 0 -> true
+                    (value0 == 9 || value0 == 11) && value1 == 1 && value2 == 1 -> false
+                    else -> null
                 }
             }
-        }
+        } ?: return
+
+        Timber.tag(TAG).d("AWS lock state from device (BLE notify): unlocked=$unlocked")
+        refreshAwsLockUi(unlocked)
     }
 
     fun onAWSSmartLockWakeUpCmd() {
         if (connectType == AWS_CONNECTION) {
+            refreshAwsLockUi(unlocked = false, fromUserCommand = true)
             val mqttMessage = GET_STATUS
             viewModelAws.publish(topic = smartLockPublishTopic, message = mqttMessage)
         } else {
@@ -694,6 +748,10 @@ class SmartLockActivity : BaseDemoActivity(),
         service?.clearConnectedGatt()
         service?.unregisterGattCallback()
         gatt?.close()
+        if (::awsLockUiDebouncer.isInitialized) {
+            awsLockUiDebouncer.cancel()
+        }
+        viewModelBle.resetDebouncers()
         super.onDestroy()
 
     }
@@ -720,6 +778,10 @@ class SmartLockActivity : BaseDemoActivity(),
 
 
     override fun onSmartLockOptionSelected(type: String) {
+        if (::awsLockUiDebouncer.isInitialized) {
+            awsLockUiDebouncer.reset()
+        }
+        viewModelBle.resetDebouncers()
         when (type) {
             AWS_CONNECTION -> {
                 connectType = type
@@ -793,7 +855,7 @@ class SmartLockActivity : BaseDemoActivity(),
         binding.placeholder.visibility = View.GONE
         binding.smartLockPlaceHolder.visibility = View.VISIBLE
         viewModelBle.lockState.observe(this, Observer { lockState ->
-
+            if (connectType != BLE_CONNECTION) return@Observer
             Timber.tag(TAG).d("Lock state changed: $lockState")
             when (lockState) {
                 LockState.LOCKED -> gatt?.let { processor.controlLock(it) }
@@ -906,7 +968,10 @@ class SmartLockActivity : BaseDemoActivity(),
         private fun readOperation(): BluetoothGattCharacteristic? {
             gatt?.readCharacteristic(characteristicRead)
             println("SmartLockActivity: Read operation completed: $characteristicRead")
-            viewModelBle.handleReadLockState(characteristicRead)
+            when (connectType) {
+                BLE_CONNECTION -> viewModelBle.handleReadLockState(characteristicRead)
+                AWS_CONNECTION -> applyAwsLockStateFromBle(characteristicRead)
+            }
             return characteristicRead
         }
 
@@ -1102,6 +1167,8 @@ class SmartLockActivity : BaseDemoActivity(),
         private const val UNLOCK_CMD = "unlock"
         private const val LOCK_CMD = "lock"
         private const val GET_STATUS = "query"
+        private const val LOCK_UI_DEBOUNCE_MS = 400L
+        private const val LOCK_COMMAND_SUPPRESS_MS = 1200L
         const val BLE_CONNECTION = "BLE"
         const val AWS_CONNECTION = "AWS"
         const val UNKNOW_CONNECTION = "UNKNOWN"

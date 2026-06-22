@@ -25,7 +25,7 @@
             style="@style/dialog_text_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/helvetica_neue_regular"
             tools:text="@string/location_service_info" />
 
         <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_ok"
@@ -35,7 +35,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
             android:layout_marginEnd="@dimen/dialog_button_margin_end"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/stolzl_medium"
             android:text="@string/button_ok" />
 
     </LinearLayout>

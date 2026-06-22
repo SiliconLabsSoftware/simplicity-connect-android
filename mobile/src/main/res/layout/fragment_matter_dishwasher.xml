@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/sl_light_grey">
+    android:background="@drawable/modal_bg"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +14,7 @@
         tools:ignore="UselessParent">
 
         <TextView
+            android:fontFamily="@font/stolzl_medium"
             android:id="@+id/txt_cluster_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,11 +22,12 @@
             android:layout_margin="@dimen/matter_5dp"
             android:gravity="center"
             android:text="@string/matter_dishwasher_cluster"
-            android:textColor="@color/masala"
-            android:textSize="@dimen/text_size_XL"
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
+            android:fontFamily="@font/stolzl_medium"
             android:id="@+id/txt_cluster_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,8 +35,8 @@
             android:layout_margin="@dimen/matter_5dp"
             android:gravity="center"
             android:text="@string/matter_dishwasher_cluster"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_L"
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <ImageView
@@ -62,7 +64,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_on"
-                    style="@style/MatterButtonBlue"
+                    style="@style/MatterWindowCoverActionButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/matter_20dp"
@@ -70,7 +72,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_pause"
-                    style="@style/MatterButtonBlue"
+                    style="@style/MatterWindowCoverActionButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/matter_20dp"
@@ -78,7 +80,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_off"
-                    style="@style/MatterButtonBlue"
+                    style="@style/MatterWindowCoverActionButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/matter_20dp"
@@ -120,30 +122,31 @@
                                 android:layout_width="@dimen/matter_30dp"
                                 android:layout_height="@dimen/matter_30dp"
                                 android:layout_gravity="center_horizontal|center"
-                                android:background="@drawable/background_blue_box"
+                                android:background="@drawable/matter_oven_unbind_outline"
                                 android:src="@drawable/ic_electric_dish_washer">
 
                             </ImageView>
 
                             <TextView
+                                android:fontFamily="@font/stolzl_medium"
                                 android:id="@+id/txt_energy_consumed_title"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/matter_5dp"
                                 android:layout_weight="1"
                                 android:text="@string/matter_dishwasher_energy_consumption_title"
-                                android:textColor="@color/masala"
-                                android:textSize="@dimen/matter_20dp"
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/matter_5dp"
+                                android:fontFamily="@font/stolzl_medium"
                                 android:text="@string/dish_washer_timing"
-                                android:textColor="@color/masala"
-                                android:textSize="@dimen/matter_20dp"
-                                android:textStyle="bold" />
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <View
@@ -158,6 +161,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:fontFamily="@font/stolzl_medium"
                                 android:layout_marginStart="@dimen/matter_5dp"
                                 android:id="@+id/tv_total_energy_consumption"
                                 android:layout_width="wrap_content"
@@ -165,19 +169,20 @@
                                 android:layout_marginTop="@dimen/matter_5dp"
                                 android:layout_marginBottom="@dimen/matter_5dp"
                                 android:text="@string/matter_zero_prefix"
-                                android:textColor="@color/masala"
-                                android:textSize="@dimen/text_size_L"
-                                android:textStyle="bold" />
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                android:textSize="14sp"
+                                 />
 
                             <TextView
+                                android:fontFamily="@font/stolzl_regular"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/matter_5dp"
                                 android:layout_weight="1"
                                 android:text="@string/matter_total"
-                                android:textColor="@color/silabs_grey"
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
                                 android:textSize="@dimen/text_size_M"
-                                android:textStyle="bold" />
+                                android:textStyle="normal" />
 
                         </LinearLayout>
 
@@ -188,6 +193,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:fontFamily="@font/stolzl_medium"
                                 android:layout_marginStart="@dimen/matter_5dp"
                                 android:id="@+id/tv_current_cycle_energy_comp"
                                 android:layout_width="wrap_content"
@@ -195,19 +201,19 @@
                                 android:layout_marginTop="@dimen/matter_5dp"
                                 android:layout_marginBottom="@dimen/matter_5dp"
                                 android:text="@string/matter_zero_prefix"
-                                android:textColor="@color/masala"
-                                android:textSize="@dimen/text_size_L"
-                                android:textStyle="bold" />
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                android:textSize="14sp" />
 
                             <TextView
+                                android:fontFamily="@font/stolzl_regular"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/matter_5dp"
                                 android:layout_weight="1"
                                 android:text="@string/matter_in_current_cycle"
-                                android:textColor="@color/silabs_grey"
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
                                 android:textSize="@dimen/text_size_M"
-                                android:textStyle="bold" />
+                                 />
 
                         </LinearLayout>
 
@@ -218,6 +224,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:fontFamily="@font/stolzl_medium"
                                 android:layout_marginStart="@dimen/matter_5dp"
                                 android:id="@+id/tv_average_energy_per_cycle"
                                 android:layout_width="wrap_content"
@@ -225,19 +232,20 @@
                                 android:layout_marginTop="@dimen/matter_5dp"
                                 android:layout_marginBottom="@dimen/matter_5dp"
                                 android:text="@string/matter_zero_prefix"
-                                android:textColor="@color/masala"
-                                android:textSize="@dimen/text_size_L"
-                                android:textStyle="bold" />
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                android:textSize="14sp"
+                                 />
 
                             <TextView
+                                android:fontFamily="@font/stolzl_regular"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/matter_5dp"
                                 android:layout_weight="1"
                                 android:text="@string/mater_average_energy_per_cycle"
-                                android:textColor="@color/silabs_grey"
+                                android:textColor="@color/silabs_redtheme_subheader_text_color"
                                 android:textSize="@dimen/text_size_M"
-                                android:textStyle="bold" />
+                                />
 
                         </LinearLayout>
 
@@ -264,20 +272,22 @@
                                 android:layout_height="wrap_content">
 
                                 <TextView
+                                    android:fontFamily="@font/stolzl_medium"
                                     android:id="@+id/tv_completed_cycle_text"
                                     android:layout_width="@dimen/matter_0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:textColor="#000000"
-                                    android:textSize="15sp"
+                                    android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                    android:textSize="14sp"
                                     tools:text="Completed Cycle" />
 
                                 <TextView
+                                    android:fontFamily="@font/stolzl_medium"
                                     android:id="@+id/progressMatterText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="#000000"
-                                    android:textSize="15sp"
+                                    android:textColor="@color/silabs_redtheme_subheader_text_color"
+                                    android:textSize="14sp"
                                     tools:text="Remaining time in 10mins" />
                             </LinearLayout>
 
@@ -300,9 +310,10 @@
         </LinearLayout>
 
         <TextView
+            android:fontFamily="@font/stolzl_regular"
             android:textSize="12sp"
             android:padding="@dimen/matter_10dp"
-            android:textColor="@color/masala"
+            android:textColor="@color/silabs_redtheme_subheader_text_color"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:text="@string/dishwasher_resfresh_text"

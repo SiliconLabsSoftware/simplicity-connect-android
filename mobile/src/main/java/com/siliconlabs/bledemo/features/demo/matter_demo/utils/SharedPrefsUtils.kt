@@ -201,5 +201,42 @@ object SharedPrefsUtils {
     const val DISHWASHER_COMPLETED_PROGRESS_BAR_COUNT = "dishwasherCompletedProgressBarCount"
     const val DISHWASHER_ON_CYCLE_PAUSE_RESUME_STATE = "dishwasherOnPauseOrStopState"
 
+    /** Prefix for Oven–RangeHood binding keys. Key = OVEN_RANGEHOOD_BINDING_PREFIX + ovenNodeId */
+    const val OVEN_RANGEHOOD_BINDING_PREFIX = "OvenRangeHoodBinding_"
+
+    /** Sentinel for "no binding" — getOvenRangeHoodBinding returns this when not bound. */
+    const val OVEN_NO_RANGEHOOD_BINDING: Long = -1L
+
+    /**
+     * Save Oven–RangeHood binding. Persists across navigation.
+     */
+    fun saveOvenRangeHoodBinding(
+        mPrefs: SharedPreferences,
+        ovenNodeId: Long,
+        rangeHoodNodeId: Long
+    ) {
+        mPrefs.edit().putLong(OVEN_RANGEHOOD_BINDING_PREFIX + ovenNodeId, rangeHoodNodeId).apply()
+    }
+
+    /**
+     * Get bound RangeHood node ID for this Oven, or [OVEN_NO_RANGEHOOD_BINDING] if not bound.
+     */
+    fun getOvenRangeHoodBinding(mPrefs: SharedPreferences, ovenNodeId: Long): Long {
+        val key = OVEN_RANGEHOOD_BINDING_PREFIX + ovenNodeId
+        return if (mPrefs.contains(key)) mPrefs.getLong(key, OVEN_NO_RANGEHOOD_BINDING) else OVEN_NO_RANGEHOOD_BINDING
+    }
+
+    /**
+     * Remove Oven–RangeHood binding.
+     */
+    fun removeOvenRangeHoodBinding(mPrefs: SharedPreferences, ovenNodeId: Long) {
+        mPrefs.edit().remove(OVEN_RANGEHOOD_BINDING_PREFIX + ovenNodeId).apply()
+    }
+
+    /**
+     * Whether this Oven is currently bound to a RangeHood (persisted).
+     */
+    fun isOvenBoundToRangeHood(mPrefs: SharedPreferences, ovenNodeId: Long): Boolean =
+        getOvenRangeHoodBinding(mPrefs, ovenNodeId) != OVEN_NO_RANGEHOOD_BINDING
 
 }

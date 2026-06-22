@@ -143,6 +143,7 @@ class SmartLockFragment : Fragment(), SmartLockActivity.SmartLockImageRefreshCli
             (activity as SmartLockActivity).hideConfigureButton()
         } else {
             //binding.connectTypeToggleBtn.text = getString(R.string.smart_lock_connection_ble)
+            binding.ivLock.setImageResource(R.drawable.door_lock)
             binding.txtClusterName.text = getString(R.string.smart_lock_status_asw_lock)
             binding.awsCommunicationLayout.visibility = View.VISIBLE
             binding.notePlaceholder.visibility = View.VISIBLE
@@ -160,7 +161,8 @@ class SmartLockFragment : Fragment(), SmartLockActivity.SmartLockImageRefreshCli
         buttonClickedStatus: Boolean,
         connectionType: String
     ) {
-        Timber.tag(TAG).e("SMART LOCK onAwsSmartLockRefresh: $buttonClickedStatus")
+        if (connectionType != AWS_CONNECTION) return
+        Timber.tag(TAG).d("AWS UI update: unlocked=$buttonClickedStatus")
         if (buttonClickedStatus) {
             binding.ivLock.setImageResource(R.drawable.door_unlock)
             if (connectionType == BLE_CONNECTION) {
@@ -193,12 +195,15 @@ class SmartLockFragment : Fragment(), SmartLockActivity.SmartLockImageRefreshCli
 
     private fun smartLockObserversSetup() {
         viewModel.lockUIState.observe(viewLifecycleOwner) { state ->
+            if ((activity as SmartLockActivity).getConnectionType() != BLE_CONNECTION) return@observe
             when (state) {
+                LockUIState.UNLOCKED -> displayUnlockState()
                 LockUIState.LOCKED -> displayLockState()
-                else -> displayUnlockState()
+                LockUIState.UNKNOWN -> Unit
             }
         }
         viewModel.isLockStateChanged.observe(viewLifecycleOwner) {
+            if ((activity as SmartLockActivity).getConnectionType() != BLE_CONNECTION) return@observe
             Timber.tag(TAG).d("isLockStateChanged: $it")
             if (it) {
                 binding.ivLock.setImageResource(R.drawable.door_unlock)

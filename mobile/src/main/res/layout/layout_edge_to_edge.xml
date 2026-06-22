@@ -8,18 +8,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_status_bar_color"
         android:id="@+id/fakeStatusBar"
         android:layout_height="0dp"
         android:layout_width="match_parent" />
 
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
+
     <!-- Your Toolbar (ActionBar) -->
     <androidx.appcompat.widget.Toolbar
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:id="@+id/toolbar"
-        android:visibility="gone"
         android:layout_height="?attr/actionBarSize"
         android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/white" />
 </LinearLayout>

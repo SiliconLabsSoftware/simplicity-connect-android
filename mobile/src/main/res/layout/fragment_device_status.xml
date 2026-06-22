@@ -1,76 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Outer area stays transparent so main content gray shows above the hairline; white only below divider -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:fitsSystemWindows="true"
-    android:layout_marginBottom="@dimen/matter_50dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/sl_white">
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/silabs_inactive_light" />
 
     <LinearLayout
-        android:id="@+id/device_info_holder"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/space_XS"
-        android:layout_marginTop="@dimen/space_XS"
-        android:layout_marginBottom="@dimen/space_XS"
+        android:background="@android:color/white"
+        android:elevation="@dimen/motion_footer_elevation"
         android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/motion_footer_min_height"
+        android:paddingStart="@dimen/motion_footer_padding_horizontal"
+        android:paddingTop="@dimen/motion_footer_padding_top"
+        android:paddingEnd="@dimen/motion_footer_padding_horizontal"
+        android:paddingBottom="@dimen/motion_footer_padding_bottom">
 
         <LinearLayout
+            android:id="@+id/device_info_holder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="@dimen/text_size_SM"
-                android:layout_height="@dimen/text_size_SM"
-                android:src="@drawable/green_dot"
-                android:layout_marginEnd="@dimen/space_XXS"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/text_size_SM"
+                    android:layout_height="@dimen/text_size_SM"
+                    android:layout_marginEnd="@dimen/space_XXS"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/green_dot" />
+
+                <TextView
+                    android:id="@+id/device_status"
+                    style="@style/tb_robo_regular_12dp_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    tools:text="Connected to" />
+
+            </LinearLayout>
 
             <TextView
-                style="@style/tb_robo_regular_12dp_grey"
-                android:id="@+id/device_status"
-                android:gravity="center"
+                android:id="@+id/device_name"
+                style="@style/tb_robo_medium_18dp"
+                android:ellipsize="end"
+                tools:text="Thunderboard" />
+
+            <TextView
+                android:id="@+id/device_firmware"
+                style="@style/tb_hn_med_12dp_grey"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                tools:text="Connected to" />
+                android:layout_height="wrap_content"
+                tools:text="0.5.0" />
 
         </LinearLayout>
 
-        <TextView
-            style="@style/tb_robo_medium_18dp"
-            android:id="@+id/device_name"
-            android:ellipsize="end"
-            tools:text="Thunderboard"/>
-
-        <TextView
-            style="@style/tb_robo_regular_12dp_grey"
-            android:id="@+id/device_firmware"
+        <com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.ui.BatteryIndicator
+            android:id="@+id/battery_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="0.5.0"/>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/space_XS"
+            android:layout_marginEnd="@dimen/space_XS"
+            android:layout_marginBottom="@dimen/space_XS" />
 
-    </LinearLayout>
-
-
-    <com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.ui.BatteryIndicator
-        android:id="@+id/battery_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="@dimen/space_XS"
-        android:layout_marginRight="@dimen/space_XS"
-        android:layout_marginBottom="@dimen/space_XS" />
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/device_info_holder"
-        android:indeterminate="true"
-        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal" />
-</RelativeLayout>
+        android:indeterminate="true" />
+    </LinearLayout>
+</LinearLayout>

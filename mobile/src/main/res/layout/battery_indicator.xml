@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/battery_percent"
         android:layout_gravity="center_vertical"
-        style="@style/tb_robo_medium_14dp_blue"/>
+        style="@style/tb_hn_medium_14dp_red"/>
 
     <com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.ui.BatteryMeter
         android:id="@+id/battery_meter"

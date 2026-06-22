@@ -175,7 +175,10 @@ class WiFiProvisioningActivity : AppCompatActivity(),
     }
 
     private fun showWiFiProvisioningDialog(accessPoint: ScanResult?) {
-
+        if (accessPoint != null && !accessPoint.requiresPassword()) {
+            provisionAccessPoint(accessPoint, passphrase = "")
+            return
+        }
         // Build and display the alert dialog
         if (accessPoint != null) {
             if (wifiInputDialog == null) {
@@ -199,7 +202,25 @@ class WiFiProvisioningActivity : AppCompatActivity(),
     private fun onAccessPointClicked(position: Int) {
         isItemClicked = true
         clickedAccessPoint = apAdapter.getItem(position)
-        showWiFiProvisioningDialog(clickedAccessPoint)
+        val accessPoint = clickedAccessPoint ?: return
+        removeAlert()
+        if (accessPoint.requiresPassword()) {
+            showWiFiProvisioningDialog(accessPoint)
+        } else {
+            provisionAccessPoint(accessPoint, passphrase = "")
+        }
+    }
+
+    private fun provisionAccessPoint(accessPoint: ScanResult, passphrase: String) {
+        showProgressDialog(getString(R.string.dev_kit_progress_bar_message))
+        lifecycleScope.launch {
+            doInAPConnectBackground(
+                IP_ADDRESS,
+                accessPoint.ssid,
+                passphrase,
+                accessPoint.security_type
+            )
+        }
     }
 
 
@@ -250,10 +271,17 @@ class WiFiProvisioningActivity : AppCompatActivity(),
     }
 
     override fun onDialogResult(ssid: String, passphrase: String, securityType: String) {
-        showProgressDialog(this.getString(R.string.dev_kit_progress_bar_message))
-        lifecycleScope.launch {
-            doInAPConnectBackground(IP_ADDRESS, ssid, passphrase, securityType)
-        }
+        provisionAccessPoint(
+            ScanResult(
+                ssid = ssid,
+                security_type = securityType,
+                network_type = "",
+                bssid = clickedAccessPoint?.bssid.orEmpty(),
+                channel = clickedAccessPoint?.channel.orEmpty(),
+                rssi = clickedAccessPoint?.rssi.orEmpty()
+            ),
+            passphrase = passphrase
+        )
     }
 
     override fun onDialogCancel() {

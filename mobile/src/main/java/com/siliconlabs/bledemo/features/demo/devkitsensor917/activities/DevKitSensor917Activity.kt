@@ -46,6 +46,7 @@ class DevKitSensor917Activity : AppCompatActivity() {
     private lateinit var listener: ResponseListener
     private var customProgressDialog: CustomProgressDialog? = null
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = Activity917DevKitSensorLayoutBinding.inflate(layoutInflater)
@@ -55,7 +56,7 @@ class DevKitSensor917Activity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.setHomeAsUpIndicator(R.drawable.matter_back)
         actionBar.setDisplayHomeAsUpEnabled(true)
-        actionBar.title = "Dev Kit Sensor 917"
+        actionBar.title = "Wi-Fi Sensor"
         val ipAddress = intent.getStringExtra(IP_ADDRESS)
         if (isNetworkAvailable(this)) {
             if (ipAddress != null) {
@@ -74,7 +75,7 @@ class DevKitSensor917Activity : AppCompatActivity() {
             binding.envGrid.visibility = View.GONE
             binding.placeholder.visibility = View.VISIBLE
           //  Toast.makeText(this, "Please turn the WiFi Setting", Toast.LENGTH_SHORT).show()
-              CustomToastManager.show(
+              CustomToastManager.showError(
                   this@DevKitSensor917Activity,"Please turn the WiFi Setting",
                   5000
               )
@@ -105,11 +106,6 @@ class DevKitSensor917Activity : AppCompatActivity() {
                 } else {
                     removeProgress()
                     runOnUiThread {
-                        /*Toast.makeText(
-                            baseContext,
-                            "API All Sensors Response failed",
-                            Toast.LENGTH_SHORT
-                        ).show()*/
                         CustomToastManager.show(
                             this@DevKitSensor917Activity,
                             "API All Sensors Response failed",
@@ -122,6 +118,13 @@ class DevKitSensor917Activity : AppCompatActivity() {
             } catch (e: Exception) {
                 removeProgress()
                 Timber.tag(TAG).e("API All Sensors Exception occurred ${e.message}")
+                runOnUiThread {
+                    CustomToastManager.show(
+                        this@DevKitSensor917Activity,
+                        getString(R.string.wifi_sensor_same_network_hint),
+                        5000,
+                    )
+                }
             }
         }
     }

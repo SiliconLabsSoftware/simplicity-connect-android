@@ -2,6 +2,7 @@ package com.siliconlabs.bledemo.features.demo.matter_demo.fragments
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,12 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import chip.devicecontroller.ChipClusters
 import chip.devicecontroller.ChipDeviceController
 import chip.devicecontroller.GetConnectedDeviceCallbackJni
+import com.google.android.material.button.MaterialButton
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.bluetooth.beacon_utils.eddystone.Constants.SCAN_TIMER
 import com.siliconlabs.bledemo.databinding.FragmentMatterDoorLightBinding
@@ -88,7 +91,8 @@ class MatterDoorFragment : Fragment() {
         return withContext(Dispatchers.Default) {
             // Simulate a time-consuming task
 
-            deviceController.getConnectedDevicePointer(deviceId,
+            deviceController.getConnectedDevicePointer(
+                deviceId,
                 object : GetConnectedDeviceCallbackJni.GetConnectedDeviceCallback {
                     override fun onDeviceConnected(devicePointer: Long) {
                         model.isDeviceOnline = true
@@ -139,11 +143,30 @@ class MatterDoorFragment : Fragment() {
         deviceController.setCompletionListener(DoorChipControllerCallback())
         binding.btnMatterDeviceState.setImageResource(R.drawable.door_lock)
         binding.txtClusterName.text = requireContext().getText(R.string.matter_door_title)
-        binding.btnOn.isLongClickable = false;
-        binding.btnOff.isLongClickable = false;
+        binding.btnOn.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_btn_lock)
+        binding.btnOn.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+        binding.btnOn.iconPadding = resources.getDimensionPixelSize(R.dimen.matter_8dp)
+        binding.btnOn.iconTint = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.silabs_redtheme_primary_color
+            )
+        )
+
+        binding.btnOn.isLongClickable = false
+        binding.btnOff.isLongClickable = false
 
         binding.btnOn.text = requireContext().getText(R.string.matter_locked_status)
         binding.btnOff.text = requireContext().getText(R.string.matter_unlock_status)
+        binding.btnOff.icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_btn_unlock)
+        binding.btnOff.iconTint = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.silabs_redtheme_primary_color
+            )
+        )
+        binding.btnOff.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+        binding.btnOff.iconPadding = resources.getDimensionPixelSize(R.dimen.matter_2dp)
         binding.btnToggle.visibility = View.GONE
         binding.btnOn.setOnClickListener {
             showMatterProgressDialog(getString(R.string.matter_door_lock_in_progress))
@@ -250,17 +273,20 @@ class MatterDoorFragment : Fragment() {
         getLockUnlockClusterForDevice().lockDoor(
             object : ChipClusters.DefaultClusterCallback {
                 override fun onSuccess() {
-                    removeProgress()
-                    Timber.tag(TAG).e("Lock command Success")
-                    binding.btnMatterDeviceState.setImageResource(R.drawable.door_lock)
+                    requireActivity().runOnUiThread {
+                        removeProgress()
+                        Timber.tag(TAG).e("Lock command Success")
+                        binding.btnMatterDeviceState.setImageResource(R.drawable.door_lock)
+                    }
                 }
 
                 override fun onError(error: Exception?) {
-                    removeProgress()
-                    SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, false)
-                    showMessageDialog()
+                    requireActivity().runOnUiThread {
+                        removeProgress()
+                        SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, false)
+                        showMessageDialog()
+                    }
                 }
-
             }, Optional.empty(),
             TIME_OUT
         )
@@ -271,18 +297,22 @@ class MatterDoorFragment : Fragment() {
         getLockUnlockClusterForDevice().unlockDoor(
             object : ChipClusters.DefaultClusterCallback {
                 override fun onSuccess() {
-                    removeProgress()
-                    Timber.tag(TAG).e("Unlock command Success")
-                    SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, true)
-                    binding.btnMatterDeviceState.setImageResource(R.drawable.door_unlock)
+                    requireActivity().runOnUiThread {
+                        removeProgress()
+                        Timber.tag(TAG).e("Unlock command Success")
+                        SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, true)
+                        binding.btnMatterDeviceState.setImageResource(R.drawable.door_unlock)
+                    }
                 }
 
                 @SuppressLint("TimberArgCount")
                 override fun onError(error: Exception?) {
-                    removeProgress()
-                    SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, false)
-                    Timber.tag(TAG).e("Unlock command failure: $error")
-                    showMessageDialog()
+                    requireActivity().runOnUiThread {
+                        removeProgress()
+                        SharedPrefsUtils.updateDeviceByDeviceId(mPrefs, deviceId, false)
+                        Timber.tag(TAG).e("Unlock command failure: $error")
+                        showMessageDialog()
+                    }
                 }
 
             }, Optional.empty(),
@@ -292,9 +322,9 @@ class MatterDoorFragment : Fragment() {
 
     private fun showMessage(msg: String) {
         requireActivity().runOnUiThread {
-           // Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+            // Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             CustomToastManager.show(
-                requireContext(),msg,5000
+                requireContext(), msg, 5000
             )
         }
     }

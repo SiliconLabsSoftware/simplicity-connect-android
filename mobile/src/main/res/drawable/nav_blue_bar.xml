@@ -6,6 +6,6 @@
     <path
         android:pathData="M2 0, H8"
         android:strokeWidth="1.2"
-        android:strokeColor="@color/blue_primary" />
+        android:strokeColor="@color/silabs_redtheme_navi_red_bar" />
 
 </vector>

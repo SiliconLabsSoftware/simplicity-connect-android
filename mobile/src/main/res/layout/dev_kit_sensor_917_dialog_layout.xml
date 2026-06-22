@@ -1,81 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/matter_25dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/matter_16dp"
+    app:cardBackgroundColor="@color/silabs_white"
+    app:cardCornerRadius="@dimen/matter_16dp"
+    app:cardElevation="@dimen/motion_card_elevation"
+    app:strokeWidth="0dp">
 
-    <TextView
-        android:id="@+id/header"
-        style="@style/settings_subtitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:gravity="center" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/matter_10dp"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:padding="@dimen/matter_24dp">
 
         <TextView
-            android:id="@+id/subTitle"
-            style="@style/SubTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="start"
-            android:textSize="18sp" />
+            android:fontFamily="@font/stolzl_bold"
+            android:gravity="center_horizontal"
+            android:textColor="@color/silabs_primary_text"
+            android:textSize="@dimen/text_size_L"
+            android:textStyle="bold"
+            tools:text="Ambient Light Sensor" />
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="@dimen/matter_50dp"
-            android:layout_height="@dimen/matter_50dp"
-            android:layout_alignParentEnd="true" />
-    </RelativeLayout>
-
-
-    <TextView
-        android:id="@+id/txt_value"
-        style="@style/DevKitSensorData"
-        android:layout_width="@dimen/matter_250dp"
-        android:layout_height="@dimen/matter_150dp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/matter_10dp"
-        android:gravity="center"
-        android:text="@string/matter_init_value"
-        android:textSize="@dimen/text_size_XXXL" />
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/matter_10dp"
-        android:layout_margin="@dimen/matter_10dp"
-        android:orientation="horizontal">
+            android:layout_width="@dimen/motion_devkit_dialog_icon_size"
+            android:layout_height="@dimen/motion_devkit_dialog_icon_size"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/matter_20dp"
+            android:contentDescription="@null"
+            tools:src="@drawable/icon_light" />
 
         <TextView
-            android:id="@+id/yes_opt"
-            style="@style/SensorText"
-            android:layout_width="wrap_content"
+            android:id="@+id/subTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="@string/refresh"
-            android:textAllCaps="false" />
-
+            android:layout_marginTop="@dimen/matter_8dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:gravity="center_horizontal"
+            android:textColor="@color/silabs_dark_gray_text"
+            android:textSize="@dimen/adapter_label_medium_size"
+            tools:text="Ambient Light" />
 
         <TextView
-            android:id="@+id/no_opt"
-            style="@style/SensorText"
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_value"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="@string/close"
-            android:textAllCaps="false" />
-    </RelativeLayout>
+            android:layout_marginTop="@dimen/matter_24dp"
+            android:fontFamily="@font/helvetica_neue_light"
+            android:gravity="center"
+            android:minHeight="@dimen/matter_80dp"
+            android:text="@string/matter_init_value"
+            android:textColor="@color/silabs_red"
+            android:textSize="@dimen/text_size_XXXL"
+            tools:text="212.68 lx" />
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/no_opt"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="@dimen/matter_48dp"
+                android:text="@string/close"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_button_fill_color"
+                android:textSize="@dimen/dialog_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_white"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:strokeColor="@color/silabs_redtheme_button_fill_color"
+                app:strokeWidth="1dp" />
+
+            <Space
+                android:layout_width="@dimen/matter_12dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/yes_opt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="@dimen/matter_48dp"
+                android:text="@string/refresh"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textSize="@dimen/dialog_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius"
+                app:rippleColor="@color/sl_light_grey" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

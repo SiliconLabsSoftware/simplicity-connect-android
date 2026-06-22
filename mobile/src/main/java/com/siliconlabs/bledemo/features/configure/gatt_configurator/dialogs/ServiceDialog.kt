@@ -48,6 +48,7 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
         handleClickEvents()
         handleNameChanges()
         handleUuidChanges()
+        updateSaveButtonState()
     }
 
     private fun initACTV(actv: AutoCompleteTextView, searchMode: SearchMode) {
@@ -60,6 +61,7 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
             binding.actvServiceName.setText(service?.name)
             binding.actvServiceUuid.setText(service?.getIdentifierAsString())
             actv.setSelection(actv.length())
+            updateSaveButtonState()
             hideKeyboard()
         }
     }
@@ -174,7 +176,7 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.btnSave.isEnabled = isInputValid()
+                updateSaveButtonState()
                 setMandatoryRequirementsCheckBoxState()
                 setServiceTypeSpinnerState()
             }
@@ -191,11 +193,18 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
                     "-"
                 )
 
-                binding.btnSave.isEnabled = isInputValid()
                 setMandatoryRequirementsCheckBoxState()
                 setServiceTypeSpinnerState()
             }
         })
+    }
+
+    private fun updateSaveButtonState() {
+        binding.btnSave.isEnabled = isServiceNameFilled()
+    }
+
+    private fun isServiceNameFilled(): Boolean {
+        return binding.actvServiceName.text.toString().trim().isNotEmpty()
     }
 
     private fun setMandatoryRequirementsCheckBoxState() {
@@ -225,11 +234,6 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
         return result.isNotEmpty()
     }
 
-    private fun isInputValid(): Boolean {
-        return binding.actvServiceName.text.toString()
-            .isNotEmpty() && isUuidValid(binding.actvServiceUuid.text.toString())
-    }
-
     private fun isUuidValid(uuid: String): Boolean {
         return Validator.is16BitUuidValid(uuid) || Validator.is128BitUuidValid(uuid)
     }
@@ -246,6 +250,7 @@ class ServiceDialog(val listener: ServiceChangeListener, var service: Service = 
         binding.actvServiceUuid.setText("")
         binding.cbMandatoryRequirements.isChecked = false
         binding.spServiceType.setSelection(0)
+        updateSaveButtonState()
     }
 
     interface ServiceChangeListener {

@@ -100,11 +100,38 @@ class MatterLightSwitchViewModel : ViewModel() {
 
     }
 
+    /** Clears unbind-in-progress without changing binding success (e.g. unbind read/write failed). */
+    fun cancelUnbindingInProgress(name: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.Main) {
+                _deviceStates.value = _deviceStates.value?.map {
+                    if (it.matterName == name) {
+                        it.copy(isUnbindingInProgress = false)
+                    } else {
+                        it
+                    }
+                }
+            }
+        }
+    }
+
+    private val _selectedLightNameForBinding = MutableLiveData<String?>(null)
+    val selectedLightNameForBinding: LiveData<String?> = _selectedLightNameForBinding
+
+    fun selectLightForBinding(matterName: String?) {
+        viewModelScope.launch {
+            withContext(Dispatchers.Main) {
+                _selectedLightNameForBinding.value = matterName
+            }
+        }
+    }
+
     fun resetDeviceStates() {
         viewModelScope.launch {
             withContext(Dispatchers.Main){
                 _deviceStates.value = _deviceStates.value?.map { it.copy(isBindingInProgress = false, isBindingSuccessful = false,
                     isUnbindingInProgress = false, isAclWriteInProgress = false) }
+                _selectedLightNameForBinding.value = null
             }
         }
 

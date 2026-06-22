@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@drawable/matter_popup_background"
-    android:gravity="center"
+    android:background="@drawable/wifi_provisioning_dialog_background"
     android:orientation="vertical"
-    android:padding="@dimen/matter_2dp">
+    android:paddingStart="@dimen/matter_20dp"
+    android:paddingTop="@dimen/matter_20dp"
+    android:paddingEnd="@dimen/matter_20dp"
+    android:paddingBottom="@dimen/matter_16dp">
 
     <TextView
         android:id="@+id/ssid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="start"
         android:textSize="@dimen/text_size_M"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        style="@style/Silabs_Rebranding_Title"
+        tools:text="Matter_Silab" />
 
     <LinearLayout
         android:id="@+id/security_type_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/matter_10dp"
-        android:layout_marginTop="@dimen/matter_10dp"
-        android:layout_marginEnd="@dimen/matter_10dp"
-        android:weightSum="3"
-        android:padding="3dp">
+        android:layout_marginTop="@dimen/matter_12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/security_type_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:singleLine="true"
-            android:gravity="start"
+            android:layout_weight="2"
+            style="@style/Silabs_Rebranding_Title"
+            android:gravity="end|center_vertical"
             android:text="@string/wifi_provisioning_security_label"
             android:textSize="@dimen/text_size_M"
             android:textStyle="bold" />
@@ -44,30 +45,30 @@
             android:id="@+id/security_type_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="start"
-            android:text="@string/wifi_provisioning_security_label"
-            android:textSize="@dimen/text_size_M" />
+            android:layout_marginStart="@dimen/matter_8dp"
+            style="@style/Silabs_Rebranding_Body"
+            android:layout_weight="3"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/silabs_redtheme_body_text_color"
+            android:textSize="@dimen/text_size_M"
+            tools:text="WPA2" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bssid_type_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/matter_10dp"
         android:layout_marginTop="@dimen/matter_10dp"
-        android:layout_marginEnd="@dimen/matter_10dp"
-        android:weightSum="3"
-        android:padding="3dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/bssid_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="start"
+            android:layout_weight="2"
+            style="@style/Silabs_Rebranding_Title"
+            android:gravity="end|center_vertical"
             android:text="@string/wifi_provisioning_bssid_label"
             android:textSize="@dimen/text_size_M"
             android:textStyle="bold" />
@@ -76,31 +77,31 @@
             android:id="@+id/bssid_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="start"
-            android:text="@string/wifi_provisioning_bssid_label"
-            android:textSize="@dimen/text_size_M" />
+            android:layout_marginStart="@dimen/matter_8dp"
+            android:layout_weight="3"
+            style="@style/Silabs_Rebranding_Body"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/silabs_redtheme_body_text_color"
+            android:textSize="@dimen/text_size_M"
+            tools:text="f8:1a:67:48:b6:bd" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/rssid_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/matter_10dp"
         android:layout_marginTop="@dimen/matter_10dp"
-        android:layout_marginEnd="@dimen/matter_10dp"
-        android:weightSum="3"
-        android:padding="3dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/rssid_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="start"
+            android:layout_weight="2"
+            android:gravity="end|center_vertical"
             android:text="@string/wifi_provisioning_rssi_label"
+            style="@style/Silabs_Rebranding_Title"
             android:textSize="@dimen/text_size_M"
             android:textStyle="bold" />
 
@@ -108,99 +109,110 @@
             android:id="@+id/rssid_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:gravity="start"
-            android:text="@string/wifi_provisioning_rssi_label"
-            android:textSize="@dimen/text_size_M" />
+            android:layout_marginStart="@dimen/matter_8dp"
+            android:layout_weight="3"
+            style="@style/Silabs_Rebranding_Body"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/silabs_redtheme_body_text_color"
+            android:textSize="@dimen/text_size_SM"
+            tools:text="-30" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvPasswordLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/matter_10dp"
-        android:layout_marginTop="@dimen/matter_10dp"
-        android:gravity="start"
-        android:text="@string/wifi_provisioning_password_label"
-        android:textSize="@dimen/text_size_M"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/matter_15dp"
-        android:layout_marginTop="@dimen/matter_5dp"
-        android:layout_marginEnd="@dimen/matter_15dp"
-        android:background="@drawable/stroke_box"
-        android:padding="@dimen/matter_0dp">
+        android:layout_marginTop="@dimen/matter_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_thread"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvPasswordLabel"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/matter_5dp"
-            android:background="@drawable/rounded_background"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="@dimen/matter_8dp">
+            android:layout_weight="2"
+            style="@style/Silabs_Rebranding_Title"
+            android:gravity="end|center_vertical"
+            android:text="@string/wifi_provisioning_password_label"
+            android:textSize="@dimen/text_size_M"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/matter_8dp"
+            android:layout_weight="3"
+            android:background="@drawable/wifi_config_inputs_group"
+            android:paddingStart="@dimen/matter_10dp"
+            android:paddingTop="@dimen/matter_2dp"
+            android:paddingEnd="@dimen/matter_4dp"
+            android:paddingBottom="@dimen/matter_2dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxStrokeColor="@color/splash_screen_start_gradient"
-                app:boxStrokeWidth="@dimen/matter_2dp"
-                app:cursorColor="@color/splash_screen_start_gradient"
-                app:hintEnabled="false"
-                app:hintTextColor="@color/splash_screen_start_gradient"
-                app:passwordToggleDrawable="@drawable/baseline_remove_red_eye_24"
-                app:passwordToggleEnabled="true">
+                android:gravity="start|center_vertical"
+                app:boxBackgroundMode="none"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/silicon_grey"
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editWiFiProvPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="sans-serif-medium"
-                    android:background="@drawable/rounded_background"
-                    android:gravity="center|left"
+                    android:layout_gravity="start|center_vertical"
+                    android:autofillHints="password"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/stolzl_regular"
+                    android:gravity="start|center_vertical"
                     android:hint="@string/wifi_provisioning_password_hint"
                     android:inputType="textPassword"
+                    android:paddingStart="-2dp"
+                    android:paddingTop="@dimen/matter_2dp"
+                    android:paddingEnd="@dimen/matter_2dp"
+                    android:paddingBottom="@dimen/matter_2dp"
                     android:lines="1"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/silabs_redtheme_body_text_color"
                     android:textSize="@dimen/text_size_M" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-
+        </FrameLayout>
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/matter_20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/negativeBtn"
-            style="@style/WifiButtonWhite"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:text="@string/matter_cancel" />
+            android:layout_marginEnd="@dimen/matter_8dp"
+            android:layout_weight="1"
+            android:background="@drawable/silabs_btn_red_outline"
+            android:fontFamily="@font/stolzl_medium"
+            android:minHeight="@dimen/matter_45dp"
+            android:text="@string/matter_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/silabs_redtheme_primary_color"
+            android:textSize="@dimen/text_size_SM" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/positiveBtn"
             style="@style/MatterButtonBlue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_10dp"
-            android:text="@string/button_provision" />
-
+            android:layout_marginStart="@dimen/matter_8dp"
+            android:layout_weight="1"
+            android:background="@drawable/wifi_provisioning_positive_btn_bg"
+            app:backgroundTint="@null"
+            android:minHeight="@dimen/matter_45dp"
+            android:text="@string/button_provision"
+            android:textAllCaps="false" />
     </LinearLayout>
 </LinearLayout>

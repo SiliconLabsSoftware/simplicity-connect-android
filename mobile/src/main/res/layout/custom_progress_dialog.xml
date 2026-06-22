@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:background="@drawable/matter_progress_shape"
     android:gravity="center"
@@ -14,17 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:indeterminateTint="@color/blue_primary" />
+        android:indeterminateTint="@color/silabs_redtheme_primary_color" />
 
     <TextView
-        tools:text="@string/matter_commissioning_device"
         android:id="@+id/customMessage"
+        style="@style/SilabsMatterDeviceBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
         android:layout_marginTop="@dimen/matter_8dp"
         android:gravity="center"
-        android:textSize="@dimen/text_size_SM" />
+        android:textSize="@dimen/text_size_SM"
+        tools:text="@string/matter_commissioning_device" />
 
     <LinearLayout
         android:id="@+id/layoutMatterCommissioning"
@@ -35,25 +36,26 @@
         android:orientation="vertical">
 
         <TextView
-            tools:text="@string/matter_commissioning_device"
             android:id="@+id/customMessageTitle"
+            style="@style/SilabsMatterDeviceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
             android:layout_marginTop="@dimen/matter_8dp"
             android:gravity="center"
-            android:textColor="@color/black"
             android:text="@string/matter_network_selection_alert_title"
-            android:textSize="@dimen/text_size_ML" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_ML"
+            tools:text="@string/matter_commissioning_device" />
 
         <TextView
-            android:text="@string/matter_commissioning_message"
             android:id="@+id/customCommissioningMessage"
+            style="@style/SilabsMatterDeviceBody"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/matter_5dp"
             android:layout_marginTop="@dimen/matter_8dp"
             android:gravity="center"
+            android:text="@string/matter_commissioning_message"
             android:textSize="@dimen/text_size_SM" />
 
         <ProgressBar
@@ -61,27 +63,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:indeterminateTint="@color/blue_primary" />
+            android:indeterminateTint="@color/silabs_redtheme_primary_color" />
 
         <View
-            android:layout_marginTop="@dimen/matter_5dp"
             android:id="@+id/view_divider_commissioning"
             android:layout_width="match_parent"
-            android:background="@color/silabs_grey"
-            android:layout_height="1dp">
-        </View>
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/matter_5dp"
+            android:background="@color/silabs_grey"/>
 
-        <TextView
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancel_bar"
+            style="@style/button_add_data_outlined"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/matter_5dp"
+            android:layout_marginVertical="@dimen/space_S"
+            android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:text="@string/button_cancel"
-            android:textColor="@color/blue_primary" />
+            android:textSize="@dimen/text_size_ML"
+            android:textStyle="normal"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
 
     </LinearLayout>
-
-
 </LinearLayout>

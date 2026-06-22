@@ -9,10 +9,12 @@ import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.siliconlabs.bledemo.R
 import com.siliconlabs.bledemo.base.activities.BaseDemoActivity
 import com.siliconlabs.bledemo.bluetooth.ble.*
@@ -139,6 +141,8 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
     private fun prepareToolBar() {
         AppUtil.setEdgeToEdge(window, this)
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.setTitleTextAppearance(this, R.style.RangeTestToolbarTitle)
+        binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.silabs_white))
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setHomeAsUpIndicator(R.drawable.matter_back)
@@ -155,6 +159,10 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
 
         binding.tvDevice2Tab.setOnClickListener {
             changeDevice(binding.tvDevice2Tab, 2)
+        }
+
+        binding.btnRangeTestEmptyConnect.setOnClickListener {
+            showRangeTestSelectDeviceDialog(activeDeviceId)
         }
     }
 
@@ -179,42 +187,46 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
         runOnUiThread { selectTab(tvTab) }
 
         if (presenter.getDeviceInfo() == null) {
-            SelectDeviceDialog.newDialog(BluetoothService.GattConnectType.RANGE_TEST, service)
-                .apply {
-                    setCallback(object : SelectDeviceDialog.RangeTestCallback {
-                        override fun getBluetoothDeviceInfo(info: BluetoothDeviceInfo?) {
-                            runOnUiThread {
-                                showModalDialog(ConnectionStatus.CONNECTING) {
-                                    presenter.getDeviceInfo()?.address?.let {
-                                        service?.clearConnectedGatt()
-                                        presenter.resetDeviceAt(which)
-                                    }
-                                    tvTab.text = getString(R.string.range_test_no_device)
-                                }
-                                tvTab.text = info?.device?.name
-                            }
-
-                            presenter.setDeviceInfo(info)
-                            service?.let {
-                                it.isNotificationEnabled = false
-                                it.connectGatt(
-                                    presenter.getDeviceInfo()?.device!!,
-                                    false,
-                                    timeoutGattCallback
-                                )
-                            }
-                        }
-
-                        override fun onCancel() {
-                            switchCurrentDevice()
-                        }
-                    })
-                }.also {
-                    it.show(supportFragmentManager, "select_device_dialog")
-                }
+            showRangeTestSelectDeviceDialog(which)
         } else {
             showRangeTestFragment(presenter.getMode())
         }
+    }
+
+    private fun showRangeTestSelectDeviceDialog(which: Int) {
+        val tvTab = if (which == 1) binding.tvDevice1Tab else binding.tvDevice2Tab
+        SelectDeviceDialog.newDialog(BluetoothService.GattConnectType.RANGE_TEST, service)
+            .apply {
+                setCallback(object : SelectDeviceDialog.RangeTestCallback {
+                    override fun getBluetoothDeviceInfo(info: BluetoothDeviceInfo?) {
+                        runOnUiThread {
+                            showModalDialog(ConnectionStatus.CONNECTING) {
+                                presenter.getDeviceInfo()?.address?.let {
+                                    service?.clearConnectedGatt()
+                                    presenter.resetDeviceAt(which)
+                                }
+                                tvTab.text = getString(R.string.range_test_no_device)
+                            }
+                            tvTab.text = info?.device?.name
+                        }
+
+                        presenter.setDeviceInfo(info)
+                        service?.let {
+                            it.isNotificationEnabled = false
+                            it.connectGatt(
+                                presenter.getDeviceInfo()?.device!!,
+                                false,
+                                timeoutGattCallback
+                            )
+                        }
+                    }
+
+                    override fun onCancel() {
+                        switchCurrentDevice()
+                        updateRangeTestEmptyState()
+                    }
+                })
+            }.show(supportFragmentManager, "select_device_dialog")
     }
 
     override fun onPause() {
@@ -371,6 +383,8 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
                 .remove(fragment)
                 .commit()
         }
+        supportFragmentManager.executePendingTransactions()
+        updateRangeTestEmptyState()
     }
 
     private fun showRangeTestFragment(mode: RangeTestMode?) {
@@ -383,6 +397,16 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment, fragment, "tag_show_range_test_fragment")
             .commit()
+        supportFragmentManager.executePendingTransactions()
+        updateRangeTestEmptyState()
+    }
+
+    private fun updateRangeTestEmptyState() {
+        val hasFragment =
+            supportFragmentManager.findFragmentByTag("tag_show_range_test_fragment") != null
+        val hasDevice = presenter.getDeviceInfo() != null
+        binding.rangeTestEmptyState.visibility =
+            if (!hasFragment && !hasDevice) View.VISIBLE else View.GONE
     }
 
     private fun getGenericAccessCharacteristic(characteristic: GattCharacteristic): BluetoothGattCharacteristic? {
@@ -1245,15 +1269,17 @@ class RangeTestActivity : BaseDemoActivity(), Controller {
     }
 
     private fun setTabSelected(textView: TextView?) {
-        textView?.background = ContextCompat.getDrawable(this, R.drawable.btn_rounded_white)
-        textView?.setTextColor(ContextCompat.getColor(this, R.color.silabs_red))
-        textView?.typeface = Typeface.create("sans-serif", Typeface.BOLD)
+        textView?.setBackgroundResource(R.drawable.range_test_tab_selected)
+        textView?.setTextColor(ContextCompat.getColor(this, R.color.silabs_primary_text))
+        textView?.typeface = ResourcesCompat.getFont(this, R.font.stolzl_regular)
+            ?: Typeface.DEFAULT
     }
 
     private fun setTabUnselected(textView: TextView?) {
-        textView?.background = ContextCompat.getDrawable(this, R.drawable.btn_rounded_red_dark)
-        textView?.setTextColor(ContextCompat.getColor(this, R.color.silabs_white))
-        textView?.typeface = Typeface.create("sans-serif", Typeface.NORMAL)
+        textView?.background = null
+        textView?.setTextColor(ContextCompat.getColor(this, R.color.silabs_primary_text))
+        textView?.typeface = ResourcesCompat.getFont(this, R.font.stolzl_regular)
+            ?: Typeface.DEFAULT
     }
 
 

@@ -2,16 +2,17 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/card_view"
     style="@style/list_item_card_view_box"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/matter_8dp"
+    app:cardUseCompatPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             style="@style/list_item_card_view_container_margins"
@@ -22,14 +23,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical" >
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/manufacturer_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/redesign_ic_scanned_device_windows"
-                    android:contentDescription="@string/content_desc_scanned_device_manufacturer_icon"/>
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:contentDescription="@string/content_desc_scanned_device_manufacturer_icon"
+                    android:src="@drawable/redesign_ic_scanned_device_windows" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -56,7 +57,7 @@
 
                 <com.siliconlabs.bledemo.common.views.ActionButton
                     android:id="@+id/connection_btn"
-                    style="@style/button_with_states"
+                    style="@style/button_browser_device_connect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -74,7 +75,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -86,9 +87,9 @@
                     <ImageView
                         android:layout_width="@dimen/card_view_feature_icon_dimension"
                         android:layout_height="@dimen/card_view_feature_icon_dimension"
+                        android:layout_gravity="center"
                         android:contentDescription="@string/advertiser_label_tx_power"
                         android:src="@drawable/redesign_ic_wifi"
-                        android:layout_gravity="center"
                         app:tint="@color/silabs_dark_gray_icon" />
 
                     <TextView
@@ -96,8 +97,8 @@
                         style="@style/list_item_card_view_text_info_ellipsized"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="-40 dBm"
-                        android:gravity="center_horizontal" />
+                        android:gravity="center_horizontal"
+                        tools:text="-40 dBm" />
 
                 </LinearLayout>
 
@@ -142,7 +143,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
 
@@ -156,10 +157,9 @@
 
                     <TextView
                         android:id="@+id/device_type"
-                        style="@style/list_item_card_view_text_info_ellipsized"
+                        style="@style/list_item_card_view_text_info_stat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
                         android:text="@string/advertiser_setting_beacon_unspecified" />
 
                 </LinearLayout>
@@ -173,7 +173,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
 
@@ -187,10 +187,9 @@
 
                     <TextView
                         android:id="@+id/tv_is_connectable"
-                        style="@style/list_item_card_view_text_info_ellipsized"
+                        style="@style/list_item_card_view_text_info_stat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         tools:text="Connectible" />
 
                 </LinearLayout>
@@ -206,7 +205,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/card_view_margin_vertical" >
+                android:layout_marginBottom="@dimen/card_view_margin_vertical">
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/favorite_btn"

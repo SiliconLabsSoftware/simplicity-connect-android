@@ -8,67 +8,80 @@
     tools:context=".features.demo.matter_demo.activities.MatterDemoActivity">
 
 
+    <!-- Elevation keeps header above matter_container: negative margin on the container
+         overlaps this region; without elevation, touches hit the FrameLayout instead of the toolbar. -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/matter_8dp">
         <!-- Fake Status Bar View -->
         <View
             android:id="@+id/fakeStatusBar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/blue_primary"
-            app:layout_constraintBottom_toTopOf="@+id/toolbar"
+            android:background="@color/silabs_redtheme_status_bar_color"
+            app:layout_constraintBottom_toTopOf="@+id/statusBarToolbarSeparator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/statusBarToolbarSeparator"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/matter_1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toTopOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fakeStatusBar" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/blue_primary"
+            android:background="@color/silabs_redtheme_tool_bar_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusBarToolbarSeparator"
             app:title="@string/matter_tile"
             app:titleTextColor="#ffff" />
 
-        <!-- Right most ImageView -->
+        <!-- Toolbar actions: align to toolbar row (not full status-bar header); clickable ripples for touch. -->
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="@dimen/matter_20dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/matter_10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintBottom_toBottomOf="@id/toolbar"
+            app:layout_constraintEnd_toEndOf="@id/toolbar"
+            app:layout_constraintTop_toTopOf="@id/toolbar">
 
             <ImageView
                 android:id="@+id/refresh"
                 android:layout_width="@dimen/matter_36dp"
                 android:layout_height="@dimen/matter_36dp"
-                android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/matter_15dp"
-                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
                 android:contentDescription="@string/matter_refresh_button"
-                android:padding="3dp"
+                android:focusable="true"
+                android:padding="@dimen/matter_5dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_refresh" />
 
             <ImageView
                 android:id="@+id/scanQRCode"
                 android:layout_width="@dimen/matter_36dp"
                 android:layout_height="@dimen/matter_36dp"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/matter_10dp"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="1"
-                android:padding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/mater_scan_qr_code"
+                android:focusable="true"
+                android:padding="@dimen/matter_5dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_qr_code_scanner" />
-
-
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -76,8 +89,8 @@
         android:id="@+id/matter_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="-50dp"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/modal_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

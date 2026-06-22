@@ -3,7 +3,7 @@
     <item android:state_checked="true">
         <shape android:shape="rectangle">
             <size android:height="20dp"/>
-            <solid android:color="@color/silabs_blue" />
+            <solid android:color="#D91E1E" />
             <corners android:radius="4dp" />
         </shape>
     </item>

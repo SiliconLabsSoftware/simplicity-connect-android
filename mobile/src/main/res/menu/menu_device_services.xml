@@ -6,18 +6,21 @@
     <item
         android:id="@+id/show_logs"
         android:title="@string/logs"
+        android:fontFamily="@font/stolzl_medium"
         android:icon="@drawable/redesign_ic_menu_device_services_logs"
         app:iconTint="@color/menu_icon"
         app:showAsAction="never" />
     <item
         android:id="@+id/request_priority"
         android:title="@string/connection_interval"
+        android:fontFamily="@font/stolzl_medium"
         android:icon="@drawable/redesign_ic_menu_device_services_connection_interval"
         app:iconTint="@color/menu_icon"
         app:showAsAction="never" />
     <item
         android:id="@+id/request_mtu"
         android:title="@string/request_mtu"
+        android:fontFamily="@font/stolzl_medium"
         android:icon="@drawable/redesign_ic_menu_device_services_mtu"
         app:iconTint="@color/menu_icon"
         app:showAsAction="collapseActionView|never" />
@@ -25,6 +28,7 @@
     <item
         android:id="@+id/menu_create_bond"
         android:title="@string/create_bond"
+        android:fontFamily="@font/stolzl_medium"
         app:iconTint="@color/menu_icon"
         app:showAsAction="ifRoom" />
 

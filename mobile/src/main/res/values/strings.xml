@@ -85,6 +85,8 @@
     <!-- Health Thermometer -->
     <string name="type">Type</string>
     <string name="temperature">Temperature</string>
+    <string name="health_thermo_connected_prefix">CONNECTED TO:</string>
+    <string name="health_thermo_type_label">TYPE :</string>
     <string name="f_symbol">°F</string>
     <string name="c_symbol">°C</string>
     <string name="content_desc_no_devices_discovered">Warning, no devices discovered</string>
@@ -198,6 +200,7 @@
     <string name="incorrect_file">Incorrect file!</string>
     <string name="select_apploader_gbl_file">Select apploader .gbl file</string>
     <string name="select_application_gbl_file">Select application .gbl file</string>
+    <string name="ota_config_choose_file">Choose file</string>
     <string name="ota_filename_s">\/%s</string>
     <string name="ota_loading_text">Loading…</string>
     <string name="ota_rebooting_text">Rebooting…</string>
@@ -256,7 +259,7 @@
     <string name="help_text_documentation_label">Additional documentation:</string>
     <string name="help_text_pub_label">Additional Apps released by Silicon Labs:</string>
     <string name="help_Google_Play_Store_label">Google Play Store</string>
-    <string name="version_text">Version %s</string>
+    <string name="version_text">App Version %s</string>
     <string name="info">Info</string>
 
     <!-- Key fob list item signal strength labels -->
@@ -273,7 +276,7 @@
     <string name="therm_type_toe">Toe</string>
     <string name="therm_type_tympanum">Tympanum</string>
     <string name="loading_ellipsis">Loading…</string>
-    <string name="temp_large_placeholder">00.</string>
+    <string name="temp_large_placeholder">00</string>
 
     <string name="unknown_characteristic_label">Unknown characteristic</string>
     <string name="unknown_descriptor_label">Unknown descriptor</string>
@@ -488,11 +491,13 @@
     <string name="light_demo_title_source">Source</string>
 
     <!-- Range Test -->
+    <string name="range_test_dialog_demo_label">Range Test Demo</string>
     <string name="demo_range_select_mode">Select Device Mode</string>
     <string name="demo_range_toast_error">Device error! Disconnecting!</string>
 
     <string name="range_device_info">Device Info</string>
     <string name="range_test_no_device">No Device</string>
+    <string name="range_test_device_not_connected">Device is not connected</string>
 
     <string name="demo_range_mode_tx">TX Mode</string>
     <string name="demo_range_mode_rx">RX Mode</string>
@@ -502,7 +507,7 @@
     <string name="range_rx_label_ma">MA</string>
     <string name="range_rx_label_per">PER</string>
 
-    <string name="range_tx_transmitted">Transmitted</string>
+    <string name="range_tx_transmitted">Transmitted:</string>
     <string name="range_rx_rx">%1$d/%2$d</string>
     <string name="range_rx_rssi">%1$d dBm</string>
     <string name="range_rx_ma">0.0%</string>
@@ -538,7 +543,7 @@
     <string name="throughput_phy_colon">PHY:</string>
     <string name="throughput_interval_colon">Interval:</string>
     <string name="throughput_latency_colon">Latency:</string>
-    <string name="throughput_supervision_timeout_colon">Supervision Timeout:</string>
+    <string name="throughput_supervision_timeout_colon">Supervis. Timeout:</string>
     <string name="throughput_pdu_colon">PDU:</string>
     <string name="throughput_mtu_colon">MTU:</string>
     <string name="throughput_n_bytes">%d bytes</string>
@@ -552,8 +557,7 @@
     <string name="iop_test_share_log_dialog_title">Select log file.</string>
     <string name="iop_test_result_log">Test Result Log</string>
     <string name="iop_test_app_log">Application Debug Log</string>
-    <string name="iop_test_full_page_info">Exercise common Bluetooth \n operations with Silicon
-        Labs \n hardware and software</string>
+    <string name="iop_test_full_page_info">Exercise common\nBluetooth operations with\nSilicon Labs hardware\nand software</string>
     <string name="iop_test_select_device_btn">Select Device</string>
     <string name="iop_test_toast_bonding">Bonding. Pull down the notification bar to pair if no Dialog is shown</string>
     <string name="iop_test_toast_press_passkey">Press passkey: 123456. Pull down the notification bar to pair if no Dialog is shown</string>
@@ -714,6 +718,7 @@
     <string name="blinky_tb_on">ON</string>
     <string name="blinky_tb_switch_status">Switch Status</string>
     <string name="blinky_tb_leds">LEDs</string>
+    <string name="blinky_tb_rgb_leds">RGB LEDs</string>
 
     <!-- Notifications -->
     <string name="notification_title_device_has_connected">%s has connected</string>
@@ -755,6 +760,8 @@
     <string name="empty_description"> </string>
 
     <!--WifiCommissioningActivity-->
+    <string name="wifi_sensor_same_network_hint">Connect your phone to the same Wi-Fi network as the sensor to load sensor data.</string>
+    <string name="wifi_sensor_ip_unavailable">Sensor is on Wi-Fi but its IP address is not available yet. Try scanning again in a moment.</string>
     <string name="hint_password">password</string>
     <string name="security_mode_unknown">Unknown</string>
     <string name="status_wpa_wpa2">WPA/WPA2</string>
@@ -868,23 +875,18 @@
     <string name="connection_failed">Connection failed</string>
 
     <string name="demo_firmware_name_health_thermometer">Bluetooth - SoC Thermometer</string>
-    <string name="demo_firmware_name_connected_lighting">Bluetooth RAIL DMP - SoC Light\" or \"Connect Bluetooth DMP - SoC Light" or "Amazon Sidewalk - SoC Dynamic Multiprotocol Light (BLE)" or "Amazon Sidewalk - SoC Dynamic Multiprotocol Light (FSK)" firmware.</string>
-    <string name="demo_firmware_name_range_test">RAIL Bluetooth DMP - SoC Range Test</string>
+    <string name="demo_firmware_name_connected_lighting">RAIL - SoC Light\" or \"Amazon Sidewalk - SoC Dynamic Multiprotocol Light (BLE)"</string>
+    <string name="demo_firmware_name_range_test">RAIL - SoC Range Test</string>
     <string name="demo_firmware_name_throughput">Bluetooth - SoC Throughput</string>
     <string name="demo_firmware_name_esl">Bluetooth - NCP ESL Access Point</string>
     <string name="demo_firmware_name_wifi_commission">1. The SoC and evaluation board (EVK) must be connected and running the correct firmware \n2. The Wi-Fi network on your mobile device should match the Wi-Fi network used for the sensor device\'s commissioning.\n3. Enable your phone\'s local network to access sensor data.</string>
-    <string name="soc_wifi_commissioning_must_be_connected">A circuit board (SoC) and the
-        evaluation board (EVK) must be connected and running proper firmwares. See <a href="https://docs.silabs.com/rs9116-wiseconnect/latest/wifibt-wc-getting-started-with-pc/update-evk-firmware">here</a>,
-        <a href="https://docs.silabs.com/rs9116-wiseconnect/latest/wifibt-wc-getting-started-with-efx32/">here</a> and
-        <a href="https://github.com/SiliconLabs/wiseconnect-wifi-bt-sdk/tree/master/examples/snippets/wlan_ble/wlan_station_ble_provisioning">here</a> for more information.
-    </string>
+    <string name="soc_wifi_commissioning_must_be_connected"><![CDATA[A circuit board (SoC) and the evaluation board (EVK) must be connected and running proper firmware. See the<a href="https://docs.silabs.com/rs9116-wiseconnect/latest/wifibt-wc-getting-started-with-pc/update-evk-firmware"> documentation</a>, <a href="https://docs.silabs.com/rs9116-wiseconnect/latest/wifibt-wc-getting-started-with-efx32">tutorial</a> and <a href="https://github.com/SiliconLabs/wiseconnect-wifi-bt-sdk/tree/master/examples/snippets/wlan_ble/wlan_station_ble_provisioning">GitHub</a>]]> for more information.</string>
     <string name="soc_blinky_must_be_connected">A circuit board (SoC) must be
-        connected and running \"Bluetooth - SoC Blinky\" firmware or firmware with a title
-        containing \"Bluetooth - SoC Dev Kit\" or \"Bluetooth - SoC Thunderboard\".</string>
+        connected and running \"Bluetooth - SoC Blinky or Bluetooth - SoC EFR32xG24 Dev Kit or Bluetooth - SoC EFR32xG26 Dev Kit or Bluetooth - SoC Thunderboard EFR32BG22\" firmware.</string>
     <string name="soc_thunderboard_must_be_connected">A circuit board (SoC) must be
-        connected and running firmware with a title containing \"Bluetooth - SoC Dev Kit\" or
-        \"Bluetooth - SoC Thunderboard\".</string>
-    <string name="demo_firmware_name_iop">Bluetooth - SoC Interoperability Test</string>
+        connected and running firmware with a title containing \"Bluetooth - SoC EFR32xG24 Dev Kit\" or \"Bluetooth - SoC EFR32xG26 Dev Kit + Apploader OTA DFU\" or
+        \"Bluetooth - SoC Thunderboard EFR32BG22\".</string>
+    <string name="demo_firmware_name_iop">Bluetooth - SoC Interoperability Test FreeRTOS</string>
 
     <string name="demo_connected_to">CONNECTED TO: %s</string>
     <string name="temperature_type">TYPE: %s</string>
@@ -909,8 +911,7 @@
     <string name="min_mtu_value">23</string>
     <string name="error_requesting_mtu">Error when requesting MTU. Status = %d</string>
 
-    <string name="ota_dfu_description">This function may be used to perform Over the Air
-        firmware update to the connected device. </string>
+    <string name="ota_dfu_description">This function may be used to perform Over the Air firmware update to the connected device.</string>
     <string name="dialog_characteristic_missing">Characteristic missing</string>
     <string name="ota_characteristic_not_found">GATT table of the connected device does not
     contain characteristic required to perform Over the Air firmware update.</string>
@@ -948,10 +949,8 @@
 
     <!-- GattConfigurator Fragment -->
     <string name="content_desc_no_gatt_servers_icon">"No gatt servers" icon</string>
-    <string name="text_gatt_configurator_purpose_explanation">Allows you to create a local \n
-        GATT database </string>
-    <string name="text_gatt_configurator_no_configured_gatt_servers">No configured GATT
-        servers </string>
+    <string name="text_gatt_configurator_purpose_explanation">Allows you to create a local\nGATT database</string>
+    <string name="text_gatt_configurator_no_configured_gatt_servers">No configured GATT servers</string>
     <string name="btn_create_new">Create New</string>
 
     <!-- TestFragment -->
@@ -963,18 +962,18 @@
 
     <string name="scan_timeout">Scan timeout</string>
     <string name="device_subtitle">Device</string>
-    <string name="report_issue">Report an issue</string>
+    <string name="report_issue">Report An Issue</string>
 
     <string name="device_information">Device Information</string>
     <string name="scan_timeout_value_in_seconds">Timeout value [s]: </string>
 
-    <string name="settings_link_more_information">More \ninformation</string>
+    <string name="settings_link_more_information">More Information</string>
     <string name="settings_link_support">Support</string>
-    <string name="settings_link_source_code">Source code</string>
-    <string name="settings_link_users_guide">User\'s guide</string>
-    <string name="settings_link_release_notes">Release notes</string>
-    <string name="settings_link_additional_documentation">Additional \ndocumentation</string>
-    <string name="settings_link_other_silabs_apps">Other \nSilabs apps</string>
+    <string name="settings_link_source_code">Source Code</string>
+    <string name="settings_link_users_guide">Users guide</string>
+    <string name="settings_link_release_notes">Release Notes</string>
+    <string name="settings_link_additional_documentation">Additional Documentation</string>
+    <string name="settings_link_other_silabs_apps">Other Silabs Apps</string>
     <string name="settings_link_export_logger">Export Log</string>
 
     <string name="scan_timeout_help_dialog_title">Scan timeout</string>
@@ -1069,7 +1068,7 @@
     <string name="dialog_upload_image_message">Select a slot on the ESL Access Point to which you
         wish to upload the new image. Choosing an occupied slot will result in overwriting the
         stored image with the new one.</string>
-    <string name="dialog_upload_image_display_checkbox">Display the image after uploading</string>
+    <string name="dialog_upload_image_display_checkbox">Show image after the update</string>
     <string name="dialog_image_to_upload_message">Image to upload:</string>
     <string name="dialog_display_image_title">Display image</string>
     <string name="dialog_display_image_message">Select an image you wish to display on the ESL
@@ -1095,7 +1094,7 @@
 
     <!--    Matter-->
     <string name="matter_demo_title">Matter Demo</string>
-    <string name="matter_light_demo_toggle_instructions">Press the bulb icon to toggle light</string>
+    <string name="matter_light_demo_toggle_instructions">Press the bulb icon to toggle the light</string>
     <string name="matter_demo_description">Add/commission Matter tags by scanning its QR code and control them from the UI</string>
     <string name="matter_scanner_adapter_empty_list_title">No Device Found</string>
     <string name="matter_scanner_adapter_empty_list_message_idle">Scan your matter device to add.</string>
@@ -1132,8 +1131,8 @@
     <string name="matter_commissioning_device">Commissioning Device…</string>
     <string name="mater_scan_qr_code">Scan QR Code</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="matter_light_on_status">ON</string>
-    <string name="matter_light_off_status">OFF</string>
+    <string name="matter_light_on_status">On</string>
+    <string name="matter_light_off_status">Off</string>
     <string name="matter_locked_status">Lock</string>
     <string name="matter_unlock_status">Unlock</string>
     <string name="matter_unlock_query">Query</string>
@@ -1144,7 +1143,7 @@
     <string name="matter_switch_on_off_cluster">Switch On Off</string>
     <string name="matter_window_open">Open</string>
     <string name="matter_window_close">Close</string>
-    <string name="matter_window_open_close_cluster">Window Covering</string>
+    <string name="matter_window_open_close_cluster">Window Covering Cluster</string>
     <string name="matter_thermostat_cluster">Thermostat</string>
     <string name="matter_occupancy_cluster">Occupancy Sensor</string>
     <string name="matter_temp_sensor_cluster">Temperature Sensor</string>
@@ -1155,14 +1154,15 @@
     <string name="matter_init_air_sensor_quality_status">Unknown</string>
     <string name="matter_ok">Send</string>
     <string name="matter_cancel">Cancel</string>
+    <string name="matter_ok_btn">OK</string>
     <string name="matter_alert_title">Thread Configuration</string>
     <string name="matter_network_selection_alert_title">Commissioning</string>
     <string name="matter_wifi_configuration_alert_title">WiFi Configuration</string>
-    <string name="matter_wifi_configuration_input_alert_title">Input network SSID and password that your phone is connected to</string>
+    <string name="matter_wifi_configuration_input_alert_title">Input network SSID and password that your phone is connected to.</string>
     <string name="matter_wifi_not_connected">WiFi Not Connected</string>
-    <string name="matter_otbr_alert_message">Enter OTBR dataset to connect</string>
+    <string name="matter_otbr_alert_message">Enter OTBR dataset</string>
     <string name="matter_select_network_mode_alert_message">Select network mode</string>
-    <string name="matter_on_off_cluster_title">Light On Off</string>
+    <string name="matter_on_off_cluster_title">Light On / Off</string>
     <string name="matter_wifi">Wi-Fi</string>
     <string name="matter_thread">Thread</string>
     <string name="matter_network_ssid">Network SSID</string>
@@ -1170,8 +1170,8 @@
     <string name="matter_light_toggle_status">Toggle</string>
     <string name="matter_manual_qr_code">QR code payload ID</string>
     <string name="matter_submit">Pair</string>
-    <string name="matter_door_title">"Door Lock Unlock"</string>
-    <string name="matter_plug_title">Plug on off</string>
+    <string name="matter_door_title">"Door Lock / Unlock"</string>
+    <string name="matter_plug_title">Plug on / off</string>
     <string name="matter_plug_list">Plug</string>
     <string name="matter_lock_list">Door Lock</string>
     <string name="matter_occupancy_sensor_list">Occupancy Sensor</string>
@@ -1183,19 +1183,21 @@
     <string name="matter_refresh_button">Refresh</string>
     <string name="matter_thermostat_list">Thermostat</string>
     <string name="matter_light_list">Light</string>
-    <string name="matter_window_list">Window Cover</string>
+    <string name="matter_window_list">Window cover</string>
     <string name="matter_dish_washer_list">Dishwasher</string>
     <string name="please_wait">Please wait while the work is in progress..</string>
     <string name="temp_note_message">Please press BTN1 button to change sensor value on the Baseboard to test the Temprature Sensor</string>
     <string name="matter_tile">Matter Devices</string>
     <string name="matter_alert_ok">OK</string>
+    <string name="matter_scanned_row_delete_a11y">Remove device</string>
     <string name="matter_delete_alert_title">Alert</string>
     <string name="matter_delete_message">Do you want to delete Device?</string>
     <string name="matter_validation_manual_qrcode">Enter valid QR Code</string>
     <string name="matter_occupancy_sensor_action">Press and Hold to detect the occupancy” and release the button to undetect the occupancy</string>
     <string name="ssid_and_password_required">SSID and password required.</string>
     <string name="password_must_be_min_8_characters">Password must be minimum 8 characters.</string>
-    <string name="add_device_subtitle">Add the device name. This is the name that will be used to reference this device.</string>
+    <string name="add_device_subtitle">Add the device name. This is the name that will be used to reference this device</string>
+    <string name="matter_add_device_name_hint">Air quality sensor</string>
     <string name="add_device_name">Add Device Name</string>
     <string name="matter_scanner_info">Manual QR code payload ID:</string>
     <string name="matter_example_mt_yk">For example : MT:YK9042C00KA068G0</string>
@@ -1215,7 +1217,9 @@
     <string name="matter_dishwasher_energy_consumption_title">Energy Consumption</string>
     <string name="matter_dishwasher_energy_consumption_average_cycle">average per cycle</string>
     <string name="matter_device_commissioning_failed">Error while retrieving device information. Please try again.</string>
+    <string name="matter_commissioning_failed">Commissioning failed. Please reset the device and try again.</string>
     <string name="matter_commissioning_message">If you cancel, commissioning will stop and it will redirect to the home screen. You need to restart board and try again.</string>
+    <string name="matter_commissioning_timeout">Something went wrong during commissioning. Please reset the device and try again.</string>
     <string name="dish_washer_timing">10 min</string>
     <string name="matter_in_current_cycle">in current cycle</string>
     <string name="matter_remaining_time">Remaining time</string>
@@ -1289,12 +1293,19 @@
     <string name="udp_receive_title">UDP Download</string>
     <string name="tls_receive_title">TLS Download</string>
     <string name="dialog_start_server">Start Server</string>
-    <string name="tcp_download_sub_title">Ensure to flash TCP_TX on the FW and enter the below details  to perform TCP throughput.</string>
-    <string name="tcp_upload_sub_title">Ensure to flash TCP_RX on the FW and enter the below details  to perform TCP throughput.</string>
-    <string name="dialog_udp_download_sub_title">Ensure to flash UDP_TX on the FW and enter the below details  to perform UDP throughput.</string>
-    <string name="dialog_udp_upload_sub_title">Ensure to flash UDP_RX on the FW and enter the below details  to perform UDP throughput.</string>
-    <string name="dialog_tls_download_sub_title">Ensure to flash TLS_TX on the FW and enter the below details  to perform TLS throughput.</string>
-    <string name="dialog_sub_title_tls_upload">Ensure to flash TLS_RX on the FW and enter the below details  to perform TLS throughput.</string>
+    <string name="tcp_download_sub_title">Ensure to flash TCP_TX on the FW and enter the below details to perform TCP throughput</string>
+    <string name="tcp_upload_sub_title">Ensure to flash TCP_RX on the FW and enter the below details to perform TCP throughput</string>
+    <string name="dialog_udp_download_sub_title">Ensure to flash UDP_TX on the FW and enter the below details to perform UDP throughput</string>
+    <string name="dialog_udp_upload_sub_title">Ensure to flash UDP_RX on the FW and enter the below details to perform UDP throughput</string>
+    <string name="dialog_tls_download_sub_title">Ensure to flash TLS_TX on the FW and enter the below details to perform TLS throughput</string>
+    <string name="dialog_sub_title_tls_upload">Ensure to flash TLS_RX on the FW and enter the below details to perform TLS throughput</string>
+    <string name="wifi_throughput_configure_tcp_server">Configure TCP Server</string>
+    <string name="wifi_throughput_configure_tcp_client">Configure TCP Client</string>
+    <string name="wifi_throughput_configure_udp_server">Configure UDP Server</string>
+    <string name="wifi_throughput_configure_udp_client">Configure UDP Client</string>
+    <string name="wifi_throughput_configure_tls_server">Configure TLS Server</string>
+    <string name="wifi_throughput_configure_tls_client">Configure TLS Server</string>
+    <string name="wifi_throughput_start_client">Start Client</string>
     <string name="wifi_throughput_connecting_status">Connecting to server…</string>
     <string name="interval">Interval</string>
     <string name="transfer">Transfer</string>
@@ -1307,6 +1318,8 @@
     <string name="udp_client">UDP Client</string>
     <string name="tls_server">TLS Server</string>
     <string name="enter_ip_address">Enter IP Address</string>
+    <string name="wifi_throughput_hint_ip_address">Enter the IP Address</string>
+    <string name="wifi_throughput_hint_server_port">Enter the Port number</string>
     <string name="please_enter_valid_port_number">Please enter valid port number</string>
     <string name="total_bytes_received">Total bytes received</string>
     <string name="total_bytes_sent">Total bytes sent</string>
@@ -1332,11 +1345,11 @@
     <string name="wifi_provisioning_scan_error">API Scan Response failed</string>
     <string name="wifi_provisioning_wifi_setting_on">Please turn on the WiFi Setting</string>
     <string name="wifi_provisioning_scanner_holder_description">Choose and select an available Wi-Fi network from the list below to do the Wi-Fi provisioning with the Devkit.</string>
-    <string name="wifi_provisioning_security_label">Security Type :</string>
-    <string name="wifi_provisioning_bssid_label">BSSID :</string>
-    <string name="wifi_provisioning_rssi_label">RSSI :</string>
-    <string name="wifi_provisioning_password_label">Password :</string>
-    <string name="wifi_provisioning_password_hint">Enter WI-FI Password</string>
+    <string name="wifi_provisioning_security_label">Security Type:</string>
+    <string name="wifi_provisioning_bssid_label">BSSID:</string>
+    <string name="wifi_provisioning_rssi_label">RSSI:</string>
+    <string name="wifi_provisioning_password_label">Password:</string>
+    <string name="wifi_provisioning_password_hint">Enter Wi-Fi password</string>
     <string name="wifi_provisioning_password_required">Password required.</string>
     <string name="wifi_provisioning_provisioning_success_title">Provisioning data sent successfully</string>
     <string name="wifi_provisioning_provisioning_success_body">The white light is continuous and blinks slowly, indicating the device is connected to the Wi-Fi network.</string>
@@ -1393,6 +1406,8 @@
     <string name="icd_registration_completed">ICD device registration completed, How to trigger to switch to Active Mode : %1$s</string>
     <string name="matter_light_switch">Light Switch</string>
     <string name="matter_light_switch_control">Light Switch Binding</string>
+    <string name="matter_select_devices_to_bind">Select Devices to Bind:</string>
+    <string name="matter_select_light_to_bind">Select a light to bind.</string>
     <string name="matter_ligth_switch_control_acl_control">ACL Control</string>
     <string name="matter_ligth_switch_control_binding_control">Binding Control</string>
     <string name="matter_light_switch_control_node_light_id">Light Node Id :</string>
@@ -1402,7 +1417,11 @@
     <string name="matter_light_switch_control_key_list_status">Key List :</string>
     <string name="matter_light_switch_control_binding_status">Binding Status :</string>
     <string name="matter_binded">Binded </string>
-    <string name="binded_to_nothing">Binded to Nothing</string>
+    <string name="binded_to_nothing">Bind</string>
+    <string name="matter_switch_bind_row_title">Switch</string>
+    <string name="matter_switch_action_bind">Bind</string>
+    <string name="matter_switch_action_unbind">Unbind</string>
+    <string name="matter_switch_bind_icon_content_description">Light switch</string>
 
     <!--    Device Information-->
     <string name="device_information_title">Device Information</string>
@@ -1497,13 +1516,22 @@
     <string name="smart_lock_published_topic">Saws_requests</string>
     <string name="smart_lock_custom_topic_hint">Enter custom message</string>
     <string name="smart_lock_subscribe_btn">Subscribe Now</string>
-    <string name="smart_lock_cmd_title">Send your text to AWS </string>
+    <string name="smart_lock_cmd_title">Send your custom command to AWS:</string>
     <string name="smart_lock_demo_selection_dialog_title">Select your control type</string>
     <string name="smart_lock_connection_aws">Control via AWS</string>
     <string name="smart_lock_connection_ble">Control via BLE</string>
     <string name="timeout_expired">Unable to connect</string>
     <string name="smart_lock_alert_config_title">Configure Smart Lock</string>
-    <string name="smart_lock_select_p12_file">Select .p12 file</string>
+    <string name="smart_lock_dialog_label_certificate_p12">Select Certificate p12</string>
+    <string name="smart_lock_dialog_label_certificate_password">Enter your Certificate password</string>
+    <string name="smart_lock_dialog_hint_certificate_password">Enter p12 file password</string>
+    <string name="smart_lock_dialog_label_subscribe">Subscribe</string>
+    <string name="smart_lock_dialog_hint_subscriber_topic">Subscriber topic</string>
+    <string name="smart_lock_dialog_label_publish">Publish</string>
+    <string name="smart_lock_dialog_hint_publish_topic">Publish topic</string>
+    <string name="smart_lock_dialog_label_endpoint">End Point URL</string>
+    <string name="smart_lock_dialog_hint_endpoint">Enter End Point</string>
+    <string name="smart_lock_select_p12_file">Select p12 files</string>
     <string name="smart_lock_password_title">Enter the Certificate Password</string>
     <string name="smart_lock_device_connected">The device is connected to the internet.</string>
     <string name="smart_lock_end_point_url">End Point URL</string>
@@ -1513,7 +1541,7 @@
     <string name="smart_lock_config_alert_subs_message">Subscribe Topic cannot be blank</string>
     <string name="smart_lock_config_alert_pub_message">Publish Topic cannot be blank</string>
     <string name="smart_lock_already_configured_alert">This device is already configured with AWS Smart Lock. Would you like to reconfigure it?</string>
-    <string name="smart_lock_note_hint">* AWS Smart is currently not setup. To configure it, click the settings icon located in the top-right corner.</string>
+    <string name="smart_lock_note_hint">*AWS Certificate and endpoints are not configured. To set it up, click the settings icon located in the top-right corner</string>
     <string name="smart_lock_alert_config_message">Please configure your AWS Smart Lock first. You can do this by clicking the settings button in the top-right corner.</string>
     <string name="smart_lock_internet_not_available">Internet not available. Kindly check your internet connection on your phone. Thank you!</string>
     <string name="bluetooth_encryption_change">Bluetooth Encryption Chnaged.</string>
@@ -1548,7 +1576,7 @@
     <string name="channel_sounding_config_reset">Reset</string>
     <string name="channel_sounding_config_save">Save</string>
     <string name="channel_sounding_config_image_dropdown_arrow">Dropdown Arrow</string>
-    <string name="channel_sounding_config_initiator_details">"     Initiator Details     "</string>
+    <string name="channel_sounding_config_initiator_details">Initiator Details</string>
     <string name="channel_sounding_config_ble_cs_config">"   Params   "</string>
     <string name="channel_sounding_config_freq_label">Measurement\nFrequency :</string>
     <string name="channel_sounding_config_duration_label">"Measurement\nCount :"</string>
@@ -1567,7 +1595,7 @@
     <string name="channel_sounding_reconnect">Reconnect</string>
     
     <!-- Ranging Status (toolbar subtitle) -->
-    <string name="channel_sounding_ranging_paused">ResumingΓÇª</string>
+    <string name="channel_sounding_ranging_paused">Resuming…</string>
     <string name="channel_sounding_ranging_resumed">Ready</string>
     <string name="channel_sounding_cancel">Cancel</string>
     
@@ -1595,9 +1623,9 @@
     <string name="channel_sounding_confidence_score">Confidence score : </string>
     <string name="channel_sounding_chart_x_axis_label">Time (seconds)</string>
     <string name="channel_sounding_chart_y_axis_label">Distance (meters)</string>
-    <string name="channel_sounding_chart_marker_spike">ΓÜá∩╕Å Spike</string>
+    <string name="channel_sounding_chart_marker_spike">⚠️ Spike</string>
     <string name="channel_sounding_chart_marker_smoothing">~ Smoothing</string>
-    <string name="channel_sounding_chart_marker_stable">Γ£ô Stable</string>
+    <string name="channel_sounding_chart_marker_stable">✓ Stable</string>
     <string name="channel_sounding_chart_marker_distance">Distance</string>
     <string name="channel_sounding_tooltip_freq">Select the update rate to determine how often the distance is calculated and updated</string>
     <string name="channel_sounding_tooltip_duration">Specify the number of measurements to collect during sounding.</string>
@@ -1605,7 +1633,7 @@
     <string name="channel_sounding_tooltip_location">Context of the physical environment where the channel sounding measurements are being performed.</string>
     <string name="channel_sounding_tooltip_sight">Line-of-sight (LoS) condition between the Bluetooth initiator (e.g., smartphone) and the reflector.</string>
     <string name="channel_sounding_config_kalman_filter_label">"Kalman Filter :"</string>
-    <string name="channel_sounding_config_filtering_level_label">Filtering Level:</string>
+    <string name="channel_sounding_config_filtering_level_label">Filtering\nLevel:</string>
     <string name="channel_sounding_tooltip_kalman_filter">Select filtering level: Light (fast response), Medium (balanced), or Heavy (maximum smoothing). Filtering is always enabled.</string>
 
     <!-- Kalman Filter Configuration Section -->
@@ -1620,7 +1648,7 @@
     <string name="channel_sounding_tooltip_measurement_noise">Higher values make the filter trust measurements less. Lower values trust measurements more. Default: 0.05</string>
     <string name="channel_sounding_config_outlier_threshold_label">"Outlier Threshold :"</string>
     <string name="channel_sounding_tooltip_outlier_threshold">Measurements with Mahalanobis distance above this threshold are treated as outliers. Default: 2.5</string>
-    <string name="channel_sounding_outlier_detected">Outlier detected! Raw: %.2f m, Filtered: %.2f m</string>
+    <string name="channel_sounding_outlier_detected">Outlier detected! Raw: %1$.3f m, Filtered: %2$.3f m</string>
     <string name="channel_sounding_poor_signal">Poor signal. Try moving to open area.</string>
     <string name="channel_sounding_stall_stopped_message">Poor signal or out of range. Click Start to try again.</string>
     <string name="channel_sounding_too_close_title">Too Close to Device</string>
@@ -1630,10 +1658,10 @@
 
     <!-- New "no HIGH confidence" dialog -->
     <string name="channel_sounding_no_high_confidence_title">Unable to Acquire Signal</string>
-    <string name="channel_sounding_no_high_confidence_message">HIGH confidence data is not being received from the CS board after multiple attempts.\n\nThis may be due to:\nΓÇó Distance too far or too close\nΓÇó Environmental interference\nΓÇó Antenna positioning\n\nPlease restart the Channel Sounding session from the demo screen.</string>
-    <string name="channel_sounding_waiting_for_high_confidence">Waiting for high-confidence score dataΓÇª</string>
+    <string name="channel_sounding_no_high_confidence_message">HIGH confidence data is not being received from the CS board after multiple attempts.\n\nThis may be due to:\n• Distance too far or too close\n• Environmental interference\n• Antenna positioning\n\nPlease restart the Channel Sounding session from the demo screen.</string>
+    <string name="channel_sounding_waiting_for_high_confidence">Waiting for high-confidence score data…</string>
     <string name="side_walk">IoT SideWalk</string>
-    <string name="light_demo_toggle_hint_light">Press the bulb icon to toggle light</string>
+    <string name="light_demo_toggle_hint_light">Press the bulb icon to toggle the light</string>
     <string name="light_demo_toggle_hint_lock">Press the lock icon to toggle lock</string>
 
     <!--    Matter EVS-->
@@ -1644,5 +1672,179 @@
     <string name="light_demo_protocol_aws">AWS\n</string>
     <string name="smart_lock_demo_protocol_aws_address">AWS Address: %1$s</string>
 
+    <!--    Matter Oven-->
+    <string name="matter_oven_device">Oven</string>
+    <string name="matter_oven_mode_convection">Convection</string>
+    <string name="matter_oven_mode_grill">Grill</string>
+    <string name="matter_oven_mode_roast">Roast</string>
+    <string name="matter_oven_mode_clean">Clean</string>
+    <string name="matter_oven_mode_convection_bake">Convection Bake</string>
+    <string name="matter_oven_mode_convection_roast">Convection Roast</string>
+    <string name="matter_oven_mode_warming">Warming</string>
+    <string name="matter_oven_mode_proofing">Proofing</string>
+    <string name="matter_oven_icon">Oven Icon</string>
+    <string name="matter_oven_mode_selected">Selected</string>
+    <string name="matter_oven_cluster">Oven</string>
+    <string name="matter_oven_label">Oven:</string>
+    <string name="matter_oven_on">ON</string>
+    <string name="matter_oven_off">OFF</string>
+    <string name="matter_oven_enable">Enable</string>
+    <string name="matter_oven_disable">Disable</string>
+    <string name="matter_oven_status_enabled">Enabled</string>
+    <string name="matter_oven_status_disabled">Disabled</string>
+    <string name="matter_oven_mode_label">Oven Mode:</string>
+    <string name="matter_oven_mode_bake">Bake</string>
+    <string name="matter_oven_range_hood_button">Range hood</string>
+    <string name="matter_oven_binding_range_hood">Binding Range hood</string>
+    <string name="matter_oven_unbinding_range_hood">Unbinding Range hood</string>
+    <string name="matter_oven_bind_to_rangehood">Bind to Rangehood</string>
+    <string name="matter_oven_unbind">Unbind from Rangehood</string>
+    <string name="matter_oven_unbind_rangehood">Unbind from Rangehood</string>
+    <string name="matter_oven_bind_to_different_rangehood">Bind to different RangeHood</string>
+    <string name="matter_oven_rangehood_binding_dialog_title">Oven-RangeHood Binding</string>
+    <string name="matter_oven_rangehood_binding_dialog_message_bound">Oven is currently bound to a RangeHood. Would you like to unbind or bind to a different RangeHood?</string>
+    <string name="matter_oven_rangehood_binding_dialog_message_not_bound">Oven is not bound to a RangeHood. Would you like to bind to a RangeHood?</string>
+    <string name="matter_oven_binding_success_message">Successfully bound Oven to RangeHood. When Oven turns ON, RangeHood Fan and Light will automatically turn ON.</string>
+    <string name="matter_oven_unbind_success_alert_title">Alert</string>
+    <string name="matter_oven_unbind_success_alert_message">Successfully unbound Oven from RangeHood.</string>
+    <string name="matter_oven_select_range_hood">Select Range Hood</string>
+    <!-- Channel Sounding Phase 2 - Mode Selection Dialog -->
+    <string name="channel_sounding_select_mode_title">Select Initiator or Reflector Mode </string>
+    <string name="channel_sounding_select_mode_description">Choose between Phone as Initiator (distance measurement) or Phone as Reflector (Digital Key for Door Lock).</string>
+    <string name="channel_sounding_mode_initiator">Phone as Initiator</string>
+    <string name="channel_sounding_mode_initiator_desc">Phone measures distance to the EFRxG24 device. Use for testing and development of Channel Sounding ranging.</string>
+    <string name="channel_sounding_mode_reflector">Phone as Reflector</string>
+    <string name="channel_sounding_mode_reflector_desc">Phone acts as a Digital Key for Door Lock. The door lock (EFRxG24) measures distance and unlocks when in range.</string>
+    <string name="channel_sounding_reflector_device_name">Silabs Example</string>
+    <string name="channel_sounding_scanning_for_reflector">Scanning for %s devices…</string>
+    <string name="channel_sounding_reflector_not_found">No \"%s\" device found. Make sure the device is powered on and in range.</string>
+    <string name="reflector_scan_dialog_description">Looking for CS Initiator devices (\"Silabs Example\"). Select a device to pair as Digital Key.</string>
 
+    <!-- Channel Sounding Phase 2 - Reflector Scan Activity -->
+    <string name="reflector_scan_title">Phone as Reflector</string>
+    <string name="reflector_scan_refresh">Refresh scan</string>
+    <string name="reflector_scan_icon_desc">Door lock scanning</string>
+    <string name="reflector_scan_scanning_title">Scanning for Door Locks…</string>
+    <string name="reflector_scan_scanning_subtitle">Looking for EFRxG24 devices running CS Initiator</string>
+    <string name="reflector_scan_available_devices">Available Door Locks</string>
+    <string name="reflector_scan_no_devices">No door locks found.\nMake sure the device is powered on and in range.</string>
+    <string name="reflector_scan_device_icon">Door lock device</string>
+    <string name="reflector_scan_device_type">CS Initiator - Door Lock</string>
+    <string name="reflector_scan_rssi_label">RSSI</string>
+    <string name="reflector_scan_discovery_failed">Discovery failed. Please try again.</string>
+    <string name="reflector_scan_scan_complete">Scan complete</string>
+
+
+    <!--    Matter Range Hood-->
+    <string name="matter_range_hood_device">Range Hood</string>
+    <string name="matter_range_hood_label">Range Hood Light:</string>
+    <string name="matter_range_hood_on">ON</string>
+    <string name="matter_range_hood_off">OFF</string>
+    <string name="matter_range_hood_icon">Range Hood Icon</string>
+    <string name="matter_range_hood_fan_speed_label">Fan Speed:</string>
+    <string name="matter_range_hood_fan_speed_1">1</string>
+    <string name="matter_range_hood_fan_speed_2">2</string>
+    <string name="matter_range_hood_fan_speed_3">3</string>
+    <string name="matter_range_hood_fan_speed_4">4</string>
+    <string name="matter_range_hood_fan_label">Range Hood Fan:</string>
+    <string name="matter_range_hood_fan_on">ON</string>
+    <string name="matter_range_hood_fan_off">OFF</string>
+    <string name="matter_range_hood_fan_icon">Range Hood Fan Icon</string>
+    <!-- Channel Sounding Phase 2 - Reflector Pairing Activity -->
+    <string name="reflector_pairing_title">Pairing with Door Lock</string>
+    <string name="reflector_pairing_phone_icon">Phone device</string>
+    <string name="reflector_pairing_lock_icon">Door lock device</string>
+    <string name="reflector_pairing_connecting">Connecting…</string>
+    <string name="reflector_pairing_subtitle">Establishing secure connection with %s</string>
+    <string name="reflector_pairing_step_complete">Step complete</string>
+    <string name="reflector_pairing_step1_title">Device Found</string>
+    <string name="reflector_pairing_step1_pending">Detecting device…</string>
+    <string name="reflector_pairing_step1_in_progress">Connecting to device…</string>
+    <string name="reflector_pairing_step1_success">%s detected</string>
+    <string name="reflector_pairing_step2_title">Pairing &amp; Bonding</string>
+    <string name="reflector_pairing_step2_pending">Exchange security keys</string>
+    <string name="reflector_pairing_step2_in_progress">Exchanging security keys…</string>
+    <string name="reflector_pairing_step2_success">Bonded successfully</string>
+    <string name="reflector_pairing_step2_failed">Bonding failed</string>
+    <string name="reflector_pairing_step3_title">Channel Sounding Setup</string>
+    <string name="reflector_pairing_step3_pending">Configure CS Reflector role</string>
+    <string name="reflector_pairing_step3_in_progress">Configuring CS Reflector…</string>
+    <string name="reflector_pairing_step3_success">CS Reflector configured</string>
+    <string name="reflector_pairing_step3_failed">Configuration failed</string>
+    <string name="reflector_pairing_step3_digital_key_missing">Digital Key GATT not found (expected service 0xAABB and characteristic 0xBBCC)</string>
+    <string name="reflector_pairing_step4_title">Digital Key Ready</string>
+    <string name="reflector_pairing_step4_pending">Enable auto-unlock</string>
+    <string name="reflector_pairing_step4_in_progress">Enabling auto-unlock…</string>
+    <string name="reflector_pairing_step4_success">Auto-unlock enabled</string>
+    <string name="reflector_pairing_in_progress">Pairing in progress…</string>
+    <string name="reflector_pairing_digital_key_ready">Digital Key Ready!</string>
+    <string name="reflector_pairing_success_message">Your phone is now configured as a Digital Key for this door lock. Auto-unlock will activate when you approach.</string>
+    <string name="reflector_pairing_go_to_dashboard">Go to Digital Key Dashboard</string>
+    <string name="reflector_pairing_connection_failed">Connection failed</string>
+    <string name="reflector_pairing_retry">Retry</string>
+    <string name="reflector_pairing_no_device">No device specified</string>
+    <string name="reflector_pairing_device_not_found">Device not found</string>
+    <string name="reflector_pairing_success">Pairing successful</string>
+
+    <!-- Channel Sounding Phase 2 - Reflector Dashboard Activity -->
+    <string name="reflector_dashboard_title">Channel Sounding</string>
+    <string name="reflector_dashboard_settings">Settings</string>
+    <string name="reflector_dashboard_mode_title">Phone as Reflector</string>
+    <string name="reflector_dashboard_mode_subtitle">Digital Key for Door Lock</string>
+    <string name="reflector_dashboard_key_icon">Digital key</string>
+    <string name="reflector_dashboard_key_active">Digital Key Active</string>
+    <string name="reflector_dashboard_key_inactive">Digital Key Inactive</string>
+    <string name="reflector_dashboard_responding">Responding to Door Lock requests</string>
+    <string name="reflector_dashboard_tap_to_enable">Tap Start to enable</string>
+    <string name="reflector_dashboard_connected_device">Connected Device</string>
+    <string name="reflector_dashboard_lock_icon">Door lock</string>
+    <string name="reflector_dashboard_hero_label">Digital key status</string>
+    <string name="reflector_dashboard_hero_unlocked_cd">Lock reports unlocked (CS distance / likeliness from firmware).</string>
+    <string name="reflector_dashboard_hero_locked_cd">Lock reports locked or state not yet available.</string>
+    <string name="reflector_dashboard_connected">● Connected</string>
+    <string name="reflector_dashboard_disconnected">● Disconnected</string>
+    <string name="reflector_dashboard_unknown_device">Unknown Device</string>
+    <string name="reflector_dashboard_gatt_services">GATT Services &amp; Characteristics</string>
+    <string name="reflector_dashboard_discovering_services">Discovering services…</string>
+    <string name="reflector_dashboard_expand">Expand/Collapse</string>
+    <string name="reflector_dashboard_stop_reflector">Stop Reflector</string>
+    <string name="reflector_dashboard_start_reflector">Start Reflector</string>
+    <string name="reflector_dashboard_service_discovery_failed">Service discovery failed</string>
+    <string name="reflector_dashboard_connection_timeout">Connection timed out</string>
+    <string name="reflector_dashboard_settings_coming_soon">Reflector settings coming soon</string>
+    <string name="reflector_dashboard_awaiting_digital_key">Securing Digital Key link…</string>
+    <string name="reflector_dashboard_phase_discovering">Finding lock service on the door…</string>
+    <string name="reflector_dashboard_phase_bonding">Pairing securely…</string>
+    <string name="reflector_dashboard_phase_enabling_notify">Enabling live lock updates…</string>
+    <string name="reflector_dashboard_phase_starting_ranging">Starting proximity ranging…</string>
+    <string name="reflector_dashboard_phase_live">Live — lock follows your distance</string>
+    <string name="reflector_dashboard_phase_setup_failed">Setup incomplete — tap status to retry</string>
+    <string name="reflector_dashboard_discovering_retry">Retrying service discovery (%1$d)…</string>
+    <string name="reflector_dashboard_retrying_gatt">Retrying Digital Key setup…</string>
+    <string name="reflector_dashboard_tap_to_retry">Tap to retry Digital Key setup</string>
+    <string name="reflector_dashboard_cs_reflector_inactive">Live link ready — tap Start to enable ranging</string>
+    <string name="reflector_dashboard_starting_cs_reflector">Starting Channel Sounding reflector…</string>
+    <string name="reflector_dashboard_lock_state_unknown">Lock state: waiting for GATT updates…</string>
+    <string name="reflector_dashboard_lock_state_locked">Lock state: locked (0x01)</string>
+    <string name="reflector_dashboard_lock_state_unlocked">Lock state: unlocked (0x00)</string>
+    <string name="reflector_dashboard_digital_key_gatt_missing">Lock characteristic 0xBBCC is not exposed yet. Stay near the lock and tap the status line to retry.</string>
+    <string name="reflector_dashboard_hero_caption_unlocked">Lock is unlocked per firmware.</string>
+    <string name="reflector_dashboard_hero_caption_locked">Lock is locked or state pending.</string>
+    <string name="reflector_dashboard_awaiting_auto_reconnect">Link down — reconnecting automatically when the door lock is in range.</string>
+    <string name="reflector_toast_auto_reconnecting">Reconnecting…</string>
+    <string name="reflector_toast_disconnected">Disconnected — out of range</string>
+    <string name="reflector_toast_reconnected">Reconnected</string>
+    <string name="reflector_session_lost_title">Connection lost</string>
+    <string name="reflector_session_lost_message">The door lock was reset or pairing was removed. Tap OK to return to the demo screen and set up the Digital Key again.</string>
+
+    <string name="reflector_fg_channel_name">Digital key (Reflector)</string>
+    <string name="reflector_fg_channel_desc">Keeps BLE connection monitoring active for Channel Sounding Reflector mode.</string>
+    <string name="reflector_fg_notification_title_in_range">Digital Key In Range</string>
+    <string name="reflector_fg_notification_title_out_range">Digital Key Out of Range</string>
+    <string name="reflector_fg_notification_body_in_range">Phone is within proximity. Lock can be unlocked.</string>
+    <string name="reflector_fg_notification_body_out_range">Phone is outside proximity. Lock cannot be unlocked.</string>
+    <string name="reflector_fg_notification_title_unlocked">Unlocked</string>
+    <string name="reflector_fg_notification_title_locked">Locked</string>
+    <string name="reflector_fg_notification_body_unlocked">Firmware reports the lock is unlocked (CS-based distance).</string>
+    <string name="reflector_fg_notification_body_locked">Firmware reports the lock is locked or state is not yet available.</string>
 </resources>

@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/stolzl_medium"
         android:inputType="text|textNoSuggestions"
         android:singleLine="true"
         android:background="@android:color/transparent"
@@ -37,6 +37,6 @@
         android:src="@drawable/ic_paste"
         android:background="@drawable/btn_blue_ripple_effect"
         android:contentDescription="@string/content_desc_copy_icon"
-        app:tint="@color/silabs_blue" />
+        />
 
 </LinearLayout>

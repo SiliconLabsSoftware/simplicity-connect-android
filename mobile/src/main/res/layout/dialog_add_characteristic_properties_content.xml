@@ -1,7 +1,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/silabs_white">
 
     <TextView
         android:id="@+id/tv_properties"
@@ -86,19 +87,23 @@
         app:layout_constraintTop_toBottomOf="@id/tv_read"
         app:track="@drawable/sw_track_small" />
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_read_bonded"
+        style="@style/full_line_checkbox_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:buttonTint="@color/filter_fragment_checkbox_button_tint"
         app:layout_constraintBottom_toBottomOf="@id/sw_read"
         app:layout_constraintEnd_toEndOf="@id/tv_bonded"
         app:layout_constraintStart_toStartOf="@id/tv_bonded"
         app:layout_constraintTop_toTopOf="@id/tv_read" />
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_read_mitm"
+        style="@style/full_line_checkbox_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:buttonTint="@color/filter_fragment_checkbox_button_tint"
         app:layout_constraintBottom_toBottomOf="@id/sw_read"
         app:layout_constraintEnd_toEndOf="@id/tv_mitm"
         app:layout_constraintStart_toStartOf="@id/tv_mitm"
@@ -134,22 +139,26 @@
         app:layout_constraintTop_toBottomOf="@id/tv_write"
         app:track="@drawable/sw_track_small" />
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_write_bonded"
+        style="@style/full_line_checkbox_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        app:layout_constraintBottom_toBottomOf="@id/sw_reliable_write"
+        app:buttonTint="@color/filter_fragment_checkbox_button_tint"
+        app:layout_constraintBottom_toBottomOf="@id/sw_write"
         app:layout_constraintEnd_toEndOf="@id/tv_bonded"
         app:layout_constraintStart_toStartOf="@id/tv_bonded"
         app:layout_constraintTop_toTopOf="@id/tv_write" />
 
-    <CheckBox
+    <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_write_mitm"
+        style="@style/full_line_checkbox_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        app:layout_constraintBottom_toBottomOf="@id/sw_reliable_write"
+        app:buttonTint="@color/filter_fragment_checkbox_button_tint"
+        app:layout_constraintBottom_toBottomOf="@id/sw_write"
         app:layout_constraintEnd_toEndOf="@id/tv_mitm"
         app:layout_constraintStart_toStartOf="@id/tv_mitm"
         app:layout_constraintTop_toTopOf="@id/tv_write" />

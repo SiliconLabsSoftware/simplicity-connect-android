@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:baselineAligned="false"
     android:gravity="bottom"
     android:orientation="horizontal">
 
@@ -9,21 +11,37 @@
         android:id="@+id/temp_display_primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:fontFamily="@font/helvetica_neue_thin"
+        android:includeFontPadding="false"
         android:text="@string/temp_large_placeholder"
-        android:textSize="20sp" />
+        android:paddingTop="@dimen/matter_2dp"
+        android:textSize="70sp"
+        android:textStyle="normal"
+        tools:text="25" />
 
     <TextView
         android:id="@+id/temp_display_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="12sp" />
+        android:layout_gravity="bottom"
+        android:fontFamily="@font/helvetica_neue_thin"
+        android:includeFontPadding="false"
+        android:paddingBottom="2dp"
+        android:text=".0"
+        android:textSize="43sp"
+        android:textStyle="normal"
+        tools:text=".7" />
 
     <TextView
         android:id="@+id/temp_degree_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:fontFamily="@font/helvetica_neue_thin"
+        android:includeFontPadding="false"
+        android:paddingBottom="@dimen/matter_2dp"
         android:text="°"
-        android:textSize="20sp" />
-
+        android:textSize="55sp"
+        android:textStyle="normal" />
 </LinearLayout>

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 TODO: use "dialog_ota_progress.xml" instead of this file
 This is the same view as in "dialog_ota_progress.xml", only without packet_size.
 But its children are deeply entangled in IOP OTA procedure, which makes it
 difficult to reuse the other one.
 -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/dialog_card"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/dialog_card">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/dialog_margins"
@@ -22,8 +22,8 @@ difficult to reuse the other one.
             style="@style/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
             android:layout_marginBottom="@dimen/space_SM"
+            android:fontFamily="@font/stolzl_medium"
             android:text="@string/upload_progress" />
 
         <LinearLayout
@@ -36,10 +36,11 @@ difficult to reuse the other one.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.35"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:text="@string/File_Name_colon" />
 
-            <TextView android:id="@+id/file_name"
+            <TextView
+                android:id="@+id/file_name"
                 style="@style/dialog_text_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -59,10 +60,11 @@ difficult to reuse the other one.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.35"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:text="@string/File_Size_colon" />
 
-            <TextView android:id="@+id/file_size"
+            <TextView
+                android:id="@+id/file_size"
                 style="@style/dialog_text_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -77,7 +79,7 @@ difficult to reuse the other one.
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/space_XS"
             android:layout_marginBottom="@dimen/space_SM"
-            android:background="@color/divider_line"/>
+            android:background="@color/divider_line" />
 
 
         <RelativeLayout
@@ -88,9 +90,9 @@ difficult to reuse the other one.
                 android:id="@+id/ota_number_of_steps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:fontFamily="sans-serif"
                 android:layout_marginBottom="@dimen/space_XS"
+                android:elegantTextHeight="true"
+                android:fontFamily="@font/helvetica_neue_regular"
                 tools:text="1 OF 1" />
 
             <TextView
@@ -98,14 +100,14 @@ difficult to reuse the other one.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@id/ota_progress_bar"
+                android:layout_marginBottom="@dimen/space_XS"
                 android:layout_toEndOf="@id/ota_number_of_steps"
                 android:elegantTextHeight="true"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="@dimen/space_XS"
+                android:fontFamily="@font/stolzl_medium"
                 android:gravity="end"
                 android:maxLength="13"
-                tools:text="10.24 kbit/s"
-                android:textSize="@dimen/advertisement_details_device_name_text_size" />
+                android:textSize="@dimen/advertisement_details_device_name_text_size"
+                tools:text="10.24 kbit/s" />
 
             <ProgressBar
                 android:id="@+id/connecting_spinner"
@@ -134,7 +136,7 @@ difficult to reuse the other one.
                 android:max="100"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:progressTint="@color/blue_primary"
+                android:progressTint="@color/silabs_redtheme_primary_color"
                 android:scaleY="5" />
 
             <TextView
@@ -147,7 +149,7 @@ difficult to reuse the other one.
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:elegantTextHeight="true"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/space_SM"
                 android:text="@string/zero_percent" />
@@ -157,9 +159,9 @@ difficult to reuse the other one.
             android:id="@+id/ota_chronometer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_S"
             android:elegantTextHeight="true"
             android:gravity="center_horizontal"
-            android:layout_marginTop="@dimen/space_S"
             android:textSize="@dimen/advertisement_details_title_text_size"
             android:textStyle="bold" />
 
@@ -168,12 +170,14 @@ difficult to reuse the other one.
             style="@style/dialog_button_positive_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_marginTop="@dimen/dialog_button_margin_top"
             android:layout_marginEnd="@dimen/dialog_button_margin_end"
-            android:layout_gravity="end"
-            android:enabled="false"
             android:elegantTextHeight="true"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/End" />
+            android:enabled="false"
+            android:fontFamily="@font/stolzl_medium"
+            android:text="@string/End"
+            app:backgroundTint="@color/iop_ota_end_button_tint"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

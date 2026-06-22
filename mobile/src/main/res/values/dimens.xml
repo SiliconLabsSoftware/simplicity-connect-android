@@ -12,6 +12,10 @@
     <dimen name="about_blue_giga_dialog_close_btn_height">50dp</dimen>
     <dimen name="about_dialog_title_padding_left">10dp</dimen>
 
+    <!-- Dialog: about Silicon Labs (default; sw600dp / h1024dp may override) -->
+    <dimen name="about_silicon_labs_dialog_width">320dp</dimen>
+    <dimen name="about_silicon_labs_dialog_height">400dp</dimen>
+
     <!-- Dialog: write characteristic (spinner for enumerated values/textfields for raw) -->
     <dimen name="characteristic_spinner_dialog_spinner_scroll_height">200dp</dimen>
 
@@ -50,7 +54,11 @@
 
     <!-- Health thermometer -->
     <dimen name="thermo_graph_padding">16dp</dimen>
-    <dimen name="thermo_large_temp_primary_text_size">60sp</dimen>
+    <dimen name="thermo_card_corner_radius">8dp</dimen>
+    <dimen name="thermo_card_elevation">2dp</dimen>
+    <dimen name="thermo_card_margin_horizontal">16dp</dimen>
+    <dimen name="thermo_card_margin_vertical">12dp</dimen>
+    <dimen name="thermo_large_temp_primary_text_size">70sp</dimen>
 
 
     <!--=============================================================================-->
@@ -58,7 +66,9 @@
 
 
     <!-- Health Thermometer -->
-    <dimen name="thermo_large_temp_secondary_text_size">24sp</dimen>
+    <dimen name="thermo_large_temp_secondary_text_size">28sp</dimen>
+    <dimen name="thermo_tab_underline_selected">3dp</dimen>
+    <dimen name="thermo_tab_underline_unselected">1dp</dimen>
     <dimen name="thermo_label_text_size">12sp</dimen>
     <dimen name="thermo_value_text_size">16sp</dimen>
     <dimen name="empty_thermo_subheader_text_size">18sp</dimen>
@@ -66,7 +76,7 @@
 
     <!-- Main Menu -->
     <dimen name="menu_tile_title_size">14sp</dimen>
-    <dimen name="bottom_navigation_text_size">14sp</dimen>
+    <dimen name="bottom_navigation_text_size">12sp</dimen>
 
     <!-- Bluetooth Browser -->
     <dimen name="rssi_indicator_text_size">14sp</dimen>
@@ -163,6 +173,11 @@
     <dimen name="color_hue_selection_line_height">4dp</dimen>
     <dimen name="color_led_height">10dp</dimen>
 
+    <!-- Blinky Thunderboard (card UI) -->
+    <dimen name="blinky_tb_card_corner_radius">12dp</dimen>
+    <dimen name="blinky_tb_card_elevation">3dp</dimen>
+    <dimen name="blinky_tb_card_spacing">10dp</dimen>
+    <dimen name="blinky_tb_content_padding">16dp</dimen>
 
     <!-- WiFi Commissioning -->
 
@@ -205,7 +220,7 @@
     <dimen name="dialog_corner_radius">24dp</dimen>
     <dimen name="dialog_margin_top">24dp</dimen>
     <dimen name="dialog_margin_bottom">16dp</dimen>
-    <dimen name="dialog_margin_horizontal">24dp</dimen>
+    <dimen name="dialog_margin_horizontal">14dp</dimen>
 
     <dimen name="dialog_title_size">20sp</dimen>
     <dimen name="dialog_text_info_size">14sp</dimen>
@@ -284,7 +299,7 @@
     <dimen name="settings_subtitle_margin">8dp</dimen>
     <dimen name="settings_version_margin">8dp</dimen>
     <dimen name="settings_subtitle_size">18sp</dimen>
-    <dimen name="settings_link_button_height">120dp</dimen>
+    <dimen name="settings_link_button_height">90dp</dimen>
     <dimen name="settings_link_button_width">160dp</dimen>
 
 
@@ -305,29 +320,114 @@
     <dimen name="matter_0dp">0dp</dimen>
     <dimen name="matter_1dp">1dp</dimen>
     <dimen name="matter_2dp">2dp</dimen>
+    <dimen name="matter_4dp">4dp</dimen>
     <dimen name="matter_5dp">5dp</dimen>
     <dimen name="matter_8dp">8dp</dimen>
     <dimen name="matter_10dp">10dp</dimen>
+    <dimen name="matter_12dp">12dp</dimen>
     <dimen name="matter_15dp">15dp</dimen>
+    <dimen name="matter_16dp">16dp</dimen>
     <dimen name="matter_18dp">18dp</dimen>
     <dimen name="matter_20dp">20dp</dimen>
+    <dimen name="matter_24dp">24dp</dimen>
     <dimen name="matter_25dp">25dp</dimen>
     <dimen name="matter_30dp">30dp</dimen>
     <dimen name="matter_36dp">36dp</dimen>
     <dimen name="matter_38dp">38dp</dimen>
     <dimen name="matter_40dp">40dp</dimen>
     <dimen name="matter_45dp">45dp</dimen>
+    <dimen name="matter_48dp">48dp</dimen>
+    <!-- Range Test segmented control -->
+    <dimen name="range_test_tabs_corner_radius">12dp</dimen>
+    <dimen name="range_test_tab_inner_corner_radius">9dp</dimen>
+    <dimen name="range_test_start_stop_corner_radius">12dp</dimen>
     <dimen name="matter_50dp">50dp</dimen>
+    <dimen name="matter_64dp">64dp</dimen>
+    <dimen name="matter_80dp">80dp</dimen>
     <dimen name="matter_90dp">90dp</dimen>
     <dimen name="matter_100dp">100dp</dimen>
     <dimen name="matter_150dp">150dp</dimen>
     <dimen name="matter_200dp">200dp</dimen>
     <dimen name="matter_250dp">250dp</dimen>
+    <dimen name="matter_350dp">380dp</dimen>
 
+    <!-- Smart Lock -->
+    <dimen name="smart_lock_lock_icon_size">167dp</dimen>
+
+    <dimen name="smart_lock_segment_width">334dp</dimen>
+    <dimen name="smart_lock_segment_height">26dp</dimen>
+    <dimen name="smart_lock_segment_padding">2dp</dimen>
+    <dimen name="smart_lock_segment_corner_radius">6dp</dimen>
+    <dimen name="smart_lock_segment_thumb_corner_radius">4dp</dimen>
+    <dimen name="smart_lock_icon_bottom_spacing">36dp</dimen>
+    <dimen name="smart_lock_segment_to_actions_spacing">12dp</dimen>
+
+    <dimen name="smart_lock_operate_width">332dp</dimen>
+    <dimen name="smart_lock_operate_height">62dp</dimen>
+    <dimen name="smart_lock_operate_padding_top">17dp</dimen>
+    <dimen name="smart_lock_operate_padding_horizontal">17dp</dimen>
+    <dimen name="smart_lock_operate_padding_bottom">15dp</dimen>
+    <dimen name="smart_lock_operate_button_spacing">24dp</dimen>
+    <dimen name="smart_lock_operate_top_corner_radius">13dp</dimen>
+
+    <dimen name="smart_lock_aws_command_row_width">298dp</dimen>
+    <dimen name="smart_lock_aws_command_row_height">36dp</dimen>
+    <dimen name="smart_lock_aws_command_gap">14dp</dimen>
+    <dimen name="smart_lock_aws_input_width">214dp</dimen>
+    <dimen name="smart_lock_aws_send_width">70dp</dimen>
+    <dimen name="smart_lock_aws_input_corner_radius">6dp</dimen>
+    <dimen name="smart_lock_aws_send_corner_radius">10dp</dimen>
+    <dimen name="smart_lock_aws_send_padding_horizontal">16dp</dimen>
+    <dimen name="smart_lock_aws_section_padding_horizontal">17dp</dimen>
+    <dimen name="smart_lock_aws_label_to_input_spacing">10dp</dimen>
+
+    <dimen name="smart_lock_note_width">298dp</dimen>
+    <dimen name="smart_lock_note_min_height">40dp</dimen>
+    <dimen name="smart_lock_note_gap_above">10dp</dimen>
 
     <dimen name="matter_preview_height">380dp</dimen>
     <dimen name="matter_light_height">200dp</dimen>
     <dimen name="matter_margin">10dp</dimen>
+    <dimen name="matter_scanned_card_corner">14dp</dimen>
+    <dimen name="matter_scanned_card_elevation">2dp</dimen>
+    <dimen name="matter_scanned_card_elevation_selected">5dp</dimen>
+    <dimen name="matter_scanned_item_vertical_margin">8dp</dimen>
+    <dimen name="matter_scanned_item_horizontal_margin">16dp</dimen>
+    <dimen name="matter_scanned_list_item_height">60dp</dimen>
+    <!-- Caps list row device art (e.g. plug vector is large intrinsic size); keeps row height consistent -->
+    <dimen name="matter_scanned_list_device_icon_size">36dp</dimen>
+    <dimen name="matter_scanned_list_item_card_elevation">8dp</dimen>
+
+    <!-- Matter light-switch control row (Figma) -->
+    <dimen name="matter_switch_bind_row_width_max">332dp</dimen>
+    <dimen name="matter_switch_bind_row_height">60dp</dimen>
+    <dimen name="matter_switch_bind_row_corner">7dp</dimen>
+    <dimen name="matter_switch_bind_row_elevation">2dp</dimen>
+    <dimen name="matter_switch_bind_icon_size">24dp</dimen>
+    <dimen name="matter_switch_bind_chip_width_unbind">84dp</dimen>
+    <dimen name="matter_switch_bind_chip_width_bind">64dp</dimen>
+    <dimen name="matter_switch_bind_chip_height">30dp</dimen>
+    <dimen name="matter_switch_bind_chip_corner">10dp</dimen>
+    <dimen name="matter_switch_bind_chip_stroke">2dp</dimen>
+    <dimen name="matter_switch_bind_chip_padding_horizontal">16dp</dimen>
+    <dimen name="matter_switch_bind_chip_max_width_progress">200dp</dimen>
+
+    <!-- Window Covering Cluster: Open / Close / Lift / Tilt (Figma) -->
+    <dimen name="matter_window_cover_action_button_width">122dp</dimen>
+    <dimen name="matter_window_cover_action_button_height">30dp</dimen>
+    <dimen name="matter_window_cover_action_button_min_width">122dp</dimen>
+    <dimen name="matter_window_cover_action_button_gap">4dp</dimen>
+    <dimen name="matter_window_cover_action_button_padding_horizontal">16dp</dimen>
+    <dimen name="matter_window_cover_action_button_corner_radius">10dp</dimen>
+
+    <!-- Window Covering Cluster: Lift / Tilt text fields (Figma) -->
+    <dimen name="matter_window_cover_text_field_width">120dp</dimen>
+    <dimen name="matter_window_cover_text_field_height">30dp</dimen>
+    <dimen name="matter_window_cover_text_field_to_button_gap">12dp</dimen>
+    <dimen name="matter_window_cover_text_field_row_vertical_gap">12dp</dimen>
+    <dimen name="matter_window_cover_text_field_line_height">16dp</dimen>
+    <dimen name="matter_window_cover_text_field_text_size">10sp</dimen>
+    <dimen name="matter_window_cover_text_field_padding_horizontal">8dp</dimen>
 
     <!--    Splash screeen-->
     <dimen name="splash_screen_dim">240dp</dimen>
@@ -336,8 +436,44 @@
     <!-- wifi sensors -->
     <dimen name="wifi_sensor_grid_width">100dp</dimen>
     <dimen name="wifi_sensor_grid_height">125dp</dimen>
-    <dimen name="cs_top_margin">-50dp</dimen>
+    <!-- Must not be negative: pulls Channel Sounding content under the toolbar (overlap). -->
+    <dimen name="cs_top_margin">0dp</dimen>
 
-<!--channel sounding-->
+    <!--channel sounding-->
     <dimen name="channel_sounding_distance_text_size">55sp</dimen>
+
+    <dimen name="silabs_btn_radius">12dp</dimen>
+
+    <!-- Motion demo — design reference 360×780 -->
+    <dimen name="motion_card_width">332dp</dimen>
+    <dimen name="motion_card_height">409dp</dimen>
+    <dimen name="motion_card_corner_radius">13dp</dimen>
+    <dimen name="motion_card_elevation">4dp</dimen>
+    <dimen name="motion_card_inner_padding_horizontal">16dp</dimen>
+    <dimen name="motion_card_inner_padding_top">12dp</dimen>
+    <dimen name="motion_card_inner_padding_bottom">16dp</dimen>
+    <!-- Figma: card sits below toolbar in upper portion of content (not vertically centered) -->
+    <dimen name="motion_card_margin_top">20dp</dimen>
+    <dimen name="motion_calibrate_min_height">48dp</dimen>
+    <dimen name="motion_column_divider_width">1dp</dimen>
+    <dimen name="motion_devkit_dialog_icon_size">52dp</dimen>
+    <dimen name="motion_devkit_dialog_columns_min_height">120dp</dimen>
+    <dimen name="motion_footer_min_height">65dp</dimen>
+    <dimen name="motion_footer_padding_top">10dp</dimen>
+    <dimen name="motion_footer_padding_bottom">10dp</dimen>
+    <dimen name="motion_footer_padding_horizontal">14dp</dimen>
+    <dimen name="motion_footer_elevation">6dp</dimen>
+
+    <!-- RSSI graph tab — Figma white card (legend + chart + time arrows) -->
+    <dimen name="graph_card_horizontal_margin">14dp</dimen>
+    <dimen name="graph_card_padding_top">24dp</dimen>
+    <dimen name="graph_card_padding_bottom">16dp</dimen>
+    <dimen name="graph_card_padding_horizontal">16dp</dimen>
+    <dimen name="graph_card_elevation">4dp</dimen>
+    <dimen name="graph_card_corner_radius">0dp</dimen>
+    
+    <dimen name="range_test_btn_width">160dp</dimen>
+
+    <dimen name="dev_kit_btn_width">120dp</dimen>
+    <dimen name="dev_kit_ambient_light_dialog_value_text_size">12sp</dimen>
 </resources>

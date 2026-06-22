@@ -1,12 +1,27 @@
+<!--
+  ~ Copyright (C) 2026 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="60dp"
-    android:height="60dp"
-    android:viewportWidth="60"
-    android:viewportHeight="60">
+    android:width="58dp"
+    android:height="58dp"
+    android:viewportWidth="58"
+    android:viewportHeight="58">
   <path
-      android:pathData="M52,60h-44a8.009,8.009 0,0 1,-8 -8v-44a8.009,8.009 0,0 1,8 -8h44a8.009,8.009 0,0 1,8 8v44A8.009,8.009 0,0 1,52 60ZM30,9a20.863,20.863 0,0 0,-8.174 1.65,20.924 20.924,0 0,0 -6.675,4.5 20.928,20.928 0,0 0,-4.5 6.675A20.867,20.867 0,0 0,9 30a20.866,20.866 0,0 0,1.65 8.174,20.931 20.931,0 0,0 4.5,6.675 20.931,20.931 0,0 0,6.675 4.5A20.863,20.863 0,0 0,30 51a20.865,20.865 0,0 0,8.174 -1.65,20.932 20.932,0 0,0 6.675,-4.5 20.927,20.927 0,0 0,4.5 -6.675A20.866,20.866 0,0 0,51 30a20.867,20.867 0,0 0,-1.65 -8.174,20.929 20.929,0 0,0 -4.5,-6.675 20.923,20.923 0,0 0,-6.675 -4.5A20.865,20.865 0,0 0,30 9Z"
-      android:fillColor="#666"/>
+      android:pathData="M7,0L51,0A7,7 0,0 1,58 7L58,51A7,7 0,0 1,51 58L7,58A7,7 0,0 1,0 51L0,7A7,7 0,0 1,7 0z"
+      android:fillColor="#525252"/>
   <path
-      android:pathData="M30,30m-18,0a18,18 0,1 1,36 0a18,18 0,1 1,-36 0"
-      android:fillColor="#0086d9"/>
+      android:pathData="M29,11L29,11A18,18 0,0 1,47 29L47,29A18,18 0,0 1,29 47L29,47A18,18 0,0 1,11 29L11,29A18,18 0,0 1,29 11z"
+      android:fillColor="@color/silabs_rebranding_2526_blinky_color_on"/>
 </vector>

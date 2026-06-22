@@ -192,7 +192,7 @@ class TagDataFragment : Fragment(R.layout.fragment_esl_tag_data),EslLoadingDialo
 
     private fun initNoTagsContainer() {
         binding.containerNoTagsConfigured.apply {
-            image.setImageResource(R.drawable.ic_esl_network)
+            image.setImageResource(R.drawable.ic_esl_no_tag)
             textPrimary.text = getString(R.string.no_tags_primary_text)
             textSecondary.text = getString(R.string.no_tags_secondary_text)
         }

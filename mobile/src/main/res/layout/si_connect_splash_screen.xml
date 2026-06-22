@@ -3,34 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/si_connect_app_screen_background">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:background="@drawable/wi_fi_symbol"
-            android:layout_width="@dimen/splash_screen_dim"
-            android:layout_height="@dimen/splash_screen_dim"/>
-
-        <ImageView
-            android:layout_marginTop="@dimen/splash_si_connect_logo"
-            android:background="@drawable/si_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    >
 
     <ImageView
-        android:layout_marginBottom="@dimen/splash_si_labs_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/silabs_logo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splase_cover_screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

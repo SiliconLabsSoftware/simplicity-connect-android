@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_dialog_background"
@@ -13,6 +14,7 @@
         android:id="@+id/dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/SilabsMatterDeviceTitle"
         android:gravity="left"
         android:paddingStart="@dimen/matter_10dp"
         android:paddingBottom="@dimen/matter_5dp"
@@ -21,7 +23,7 @@
         android:textColor="@color/black"
         android:textSize="17sp"
         android:textStyle="bold"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <!-- Message TextView -->
     <LinearLayout
@@ -32,6 +34,7 @@
         <TextView
             android:id="@+id/dialog_message"
             android:layout_width="match_parent"
+            style="@style/Silabs_Rebranding_Body"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
@@ -49,30 +52,34 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
+        android:gravity="center"
         android:padding="@dimen/matter_10dp">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_negative"
-            style="@style/MatterButtonBlue"
+            style="@style/button_add_data_outlined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_5dp"
-            android:layout_weight="3"
-            android:background="@color/silabs_white"
+            android:layout_marginEnd="32dp"
+            android:textStyle="normal"
+            android:layout_marginVertical="@dimen/space_S"
+            android:textSize="@dimen/text_size_S"
             android:text="@string/button_cancel"
-            android:textAllCaps="false"
-            android:textColor="@color/silabs_dark_blue"
-            android:textSize="12sp" />
+            app:cornerRadius="@dimen/silabs_btn_radius" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_positive"
-            style="@style/MatterButtonBlue"
+            style="@style/Widget.MaterialComponents.Button"
+            android:fontFamily="@font/stolzl_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_5dp"
-            android:layout_weight="1"
+            android:layout_marginVertical="@dimen/space_S"
             android:text="@string/start_commissioning"
+            android:textColor="@color/silabs_white"
+            android:textSize="@dimen/text_size_S"
             android:textAllCaps="false"
-            android:textSize="12sp" />
+            android:textStyle="normal"
+            app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+            app:cornerRadius="@dimen/silabs_btn_radius" />
     </LinearLayout>
 </LinearLayout>

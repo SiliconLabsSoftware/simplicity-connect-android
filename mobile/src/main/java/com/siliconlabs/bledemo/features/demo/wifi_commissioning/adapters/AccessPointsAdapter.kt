@@ -1,6 +1,5 @@
 package com.siliconlabs.bledemo.features.demo.wifi_commissioning.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,7 +82,6 @@ class AccessPointsAdapter(
             this.securityMode.setText(securityMode)
 
             if (accessPoints[position].status) {
-                Log.e("ACCESS_POINT_ADAPTER", "Hello!!!!")
                 statusImage.setImageResource(R.drawable.icon_connected)
                 if (accessPoints[position].macAddress != null) {
                     macAddress.text = accessPoints[position].macAddress

@@ -118,7 +118,7 @@ class CharacteristicWriteDialog(
                 if (writeType == FragmentCharacteristicDetail.WriteType.REMOTE_WRITE) View.VISIBLE
                 else View.GONE
 
-            saveBtn.text = requireContext().getString(
+            saveBtn.text = getString(
                 when (writeType) {
                     FragmentCharacteristicDetail.WriteType.REMOTE_WRITE -> R.string.button_send
                     FragmentCharacteristicDetail.WriteType.LOCAL_WRITE -> R.string.button_save

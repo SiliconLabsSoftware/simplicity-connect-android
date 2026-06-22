@@ -4,7 +4,7 @@
     <gradient
         android:type="linear"
         android:angle="0"
-        android:startColor="@color/fly_in_bar_gradient"
-        android:endColor="@color/blue_primary"/>
+        android:startColor="@color/silabs_rebranding_2373_fly_bar_gradient"
+        android:endColor="@color/silabs_redtheme_primary_color"/>
 
 </shape>

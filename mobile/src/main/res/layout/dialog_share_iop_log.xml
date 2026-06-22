@@ -25,8 +25,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/matter_1dp"
-
-            android:background="@color/tb_grey"></View>
+            android:background="@color/tb_grey"/>
 
         <TextView
             android:id="@+id/tv_test_log"
@@ -37,12 +36,12 @@
             android:layout_marginBottom="@dimen/dialog_margin_between_buttons"
             android:gravity="center"
             android:text="@string/iop_test_result_log"
-            android:textColor="@color/silabs_blue" />
+            android:textColor="@color/silabs_primary_text" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/matter_1dp"
-            android:background="@color/tb_grey"></View>
+            android:background="@color/tb_grey"/>
 
         <TextView
             android:id="@+id/tv_app_log"
@@ -53,12 +52,12 @@
             android:layout_marginBottom="@dimen/dialog_margin_between_buttons"
             android:gravity="center"
             android:text="@string/iop_test_app_log"
-            android:textColor="@color/silabs_blue" />
+            android:textColor="@color/silabs_redtheme_primary_color" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/matter_1dp"
-            android:background="@color/tb_grey"></View>
+            android:background="@color/tb_grey"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/stolzl_medium"
                 android:text="@string/button_cancel"
                 android:textColor="@color/silabs_red"
                 android:textSize="@dimen/matter_18dp" />

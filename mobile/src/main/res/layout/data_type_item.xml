@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingTop="4dp">
 
-        <TextView
-            android:id="@+id/tv_data_text"
-            style="@style/TextSmall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            tools:text="Lorem Ipsum"/>
+    <TextView
+        android:id="@+id/tv_data_text"
+        style="@style/TextSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/helvetica_neue_regular"
+        android:gravity="center_vertical"
+        tools:text="Lorem Ipsum" />
 
-        <ImageButton
-            android:id="@+id/ib_remove"
-            android:layout_width="32dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/btn_grey_ripple_effect"
-            android:contentDescription="@string/label_remove"
-            tools:visibility="gone"
-            android:tint="@color/silabs_dark_gray_icon"
-            android:src="@drawable/redesign_ic_card_view_action_icon_delete" />
+    <ImageButton
+        android:id="@+id/ib_remove"
+        android:layout_width="32dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/btn_grey_ripple_effect"
+        android:contentDescription="@string/label_remove"
+        android:src="@drawable/redesign_ic_card_view_action_icon_delete"
+        app:tint="@color/silabs_dark_gray_icon"
+        tools:visibility="gone" />
 
 </LinearLayout>

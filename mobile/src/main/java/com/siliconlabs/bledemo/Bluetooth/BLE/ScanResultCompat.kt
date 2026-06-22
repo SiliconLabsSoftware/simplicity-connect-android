@@ -30,7 +30,10 @@ class ScanResultCompat {
 
     @SuppressLint("MissingPermission")
     fun getDisplayName(): String {
-        return device?.name ?: "N/A"
+        // Priority: scan record device name > BluetoothDevice.name > fallback
+        return scanRecord?.deviceName
+            ?: device?.name
+            ?: "N/A"
     }
 
     override fun toString(): String {

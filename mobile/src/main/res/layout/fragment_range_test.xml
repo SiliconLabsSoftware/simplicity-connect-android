@@ -5,16 +5,19 @@
     android:fitsSystemWindows="true"
     android:id="@+id/range_root_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/range_test_content_background">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:background="@android:color/transparent"
+        android:layout_above="@id/bottom_pane"
+        app:cardBackgroundColor="@color/silabs_white"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
-        android:layout_above="@id/bottom_pane">
+        app:strokeColor="@color/silabs_divider"
+        app:strokeWidth="1dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -36,24 +39,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/stolzl_regular"
                         android:text="@string/range_device_info"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_subtle_text"
+                        android:textSize="@dimen/text_size_S" />
 
                     <TextView
                         android:id="@+id/tv_range_device_name"
-                        style="@style/TextBig"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
-                        tools:text="Soc-rangetest-rail-dmp" />
+                        android:fontFamily="@font/stolzl_bold"
+                        android:textColor="@color/silabs_black"
+                        android:textSize="20sp"
+                        tools:text="Blinky Example" />
 
                     <TextView
                         android:id="@+id/tv_range_model_number"
-                        style="@style/TextBig"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
+                        android:fontFamily="@font/stolzl_regular"
                         android:textAllCaps="true"
+                        android:textColor="@color/silabs_primary_text"
+                        android:textSize="@dimen/text_size_SM"
                         tools:text="EFR32MG12P43F1024GL125 - BRD4164A" />
                 </LinearLayout>
 
@@ -71,15 +80,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/range_tx_transmitted"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <TextView
                         android:id="@+id/tv_range_test_packet_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/stolzl_bold"
                         android:text="0"
+                        android:textColor="@color/silabs_red"
                         android:textSize="@dimen/text_size_increased_twice" />
+
+                    <include layout="@layout/horizontal_separator" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/range_rx_metrics_and_chart_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/range_rx_data_row_1"
@@ -102,15 +121,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/range_rx_label_rx"
-                            android:textColor="@color/silabs_subtle_text" />
+                            android:textColor="@color/silabs_dark_gray_text" />
 
                         <TextView
                             android:id="@+id/tv_range_test_rx"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="@font/stolzl_bold"
                             android:text="@string/range_rx_rx"
-                            android:textColor="@color/silabs_blue"
+                            android:textColor="@color/silabs_red"
                             android:textSize="24sp" />
 
                     </LinearLayout>
@@ -126,15 +145,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/range_rx_label_rssi"
-                            android:textColor="@color/silabs_subtle_text" />
+                            android:textColor="@color/silabs_dark_gray_text" />
 
                         <TextView
                             android:id="@+id/tv_range_test_rssi"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="@font/stolzl_bold"
                             android:text="@string/range_rx_rssi"
-                            android:textColor="@color/silabs_blue"
+                            android:textColor="@color/silabs_red"
                             android:textSize="24sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -160,15 +179,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/range_rx_label_ma"
-                            android:textColor="@color/silabs_subtle_text" />
+                            android:textColor="@color/silabs_dark_gray_text" />
 
                         <TextView
                             android:id="@+id/tv_range_test_ma"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="@font/stolzl_bold"
                             android:text="@string/range_rx_ma"
-                            android:textColor="@color/silabs_blue"
+                            android:textColor="@color/silabs_red"
                             android:textSize="24sp" />
 
                     </LinearLayout>
@@ -184,25 +203,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/range_rx_label_per"
-                            android:textColor="@color/silabs_subtle_text" />
+                            android:textColor="@color/silabs_dark_gray_text" />
 
                         <TextView
                             android:id="@+id/tv_range_test_per"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="@font/stolzl_bold"
                             android:text="@string/range_rx_per"
-                            android:textColor="@color/silabs_blue"
+                            android:textColor="@color/silabs_red"
                             android:textSize="24sp" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <include layout="@layout/horizontal_separator" />
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp" />
 
@@ -212,17 +233,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/stolzl_regular"
                     android:gravity="center"
                     android:text="@string/range_rx_rssi_level"
-                    android:textColor="@color/silabs_dark_gray_text"
+                    android:textColor="@color/silabs_primary_text"
                     android:textSize="12sp" />
 
                 <include layout="@layout/horizontal_separator" />
 
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/phy_config_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:orientation="horizontal"
                     android:paddingTop="8dp">
@@ -234,7 +258,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="@string/range_config_phy_config"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <Spinner
                         android:id="@+id/sp_phy_config"
@@ -243,103 +267,138 @@
                         android:layout_weight="1" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_range_tx_power_layout_1"
-                    style="@style/TitleSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="@string/range_config_tx_power"
-                    android:textColor="@color/silabs_subtle_text" />
-
                 <LinearLayout
                     android:id="@+id/range_tx_power_layout_2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <SeekBar
-                        android:id="@+id/sb_range_tx_power"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="6" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_range_tx_power_layout_1"
+                            style="@style/TitleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/range_config_tx_power"
+                            android:textColor="@color/silabs_primary_text" />
+
+                        <SeekBar
+                            android:id="@+id/sb_range_tx_power"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:progressDrawable="@drawable/range_test_seekbar_track"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/range_test_seekbar_thumb" />
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/sp_tx_power"
-                        style="@style/CustomSpinner"
-                        android:layout_width="0dp"
-                        android:layout_weight="2" />
+                        style="@style/CustomSpinnerRangeTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:minWidth="56dp" />
                 </LinearLayout>
 
-                <TextView
-                    style="@style/TitleSmall"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="@string/range_config_payload_length"
-                    android:textColor="@color/silabs_subtle_text" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <SeekBar
-                        android:id="@+id/sb_range_payload_length"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="6" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TitleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/range_config_payload_length"
+                            android:textColor="@color/silabs_primary_text" />
+
+                        <SeekBar
+                            android:id="@+id/sb_range_payload_length"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:progressDrawable="@drawable/range_test_seekbar_track"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/range_test_seekbar_thumb" />
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/sp_payload_length"
-                        style="@style/CustomSpinner"
-                        android:layout_width="0dp"
-                        android:layout_weight="2" />
-
+                        style="@style/CustomSpinnerRangeTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:minWidth="56dp" />
                 </LinearLayout>
 
-                <TextView
-                    style="@style/TitleSmall"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="@string/range_config_ma_window_size"
-                    android:textColor="@color/silabs_subtle_text" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
-                    <SeekBar
-                        android:id="@+id/range_seek_ma_window_size"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="6" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/TitleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/range_config_ma_window_size"
+                            android:textColor="@color/silabs_primary_text" />
+
+                        <SeekBar
+                            android:id="@+id/range_seek_ma_window_size"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:progressDrawable="@drawable/range_test_seekbar_track"
+                            android:splitTrack="false"
+                            android:thumb="@drawable/range_test_seekbar_thumb" />
+                    </LinearLayout>
 
                     <Spinner
                         android:id="@+id/sp_ma_window_size"
-                        style="@style/CustomSpinner"
-                        android:layout_width="0dp"
-                        android:layout_weight="2" />
+                        style="@style/CustomSpinnerRangeTest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:minWidth="56dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -357,11 +416,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="@string/range_config_channel_no"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <Spinner
                         android:id="@+id/sp_channel_number"
-                        style="@style/CustomSpinner"
+                        style="@style/CustomSpinnerRangeTest"
                         android:layout_width="100dp" />
 
                 </LinearLayout>
@@ -380,16 +439,17 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="@string/range_config_packet_count"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <Spinner
                         android:id="@+id/sp_packet_count"
-                        style="@style/CustomSpinner"
+                        style="@style/CustomSpinnerRangeTest"
                         android:layout_width="100dp" />
                 </LinearLayout>
 
-                <CheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/range_check_packet_repeat"
+                    style="@style/full_line_checkbox_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
@@ -397,7 +457,8 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/range_config_packet_count_repeat" />
+                    android:text="@string/range_config_packet_count_repeat"
+                    app:buttonTint="@color/filter_fragment_checkbox_button_tint" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -414,11 +475,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="@string/range_config_remote_id"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <Spinner
                         android:id="@+id/sp_remote_id"
-                        style="@style/CustomSpinner"
+                        style="@style/CustomSpinnerRangeTest"
                         android:layout_width="100dp" />
 
                 </LinearLayout>
@@ -438,11 +499,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="@string/range_config_self_id"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <Spinner
                         android:id="@+id/sp_self_id"
-                        style="@style/CustomSpinner"
+                        style="@style/CustomSpinnerRangeTest"
                         android:layout_width="100dp" />
 
                 </LinearLayout>
@@ -461,34 +522,40 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/range_config_uart_log_enable"
-                        android:textColor="@color/silabs_subtle_text" />
+                        android:textColor="@color/silabs_primary_text" />
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/range_check_uart_log"
+                        style="@style/full_line_checkbox_view"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        app:buttonTint="@color/filter_fragment_checkbox_button_tint" />
 
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <RelativeLayout
         android:id="@+id/bottom_pane"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/silabs_white">
+        android:background="@color/range_test_content_background">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/range_test_start_stop"
-            style="@style/ButtonBlue"
+            style="@style/RangeTestStartStopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingHorizontal="10dp"
+            android:fontFamily="@font/stolzl_bold"
+            android:minWidth="122dp"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="12dp"
             android:text="@string/range_rx_start"
-            android:textSize="18sp" />
+            android:textAllCaps="true"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/range_test_logo"
@@ -498,4 +565,5 @@
             android:layout_marginStart="16dp"
             android:src="@drawable/icon_proprietary" />
     </RelativeLayout>
+
 </RelativeLayout>

@@ -45,7 +45,8 @@
         android:name=".application.SiliconLabsDemoApplication"
         android:allowBackup="false"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/si_launcher_round"
+        android:icon="@mipmap/ic_launcher_rebranded"
+        android:roundIcon="@mipmap/ic_launcher_rebranded"
         android:label="@string/app_name_simplicity_Connect"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
@@ -53,9 +54,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="tiramisu">
-        <activity
-            android:name=".features.demo.energyharvesting.EnergyHarvestingActivity"
-            android:exported="false" />
+
         <!-- MqttService -->
         <service
             android:name=".features.configure.advertiser.services.MqttForegroundService"
@@ -86,6 +85,11 @@
             android:foregroundServiceType="location|dataSync">
 
         </service>
+        <service
+            android:name=".features.demo.channel_sounding.services.ReflectorProximityForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice"
+            tools:ignore="ForegroundServicePermission" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.siliconlabs.bledemo.provider"
@@ -248,6 +252,31 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/MainAppTheme.NoActionBar"
             tools:ignore="DiscouragedApi"/>
+
+        <!-- Channel Sounding Phase 2 - Reflector Mode Activities -->
+        <activity
+            android:name=".features.demo.channel_sounding.activities.ReflectorScanActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/MainAppTheme.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
+
+        <activity
+            android:name=".features.demo.channel_sounding.activities.ReflectorPairingActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/MainAppTheme.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
+
+        <activity
+            android:name=".features.demo.channel_sounding.activities.ReflectorDashboardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/MainAppTheme.NoActionBar"
+            tools:ignore="DiscouragedApi"/>
+            tools:ignore="DiscouragedApi"
+            tools:targetApi="36" />
+        <activity
+            android:name=".features.demo.energyharvesting.EnergyHarvestingActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

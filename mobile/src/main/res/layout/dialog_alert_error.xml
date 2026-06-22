@@ -33,7 +33,7 @@
                     android:id="@+id/error_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/helvetica_neue_regular"
                     android:gravity="center"
                     android:textColor="@color/silabs_primary_text"
                     android:textSize="@dimen/dialog_error_text_size"

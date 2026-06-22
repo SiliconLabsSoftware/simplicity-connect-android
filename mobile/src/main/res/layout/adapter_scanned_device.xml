@@ -13,6 +13,7 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dialog_margin_horizontal"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
@@ -23,8 +24,8 @@
             android:layout_marginStart="@dimen/device_selection_item_margin"
             android:contentDescription="@string/content_desc_scanned_device_proprietary_icon"
             android:visibility="gone"
-            android:scaleType="center"
-            tools:src="@drawable/icon_zigbee"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/ic_aws_iot_icon"
             tools:visibility="visible" />
 
         <ImageView
@@ -33,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/device_selection_item_margin"
-            android:scaleType="center"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/content_desc_scanned_device_icon"
             android:src="@drawable/bt_level" />
 
@@ -54,17 +55,16 @@
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/device_selection_item_padding"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:lines="2"
                 android:textColor="@color/silabs_primary_text"
-                android:textSize="@dimen/device_item_text_size"
+                android:textSize="@dimen/text_size_S"
                 tools:text="Bluetooth Device" />
 
 
             <TextView
                 android:id="@+id/address"
-                style="@style/Subhead"
+                style="@style/SelectDeviceBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -73,7 +73,6 @@
                 android:drawablePadding="@dimen/device_selection_item_padding"
                 android:ellipsize="end"
                 android:paddingBottom="4dp"
-                android:fontFamily="sans-serif"
                 android:gravity="center_vertical"
                 android:lines="1"
                 android:textColor="@color/silabs_inactive"
@@ -90,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/device_selection_item_margin"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/helvetica_neue_regular"
             android:gravity="center_vertical"
             android:lines="1"
             android:textColor="@color/silabs_primary_text"
@@ -101,8 +100,9 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/item_bottom_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+        android:background="@color/silabs_redtheme_select_dialog_device_list_line_color" />
 
 </LinearLayout>

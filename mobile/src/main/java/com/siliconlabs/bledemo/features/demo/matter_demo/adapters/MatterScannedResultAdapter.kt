@@ -1,6 +1,7 @@
 package com.siliconlabs.bledemo.features.demo.matter_demo.adapters
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -18,11 +19,14 @@ class MatterScannedResultAdapter(
 ) : RecyclerView.Adapter<MatterItemViewModel>() {
     private lateinit var context: Context
     private var onClickListener: OnClickListener? = null
+    private var selectedPosition: Int = RecyclerView.NO_POSITION
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatterItemViewModel {
         val binding =
             MatterScannedListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
-                parent, false
+                parent,
+                false
             )
         context = parent.context
         return MatterItemViewModel(binding, parent.context)
@@ -40,7 +44,7 @@ class MatterScannedResultAdapter(
         } else {
             holder.binding.root.alpha = 0.5f
             holder.binding.imageView.setColorFilter(
-                ContextCompat.getColor(context, R.color.silabs_dark_gray_icon),
+                ContextCompat.getColor(context, R.color.silabs_rebranding_2373_matter_list_disable_color),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
             holder.itemView.isEnabled = false

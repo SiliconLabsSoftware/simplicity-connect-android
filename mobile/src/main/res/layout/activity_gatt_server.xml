@@ -9,16 +9,23 @@
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"/>
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar that becomes supportActionBar -->
     <androidx.appcompat.widget.Toolbar
-        android:layout_below="@id/fakeStatusBar"
+        android:layout_below="@id/statusBarToolbarSeparator"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:background="@color/silabs_redtheme_tool_bar_color"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <com.siliconlabs.bledemo.common.views.HorizontalShadow
         android:id="@+id/horizontalShadow"
@@ -46,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/stolzl_medium"
             tools:text="New GATT server" />
     </LinearLayout>
 

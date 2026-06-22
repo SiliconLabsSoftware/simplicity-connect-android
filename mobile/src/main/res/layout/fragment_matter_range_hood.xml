@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sl_light_grey"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/matter_16dp">
+
+        <!-- Range Hood Light -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/matter_16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/matter_12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:orientation="vertical"
+                android:padding="@dimen/matter_16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/matter_12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_range_hood_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/stolzl_bold"
+                        android:text="@string/matter_range_hood_label"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                        android:textSize="@dimen/text_size_ML"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_range_hood_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/matter_4dp"
+                        android:fontFamily="@font/stolzl_bold"
+                        android:text="@string/matter_range_hood_off"
+                        android:textColor="@color/silabs_red"
+                        android:textSize="@dimen/text_size_ML"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/matter_range_hood_panel_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/matter_16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_range_hood_icon"
+                            android:layout_width="@dimen/matter_80dp"
+                            android:layout_height="@dimen/matter_80dp"
+                            android:contentDescription="@string/matter_range_hood_icon"
+                            android:src="@drawable/matter_light"
+                            tools:src="@drawable/matter_light" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_range_hood_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_bold"
+                            android:minWidth="@dimen/matter_100dp"
+                            android:paddingHorizontal="@dimen/matter_25dp"
+                            android:paddingVertical="@dimen/matter_12dp"
+                            android:text="@string/matter_range_hood_on"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/text_size_SM"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_range_hood_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/matter_8dp"
+                            android:fontFamily="@font/stolzl_bold"
+                            android:minWidth="@dimen/matter_100dp"
+                            android:paddingHorizontal="@dimen/matter_25dp"
+                            android:paddingVertical="@dimen/matter_12dp"
+                            android:text="@string/matter_range_hood_off"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/text_size_SM"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Range Hood Fan -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/matter_16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/matter_12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/matter_16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/matter_12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_fan_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/stolzl_bold"
+                        android:text="@string/matter_range_hood_fan_label"
+                        android:textColor="@color/silabs_redtheme_scanner_header_text_color"
+                        android:textSize="@dimen/text_size_ML"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_fan_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/matter_4dp"
+                        android:fontFamily="@font/stolzl_bold"
+                        android:text="@string/matter_range_hood_fan_off"
+                        android:textColor="@color/silabs_red"
+                        android:textSize="@dimen/text_size_ML"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/matter_16dp"
+                    android:background="@drawable/matter_range_hood_panel_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/matter_16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/iv_fan_icon"
+                            android:layout_width="@dimen/matter_80dp"
+                            android:layout_height="@dimen/matter_80dp"
+                            android:contentDescription="@string/matter_range_hood_fan_icon"
+                            android:src="@drawable/matter_range_hood_fan" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_on"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/stolzl_bold"
+                            android:minWidth="@dimen/matter_100dp"
+                            android:paddingHorizontal="@dimen/matter_25dp"
+                            android:paddingVertical="@dimen/matter_12dp"
+                            android:text="@string/matter_range_hood_fan_on"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/text_size_SM"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_off"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/matter_8dp"
+                            android:fontFamily="@font/stolzl_bold"
+                            android:minWidth="@dimen/matter_100dp"
+                            android:paddingHorizontal="@dimen/matter_25dp"
+                            android:paddingVertical="@dimen/matter_12dp"
+                            android:text="@string/matter_range_hood_fan_off"
+                            android:textAllCaps="true"
+                            android:textSize="@dimen/text_size_SM"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fanSpeedLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/matter_16dp"
+                        android:text="@string/matter_range_hood_fan_speed_label"
+                        android:textColor="@color/masala"
+                        android:textSize="@dimen/text_size_L"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_speed_1"
+                            style="@style/MatterButtonBlue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/matter_8dp"
+                            android:layout_weight="1"
+                            android:text="@string/matter_range_hood_fan_speed_1"
+                            android:textColor="@color/masala" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_speed_2"
+                            style="@style/MatterButtonBlue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/matter_8dp"
+                            android:layout_weight="1"
+                            android:text="@string/matter_range_hood_fan_speed_2"
+                            android:textColor="@color/masala" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_speed_3"
+                            style="@style/MatterButtonBlue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/matter_8dp"
+                            android:layout_weight="1"
+                            android:text="@string/matter_range_hood_fan_speed_3"
+                            android:textColor="@color/masala" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_fan_speed_4"
+                            style="@style/MatterButtonBlue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/matter_8dp"
+                            android:layout_weight="1"
+                            android:text="@string/matter_range_hood_fan_speed_4"
+                            android:textColor="@color/masala" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

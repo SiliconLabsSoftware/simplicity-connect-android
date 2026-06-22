@@ -42,6 +42,7 @@
                     android:id="@+id/access_pt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/SilabsMatterDeviceTitle"
                     android:text="@string/app_name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/access_pt_name_size" />
@@ -50,8 +51,9 @@
                     android:id="@+id/access_pt_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/SilabsMatterDeviceTitle"
                     android:text="@string/app_name"
-                    android:textColor="@color/grey"
+                    android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                     android:textSize="@dimen/access_pt_type_size" />
 
                 <TextView
@@ -59,7 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
-                    android:textColor="@color/grey"
+                    style="@style/SilabsMatterDeviceTitle"
+                    android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                     android:textSize="@dimen/access_pt_type_size"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -69,7 +72,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
-                    android:textColor="@color/grey"
+                    style="@style/SilabsMatterDeviceTitle"
+                    android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                     android:textSize="@dimen/access_pt_type_size"
                     android:visibility="gone"
                     tools:visibility="visible" />

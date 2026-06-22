@@ -740,7 +740,7 @@ class MatterDishwasherFragment : Fragment() {
             requireActivity().runOnUiThread {
                 binding.btnMatterDeviceState.setImageResource(R.drawable.dishwasher_state_on)
                 binding.btnMatterDeviceState.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.silabs_dark_blue),
+                    ContextCompat.getColor(requireContext(), R.color.silabs_redtheme_primary_color),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
                 binding.txtClusterStatus.text = requireContext().getString(R.string.blinky_tb_on)
@@ -812,7 +812,7 @@ class MatterDishwasherFragment : Fragment() {
             requireActivity().runOnUiThread {
                 binding.btnMatterDeviceState.setImageResource(R.drawable.ic_dishwasher_icon_stateoff)
                 binding.btnMatterDeviceState.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.silabs_dark_blue),
+                    ContextCompat.getColor(requireContext(), R.color.silabs_redtheme_primary_color),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
                 binding.txtClusterStatus.text =
@@ -839,7 +839,7 @@ class MatterDishwasherFragment : Fragment() {
             requireActivity().runOnUiThread {
                 binding.btnMatterDeviceState.setImageResource(R.drawable.dishwasher_state_on)
                 binding.btnMatterDeviceState.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.silabs_dark_blue),
+                    ContextCompat.getColor(requireContext(), R.color.silabs_redtheme_primary_color),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
                 binding.txtClusterStatus.text = requireContext().getString(R.string.blinky_tb_on)

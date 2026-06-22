@@ -5,28 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/modal_bg"
     tools:context=".features.demo.devkitsensor917.activities.DevKitSensor917Activity">
-
 
     <!-- Fake Status Bar View -->
     <View
         android:id="@+id/fakeStatusBar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_status_bar_color"
         app:layout_constraintBottom_toTopOf="@id/appBarLayout"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:background="@color/grey" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/aws_iot_demo_toolbar"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="@string/dev_kit_sensor_917_title"
         app:titleTextColor="#ffff" />
 
+    <ProgressBar
+        android:id="@+id/aws_iot_load_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="6dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/silabs_red"
+        android:elevation="8dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/placeholder"

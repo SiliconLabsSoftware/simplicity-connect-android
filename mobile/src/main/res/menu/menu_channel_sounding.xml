@@ -2,8 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Lower orderInCategory = further left in the action group (LTR) -->
+    <item
+        android:id="@+id/menu_configure"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="1"
+        android:title="@string/channel_sounding_configure_title"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/menu_start_stop"
+        android:orderInCategory="2"
         android:title="@string/channel_sounding_menu_start"
         app:showAsAction="always" />
 

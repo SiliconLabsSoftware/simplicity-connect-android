@@ -54,6 +54,7 @@ import com.siliconlabs.bledemo.home_screen.base.BluetoothDependent
 import com.siliconlabs.bledemo.home_screen.base.LocationDependent
 import com.siliconlabs.bledemo.utils.BLEUtils
 import com.siliconlabs.bledemo.utils.CustomToastManager
+import timber.log.Timber
 
 
 class BrowserFragment : BaseServiceDependentMainMenuFragment(),
@@ -131,6 +132,7 @@ class BrowserFragment : BaseServiceDependentMainMenuFragment(),
 
     private val scanFragmentListener = object: ScanFragment.ScanFragmentListener{
         override fun onScanningStateChanged(isOn: Boolean) {
+            if (!isAdded) return
             toggleMainView(isOn, viewModel.isAnyDeviceDiscovered.value ?: false)
             toggleScanningButton(isOn)
             toggleRefreshInfoRunnable(isOn)
@@ -224,24 +226,28 @@ class BrowserFragment : BaseServiceDependentMainMenuFragment(),
     }
 
     private fun toggleMainView(isScanningOn: Boolean, isAnyDeviceDiscovered: Boolean) {
-        viewBinding.apply {
-            if (isAnyDeviceDiscovered) {
-                rvDebugDevices.visibility = View.VISIBLE
-                lookingForDevicesBackground.root.visibility = View.GONE
-            } else {
-                rvDebugDevices.visibility = View.GONE
-                lookingForDevicesBackground.apply {
-                    root.visibility = View.VISIBLE
-                    if (isScanningOn) {
-                        image.setImageResource(R.drawable.redesign_ic_main_view_browser_scanning_spinner)
-                        (image.drawable as AnimatedVectorDrawable).start()
-                        textPrimary.text = getString(R.string.device_scanning_background_message)
-                    } else {
-                        image.setImageResource(R.drawable.graphic_loading)
-                        textPrimary.text = getString(R.string.no_devices_found_title_copy)
+        try {
+            viewBinding.apply {
+                if (isAnyDeviceDiscovered) {
+                    rvDebugDevices.visibility = View.VISIBLE
+                    lookingForDevicesBackground.root.visibility = View.GONE
+                } else {
+                    rvDebugDevices.visibility = View.GONE
+                    lookingForDevicesBackground.apply {
+                        root.visibility = View.VISIBLE
+                        if (isScanningOn) {
+                            image.setImageResource(R.drawable.redesign_ic_main_view_browser_scanning_spinner)
+                            (image.drawable as AnimatedVectorDrawable).start()
+                            textPrimary.text = getString(R.string.device_scanning_background_message)
+                        } else {
+                            image.setImageResource(R.drawable.graphic_loading)
+                            textPrimary.text = getString(R.string.no_devices_found_title_copy)
+                        }
                     }
                 }
             }
+        } catch (e: Exception) {
+            Timber.e("BrowserFragment${e.message}")
         }
     }
 
@@ -390,6 +396,7 @@ class BrowserFragment : BaseServiceDependentMainMenuFragment(),
 
     override fun onPause() {
         super.onPause()
+        getScanFragment().setScanFragmentListener(null)
         bluetoothService?.apply {
             unregisterGattServerCallback()
             unregisterGattCallback()

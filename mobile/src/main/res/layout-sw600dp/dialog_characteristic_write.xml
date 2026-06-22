@@ -35,6 +35,8 @@
                     android:id="@+id/characteristic_dialog_service_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica_neue_medium"
+                    android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                     android:text="@string/characteristic_dialog_default_service_name"
                     android:textSize="@dimen/dialog_charac_service_name_text_size" />
 
@@ -42,19 +44,19 @@
                     android:id="@+id/characteristic_dialog_characteristic_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/helvetica_neue_medium"
                     android:text="@string/characteristic_dialog_default_charac_name"
-                    android:textColor="@color/silabs_primary_text"
+                    android:textColor="@color/silabs_redtheme_checkbox_text_color"
                     android:textSize="@dimen/dialog_charac_name_text_size" />
 
                 <TextView
                     android:id="@+id/characteristic_dialog_characteristic_uuid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/helvetica_neue_medium"
                     android:lines="1"
                     android:text="@string/characteristic_dialog_default_uuid"
-                    android:textColor="@color/silabs_primary_text"
+                    android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                     android:textSize="@dimen/dialog_charac_uuid_text_size" />
             </LinearLayout>
 
@@ -84,17 +86,21 @@
             android:orientation="vertical">
 
             <RadioButton
-                android:buttonTint="@color/silabs_dark_blue"
+                android:buttonTint="@color/silabs_redtheme_primary_color"
                 android:id="@+id/write_with_resp_radio_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/silabs_redtheme_scanner_body_text_color"
+                android:fontFamily="@font/helvetica_neue_medium"
                 android:text="@string/Write_with_response"/>
 
             <RadioButton
-                android:buttonTint="@color/silabs_dark_blue"
+                android:buttonTint="@color/silabs_redtheme_primary_color"
                 android:id="@+id/write_without_resp_radio_button"
                 android:layout_width="wrap_content"
+                android:textColor="@color/silabs_redtheme_scanner_body_text_color"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica_neue_medium"
                 android:text="@string/Write_without_response"/>
 
         </RadioGroup>
@@ -107,22 +113,25 @@
             android:layout_marginTop="@dimen/dialog_button_margin_top"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/cancel_btn"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancel_btn"
+                style="@style/dialog_button_negative_action_redtheme_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel"/>
+                android:text="@string/button_cancel" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/clear_btn"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clear_btn"
+                style="@style/dialog_button_negative_action_redtheme_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
                 android:gravity="center"
                 android:text="@string/button_clear" />
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/save_btn"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_btn"
                 style="@style/dialog_button_positive_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

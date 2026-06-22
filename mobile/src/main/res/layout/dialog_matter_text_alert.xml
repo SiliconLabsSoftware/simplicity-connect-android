@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/matter_4dp"
+    app:cardElevation="6dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/matter_20dp">
+
+        <TextView
+            android:id="@+id/tv_alert_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/stolzl_bold"
+            android:textColor="@color/silabs_rebranding_matter_alert_title_blue"
+            android:textSize="@dimen/text_size_L"
+            android:textStyle="bold"
+            tools:text="Alert" />
+
+        <TextView
+            android:id="@+id/tv_alert_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_12dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:textColor="@color/silabs_rebranding_2373_connected_light_text_color"
+            android:textSize="@dimen/text_size_ML"
+            tools:text="Do you want to delete Device?" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/matter_20dp"
+            android:gravity="center"
+            android:background="@color/silabs_white"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_alert_cancel"
+                style="@style/button_add_data_outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stolzl_medium"
+                android:minHeight="30dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="@string/matter_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_redtheme_button_text_color"
+                android:textSize="@dimen/text_size_SM"
+                app:cornerRadius="@dimen/matter_12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_alert_ok"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="@dimen/matter_100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_S"
+                android:fontFamily="@font/stolzl_medium"
+                android:layout_marginStart="@dimen/matter_5dp"
+                android:text="@string/button_ok"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textSize="@dimen/text_size_SM"
+                android:textStyle="normal"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

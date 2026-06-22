@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="70dp"
     android:layout_margin="@dimen/matter_18dp"
-    android:background="@color/sl_light_grey">
+    android:background="@drawable/modal_bg">
 
     <LinearLayout
         android:id="@+id/smart_lock_prime_window"
@@ -20,24 +20,31 @@
         tools:ignore="UselessParent">
 
         <TextView
+            android:textColor="@color/silabs_redtheme_scanner_header_text_color"
             android:id="@+id/txt_cluster_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/matter_5dp"
+            android:fontFamily="@font/stolzl_medium"
             android:gravity="center"
+            android:letterSpacing="0"
+            android:lineHeight="20sp"
+            android:minLines="2"
             android:text="@string/smart_lock_status"
-            android:textSize="@dimen/text_size_XL"
-            android:textStyle="bold" />
+            android:textFontWeight="500"
+            android:textSize="14sp" />
+
+
 
         <ImageView
             android:id="@+id/iv_lock"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/matter_light_height"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/matter_25dp"
-            android:layout_marginBottom="@dimen/matter_18dp"
-            android:adjustViewBounds="true"
+            android:layout_marginBottom="@dimen/smart_lock_icon_bottom_spacing"
+            android:adjustViewBounds="false"
             android:background="@color/silabs_transparent"
             android:contentDescription="@string/smart_lock_demo_desc"
             android:scaleType="fitCenter"
@@ -47,116 +54,125 @@
 
     <LinearLayout
         android:id="@+id/operateLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/smart_lock_operate_width"
+        android:layout_height="@dimen/smart_lock_operate_height"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/smart_lock_segment_to_actions_spacing"
+        android:background="@drawable/smart_lock_operate_panel_bg"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/smart_lock_operate_padding_horizontal"
+        android:paddingTop="@dimen/smart_lock_operate_padding_top"
+        android:paddingRight="@dimen/smart_lock_operate_padding_horizontal"
+        android:paddingBottom="@dimen/smart_lock_operate_padding_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/connectTypeToggleBtn">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/lockBtn"
-            style="@style/MatterButtonBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_20dp"
-            android:layout_weight="1"
+            style="@style/SmartLockOperateButton"
+            android:layout_width="@dimen/matter_window_cover_action_button_width"
+            android:layout_height="@dimen/matter_window_cover_action_button_height"
+            android:layout_marginEnd="@dimen/smart_lock_operate_button_spacing"
+            android:drawableStart="@drawable/ic_btn_lock"
+            android:drawablePadding="@dimen/matter_window_cover_action_button_gap"
+            android:gravity="center"
             android:text="@string/matter_locked_status"
             android:textIsSelectable="false" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/unlockBtn"
-            style="@style/MatterButtonBlue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_20dp"
-            android:layout_weight="1"
+            style="@style/SmartLockOperateButton"
+            android:layout_width="@dimen/matter_window_cover_action_button_width"
+            android:layout_height="@dimen/matter_window_cover_action_button_height"
+            android:drawableStart="@drawable/ic_btn_unlock"
+            android:drawablePadding="@dimen/matter_window_cover_action_button_gap"
+            android:gravity="center"
             android:longClickable="false"
             android:text="@string/matter_unlock_status"
             android:textIsSelectable="false" />
-
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/awsCommunicationLayout"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/smart_lock_operate_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/matter_10dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/silabs_background"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingBottom="@dimen/smart_lock_operate_padding_bottom"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/operateLayout">
 
-        <View
-            android:id="@+id/diviver1"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/matter_18dp"
-            android:background="@color/silabs_black" />
-
         <TextView
             android:id="@+id/txt_aws_communication"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/smart_lock_aws_command_row_width"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/matter_18dp"
-            android:layout_marginTop="@dimen/matter_10dp"
+            android:layout_marginTop="@dimen/smart_lock_aws_label_to_input_spacing"
+            android:fontFamily="@font/stolzl_regular"
             android:gravity="start"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="16sp"
             android:text="@string/smart_lock_cmd_title"
-            android:textSize="@dimen/text_size_ML"
-            android:textStyle="bold" />
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textFontWeight="400"
+            android:textSize="12sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/matter_18dp">
+            android:id="@+id/layout_custom_command"
+            android:layout_width="@dimen/smart_lock_aws_command_row_width"
+            android:layout_height="@dimen/smart_lock_aws_command_row_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/smart_lock_aws_label_to_input_spacing">
 
             <EditText
                 android:id="@+id/awsTextInput"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="@dimen/matter_10dp"
-                android:layout_weight="2.0"
-                android:background="@drawable/stroke_box"
+                android:layout_width="@dimen/smart_lock_aws_input_width"
+                android:layout_height="@dimen/smart_lock_aws_command_row_height"
+                android:background="@drawable/smart_lock_aws_input_bg"
+                android:gravity="center_vertical"
                 android:hint="@string/smart_lock_custom_topic_hint"
                 android:imeOptions="actionDone"
+                android:importantForAutofill="no"
                 android:inputType="text"
-                android:padding="@dimen/matter_10dp"
-                android:textSize="18sp"
+                android:maxLines="1"
+                android:paddingStart="@dimen/matter_10dp"
+                android:paddingEnd="@dimen/matter_10dp"
+                android:textColor="@color/silabs_redtheme_checkbox_text_color"
+                android:textColorHint="@color/silabs_redtheme_filer_hint_text_color"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/subscribeSendBtn"
-                app:layout_constraintStart_toStartOf="parent" />
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/subscribeSendBtn"
-                style="@style/MatterButtonBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/SmartLockAwsSendButton"
+                android:layout_width="@dimen/smart_lock_aws_send_width"
+                android:layout_height="@dimen/smart_lock_aws_command_row_height"
                 android:longClickable="false"
                 android:text="@string/button_send"
                 android:textIsSelectable="false"
-                app:layout_constraintBottom_toBottomOf="@+id/awsTextInput"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/awsTextInput" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/awsTextInput"
+                android:layout_marginStart="@dimen/smart_lock_aws_command_gap" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/matter_18dp"
-            android:background="@color/silabs_black" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/notePlaceholder"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/smart_lock_note_width"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/smart_lock_note_min_height"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -166,16 +182,25 @@
             android:id="@+id/noteText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/matter_20dp"
+            android:fontFamily="@font/stolzl_regular"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            android:lineHeight="16sp"
             android:text="@string/smart_lock_note_hint"
-            android:textColor="@color/silabs_red" />
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textFontWeight="400"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/connectTypeToggleBtn"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center"
+        android:layout_width="@dimen/smart_lock_segment_width"
+        android:layout_height="@dimen/smart_lock_segment_height"
+        android:background="@drawable/smart_lock_segment_track"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/smart_lock_segment_padding"
         android:visibility="visible"
         app:checkedButton="@id/btnBleOn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -186,21 +211,71 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBleOn"
-            style="@style/CustomToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/stolzl_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:letterSpacing="0"
+            android:lineHeight="13sp"
             android:longClickable="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:text="@string/smart_lock_connection_ble"
-            android:textIsSelectable="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textFontWeight="400"
+            android:textIsSelectable="false"
+            android:textSize="11sp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@color/smart_lock_segment_button_background"
+            app:cornerRadius="@dimen/smart_lock_segment_thumb_corner_radius"
+            app:elevation="0dp"
+            app:rippleColor="@color/silabs_background"
+            app:strokeColor="@android:color/transparent"
+            app:strokeWidth="0dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAwsOn"
-            style="@style/CustomToggleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/stolzl_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            android:letterSpacing="0"
+            android:lineHeight="13sp"
             android:longClickable="false"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:text="@string/smart_lock_connection_aws"
-            android:textIsSelectable="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/silabs_redtheme_checkbox_text_color"
+            android:textFontWeight="400"
+            android:textIsSelectable="false"
+            android:textSize="11sp"
+            android:stateListAnimator="@null"
+            app:backgroundTint="@color/smart_lock_segment_button_background"
+            app:cornerRadius="@dimen/smart_lock_segment_thumb_corner_radius"
+            app:elevation="0dp"
+            app:rippleColor="@color/silabs_background"
+            app:strokeColor="@android:color/transparent"
+            app:strokeWidth="0dp" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

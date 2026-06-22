@@ -3,9 +3,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/silabs_primary_text"
-    android:maxLines="3"
     android:ellipsize="end"
+    android:fontFamily="@font/stolzl_regular"
+    android:maxLines="3"
     android:padding="10dp"
+    android:textColor="@color/silabs_primary_text"
     android:textSize="14sp" />
 

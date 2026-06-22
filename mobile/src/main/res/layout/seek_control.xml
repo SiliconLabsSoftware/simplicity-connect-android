@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/space_XSS"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/blue_primary"
-        android:textSize="@dimen/filter_rssi_value_text_size"
+        android:fontFamily="@font/helvetica_neue_medium"
+        android:textColor="@color/silabs_redtheme_primary_color"
+        android:textSize="@dimen/text_size_SM"
         tools:text="Value" />
 
 
@@ -53,6 +53,11 @@
         android:stepSize="@integer/rssi_step_size"
         android:valueFrom="@integer/rssi_value_max_negative_range"
         android:valueTo="@integer/rssi_min_value"
+        app:haloColor="@color/silabs_redtheme_primary_color"
+        app:thumbColor="@color/range_slider_thumb_background"
+        app:thumbStrokeColor="@color/range_slider_thumb_background"
+        app:trackColorActive="@color/silabs_redtheme_primary_color"
+        app:trackColorInactive="@color/silabs_divider"
         app:values="@array/initial_range_slider_value" />
 
 </RelativeLayout>

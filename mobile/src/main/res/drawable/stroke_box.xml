@@ -4,9 +4,9 @@
 
     <stroke
         android:width="2.5dp"
-        android:color="@android:color/darker_gray" />
+        android:color="@color/silabs_rebranding_2373_edit_box_outline_color" />
 
     <corners
-        android:radius="14dp" />
+        android:radius="2dp" />
 
 </shape>

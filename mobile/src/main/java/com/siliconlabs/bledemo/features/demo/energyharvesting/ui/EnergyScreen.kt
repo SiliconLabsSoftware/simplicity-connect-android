@@ -1,5 +1,6 @@
 package com.siliconlabs.bledemo.features.demo.energyharvesting.ui
 
+import android.graphics.Typeface
 import android.view.MotionEvent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,14 +14,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
@@ -54,29 +62,52 @@ fun EnergyScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .paint(
+                painter = painterResource(id = R.drawable.modal_bg),
+                contentScale = ContentScale.Crop
+            )
+
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = state.status?.name ?: "EH Sensor", style = MaterialTheme.typography.titleMedium)
-        val identifierOrAddress = state.status?.deviceIdentifier ?: state.status?.deviceAddress ?: "—"
-        Text(text = identifierOrAddress.uppercase(), style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = state.status?.name ?: "EH Sensor",
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontFamily = FontFamily(Font(R.font.stolzl_medium)),
+                fontWeight = FontWeight.Normal,
+                fontSize = 20.sp
+            ),
+        )
+        val identifierOrAddress = state.status?.deviceIdentifier ?: state.status?.deviceAddress ?: "--"
+
+        Text(
+            text = identifierOrAddress.uppercase(),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontFamily = FontFamily(Font(R.font.stolzl_regular)),
+                fontWeight = FontWeight.Normal, color = colorResource(R.color.silabs_rebranding_2373_connected_light_text_color)
+            ),
+        )
         Spacer(Modifier.height(16.dp))
 
         val liveVoltage = if (state.history.isEmpty()) "--" else state.status?.voltageMv?.let { "$it mV" } ?: "--"
         Text(
             text = liveVoltage,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontFamily = FontFamily(Font(R.font.stolzl_medium)),
+                fontWeight = FontWeight.Normal,
+            ),
             fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Bold,
-            fontSize = 50.sp
+            fontSize = 20.sp
         )
         Spacer(Modifier.height(8.dp))
         val displayTimestamp = state.lastTimestamp?.let { ts -> if (ts.length >= 8) ts.substring(0, 8) else ts }
         Text(
             text = displayTimestamp ?: "--:--:--",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                fontFamily = FontFamily(Font(R.font.stolzl_regular)),
+                fontWeight = FontWeight.Normal,color = colorResource(R.color.silabs_rebranding_2373_connected_light_text_color)
+            ),
             fontStyle = FontStyle.Normal,
-            fontWeight = FontWeight.Medium,
             fontSize = 12.sp
         )
         Spacer(Modifier.height(8.dp))
@@ -202,7 +233,7 @@ fun EnergyScreen(
             Text(
                 text = "Note: Values & graph refresh continuously",
                 style = MaterialTheme.typography.bodySmall.copy(
-                    fontStyle = FontStyle.Italic,
+                    fontStyle = FontStyle.Normal,
                     fontWeight = FontWeight.Medium,
                 ),
                 textAlign = TextAlign.Center,
@@ -266,12 +297,13 @@ private fun EhVoltageChart(
                     setDrawCircles(hasData)
                     circleRadius = 4f
                     setDrawCircleHole(false)
-                    color = 0xFF1976D2.toInt()
-                    setCircleColor(0xFF000000.toInt())
+                    color = ContextCompat.getColor(chart.context,R.color.silabs_red)
+                    setCircleColor(ContextCompat.getColor(chart.context,R.color.silabs_red))
                     valueTextSize = 10f
                     setDrawValues(hasData)
                     valueTextColor = android.graphics.Color.BLACK
-                    valueTypeface = android.graphics.Typeface.SANS_SERIF
+                    valueTypeface = ResourcesCompat.getFont(chart.context, R.font.helvetica_neue_regular)
+                        ?: Typeface.DEFAULT
                     valueFormatter = object : IValueFormatter {
                         override fun getFormattedValue(
                             value: Float,
@@ -392,7 +424,13 @@ fun FeatureColumn(iconRes: Int, label: String, modifier: Modifier = Modifier) {
             contentDescription = null,
             modifier = Modifier.size(20.dp)
         )
-        Text(text = label, style = MaterialTheme.typography.bodySmall)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontFamily = FontFamily(Font(R.font.stolzl_regular)),
+                fontWeight = FontWeight.Normal,
+            ),
+        )
     }
 }
 

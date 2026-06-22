@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/dialog_card"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="@style/dialog_card" >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         style="@style/dialog_margins"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/dialog_margin_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             style="@style/dialog_title"
@@ -18,53 +19,68 @@
             android:layout_marginBottom="@dimen/dialog_title_margin_bottom"
             android:text="@string/ota_choose_file" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/Application_colon" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center_vertical"
+                android:text="@string/Application_colon" />
 
-                <Button
-                    android:id="@+id/select_app_file_btn"
-                    style="@style/button_external_link"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_weight="0.7"
-                    android:text="@string/select_application_gbl_file"
-                    android:textAllCaps="false" />
-            </LinearLayout>
+            <Button
+                android:id="@+id/select_app_file_btn"
+                style="@style/button_external_link"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:fontFamily="@font/stolzl_regular"
+                android:gravity="center"
+                android:text="@string/select_application_gbl_file"
+                android:textAllCaps="false" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/space_S"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dialog_button_margin_end"
-            android:gravity="end">
+            android:layout_marginTop="@dimen/space_S"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <Button android:id="@+id/ota_cancel"
-                style="@style/dialog_button_negative_action"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_cancel"
+                style="@style/button_add_data_outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginEnd="@dimen/dialog_margin_between_buttons"
-                android:text="@string/button_cancel" />
+                android:layout_marginVertical="@dimen/space_S"
+                android:layout_marginEnd="32dp"
+                android:text="@string/button_cancel"
+                android:textSize="@dimen/text_size_ML"
+                android:textStyle="normal"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
 
-            <Button android:id="@+id/ota_proceed"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ota_proceed"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_S"
                 android:enabled="false"
-                android:fontFamily="sans-serif-medium"
-                style="@style/dialog_button_positive_action"
-                android:text="@string/btn_upload" />
+                android:fontFamily="@font/stolzl_medium"
+                android:text="@string/btn_upload"
+                android:textAllCaps="false"
+                android:textColor="@color/silabs_white"
+                android:textSize="@dimen/text_size_ML"
+                android:textStyle="normal"
+                app:backgroundTint="@color/silabs_redtheme_button_fill_color"
+                app:cornerRadius="@dimen/silabs_btn_radius" />
         </LinearLayout>
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

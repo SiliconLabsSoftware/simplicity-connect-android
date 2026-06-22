@@ -5,6 +5,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.siliconlabs.bledemo.R
 
@@ -29,11 +30,26 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
     private var unit: String = ""
     private var mode: Mode = Mode.NONE
 
-    private val colors = intArrayOf(
-            context.getColor(R.color.silabs_speedmeter_start),
-            context.getColor(R.color.silabs_speedmeter_center),
-            context.getColor(R.color.silabs_speedmeter_end)
-    )
+    private val ringColors: IntArray
+
+    init {
+        val a = context.obtainStyledAttributes(attributeSet, R.styleable.SpeedView)
+        val useBleThroughputRing = a.getBoolean(R.styleable.SpeedView_useBleThroughputSpeedRing, false)
+        a.recycle()
+        ringColors = if (useBleThroughputRing) {
+            intArrayOf(
+                ContextCompat.getColor(context, R.color.ble_throughput_speed_ring_start),
+                ContextCompat.getColor(context, R.color.ble_throughput_speed_ring_center),
+                ContextCompat.getColor(context, R.color.ble_throughput_speed_ring_end),
+            )
+        } else {
+            intArrayOf(
+                ContextCompat.getColor(context, R.color.silabs_speedmeter_start),
+                ContextCompat.getColor(context, R.color.silabs_speedmeter_center),
+                ContextCompat.getColor(context, R.color.silabs_speedmeter_end),
+            )
+        }
+    }
 
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.parseColor("#CCCCCC")
@@ -65,6 +81,7 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
             textSize = (mWidth * 0.05).toFloat()
             color = Color.parseColor("#333333")
         }
+        applyStolzlMedium(speedUnitPaint)
     }
 
     private fun initIndicatorBitmap() {
@@ -78,6 +95,7 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
             textSize = (mWidth * 0.08).toFloat()
             color = Color.parseColor("#333333")
         }
+        applyStolzlMedium(speedPaint)
     }
 
     private fun initRect() {
@@ -102,6 +120,7 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
             textSize = (mWidth * 0.04).toFloat()
             color = Color.parseColor("#666666")
         }
+        applyStolzlMedium(unitPaint)
     }
 
     private fun initGradientPaintRing() {
@@ -109,10 +128,14 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
             strokeWidth = (0.07 * mWidth).toFloat()
             style = Paint.Style.STROKE
             shader = LinearGradient(0f, 0f, mWidth, 0f,
-                    colors,
+                    ringColors,
                     positions,
                     Shader.TileMode.CLAMP)
         }
+    }
+
+    private fun applyStolzlMedium(paint: Paint) {
+        ResourcesCompat.getFont(context, R.font.stolzl_medium)?.let { paint.typeface = it }
     }
 
     fun updateSpeed(progress: Int, value: String, unit: String, mode: Mode) {
@@ -151,7 +174,7 @@ class SpeedView(context: Context, attributeSet: AttributeSet? = null) : View(con
             postTranslate(px, py)
         }
 
-        canvas?.apply {
+        canvas.apply {
             indicatorBitmap?.let { drawBitmap(it, mMatrix, indicatorPaint) }
             drawArc(rectangle, 135f, 270f, false, gradientPaintRing)
             drawArc(rectangle, startAngle, sweepAngle, false, greyPaintRing)

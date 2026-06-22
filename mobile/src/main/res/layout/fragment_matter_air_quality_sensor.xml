@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sl_light_grey">
+    android:layout_marginTop="@dimen/matter_10dp">
 
 
     <LinearLayout
@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/SilabsMatterDeviceTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -34,7 +35,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/matter_150dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -42,21 +43,22 @@
                     android:layout_width="@dimen/matter_200dp"
                     android:layout_height="@dimen/matter_100dp"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/matter_10dp"
+                    android:fontFamily="@font/helvetica_neue_light"
                     android:gravity="center"
                     android:text="@string/matter_init_air_sensor_quality_value"
-                    android:textColor="@color/silabs_blue"
+                    android:textColor="@color/silabs_redtheme_primary_color"
                     android:textSize="@dimen/text_size_XXXL" />
 
                 <TextView
                     android:id="@+id/txt_status"
-                    android:layout_width="@dimen/matter_200dp"
-                    android:layout_height="@dimen/matter_100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/stolzl_regular"
                     android:gravity="center"
                     android:text="@string/matter_init_air_sensor_quality_status"
-                    android:textColor="@color/silabs_blue"
-                    android:textSize="@dimen/text_size_L" />
+                    android:textColor="@color/silabs_redtheme_primary_color"
+                    android:textSize="@dimen/text_size_M" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -67,13 +69,14 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_read_value"
-                style="@style/MatterButtonBlue"
-                android:layout_width="wrap_content"
+                style="@style/button_add_data_outlined"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/matter_10dp"
-                android:text="@string/matter_refresh_button" />
+                android:text="@string/matter_refresh_button"
+                app:cornerRadius="14dp" />
 
         </LinearLayout>
     </LinearLayout>

@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
@@ -26,8 +26,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,6 +34,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -102,7 +103,7 @@ class EnergyHarvestingActivity : ComponentActivity() {
 
         // Proper edge-to-edge with blue system bars
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val blue = ContextCompat.getColor(this, R.color.silabs_dark_blue)
+        val blue = ContextCompat.getColor(this, R.color.silabs_redtheme_status_bar_color)
         window.statusBarColor = blue
 
 
@@ -116,7 +117,13 @@ class EnergyHarvestingActivity : ComponentActivity() {
                 val uiState by viewModel.ui.collectAsState()
                 val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
-                Column(modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White)
+                )
+                    Column(modifier = Modifier.fillMaxSize()) {
                     // Fake status bar view with blue background
                     Box(
                         modifier = Modifier
@@ -125,9 +132,18 @@ class EnergyHarvestingActivity : ComponentActivity() {
                             .background(Color(blue))
                     )
 
+                    // Matches XML layouts: 1dp grey line between status strip and toolbar (Wi‑Fi Throughput style)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(colorResource(R.color.grey))
+                    )
+
                     // Main content with scaffold
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
+                        containerColor = Color.White,
                         topBar = {
                             TopAppBar(
                                 title = {
@@ -141,9 +157,9 @@ class EnergyHarvestingActivity : ComponentActivity() {
                                     IconButton(onClick = { voltageLogger.clear()
                                         finish() }) {
                                         Icon(
-                                            imageVector = Icons.Filled.ArrowBack,
+                                            painter = painterResource(R.drawable.matter_back),
                                             contentDescription = "Back",
-                                            tint = Color.White
+                                            tint = Color.Unspecified
                                         )
                                     }
                                 },
@@ -151,7 +167,7 @@ class EnergyHarvestingActivity : ComponentActivity() {
                             )
                         }
                     ) { innerPadding ->
-                        Surface {
+                        Surface(color = Color.White) {
                             val scrollState = rememberScrollState()
                             EnergyScreen(
                                 state = uiState,
@@ -160,6 +176,7 @@ class EnergyHarvestingActivity : ComponentActivity() {
                                     .verticalScroll(scrollState)
                             )
                         }
+                    }
                     }
                 }
             }

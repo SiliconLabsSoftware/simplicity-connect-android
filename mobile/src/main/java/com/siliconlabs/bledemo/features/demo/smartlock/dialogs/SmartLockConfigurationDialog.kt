@@ -47,7 +47,7 @@ class SmartLockConfigurationDialog(
             selectP12FileBtn.setOnClickListener { listener.onSelectFileButtonClicked() }
             submitMqttButton.setOnClickListener {
                 val uriPath = binding.selectP12FileBtn.text.toString().trim()
-                if (uriPath.isEmpty() || uriPath.equals("Select .p12 file")) {
+                if (uriPath.isEmpty() || uriPath == getString(R.string.smart_lock_select_p12_file)) {
                     DynamicToast.makeError(
                         context,
                         context.getString(R.string.smart_lock_config_alert_p12_message),

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/modal_bg"
     tools:context=".features.demo.wifi_commissioning.activities.WifiCommissioningActivity">
     <!-- Fake Status Bar View -->
     <View
@@ -13,16 +14,24 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blue_primary" />
+        android:background="@color/silabs_redtheme_status_bar_color" />
+
+    <View
+        android:id="@+id/statusBarToolbarSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/matter_1dp"
+        android:layout_below="@id/fakeStatusBar"
+        android:background="@color/grey" />
 
     <!-- Toolbar just below fake status bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_below="@id/fakeStatusBar"
+        android:layout_below="@id/statusBarToolbarSeparator"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_primary"
+        android:background="@color/silabs_redtheme_tool_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <LinearLayout
         android:layout_below="@id/toolbar"
         android:id="@+id/firmware_ly"
@@ -38,6 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
+            android:fontFamily="@font/stolzl_regular"
             android:text="@string/firmware_version"
             android:textSize="@dimen/firmware_txt_size"
             android:textStyle="bold"
@@ -49,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/firmware_txt_size"
+            android:fontFamily="@font/stolzl_regular"
             android:textColor="@color/black"
             android:layout_weight="2"
             android:gravity="end" />
@@ -61,14 +72,22 @@
         android:layout_below="@id/firmware_ly" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/wifi_access_pts_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_container"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/top_shadow"
-        android:orientation="vertical"
-        android:visibility="visible" />
+        android:layout_alignParentBottom="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wifi_access_pts_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:visibility="visible" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.siliconlabs.bledemo.common.views.HorizontalShadow
         android:layout_width="match_parent"
@@ -94,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/connected_ap_tv_margin"
             android:gravity="center_horizontal"
+            android:fontFamily="@font/stolzl_regular"
             android:text="@string/device_already_connected"
             android:textColor="@color/black"
             android:textSize="@dimen/ble_detail_connected_ap_size" />
@@ -104,6 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/my_button"
+            android:fontFamily="@font/stolzl_regular"
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
             android:paddingRight="20dp"

@@ -58,11 +58,10 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/disconnect_btn"
+                    style="@style/button_connected_device_disconnect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:backgroundTint="@color/btn_action_on"
-                    android:textSize="@dimen/connect_button_text_size"
                     android:text="@string/button_disconnect" />
 
                 <ProgressBar
@@ -155,7 +154,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical"
                 tools:ignore="UseCompoundDrawables">
 
@@ -170,10 +169,9 @@
 
                 <TextView
                     android:id="@+id/device_type"
-                    style="@style/list_item_card_view_text_info_ellipsized"
+                    style="@style/list_item_card_view_text_info_stat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
                     android:text="@string/advertiser_setting_beacon_unspecified" />
 
             </LinearLayout>
@@ -187,7 +185,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="vertical"
                 tools:ignore="UseCompoundDrawables">
 
@@ -202,10 +200,9 @@
 
                 <TextView
                     android:id="@+id/tv_is_connectable"
-                    style="@style/list_item_card_view_text_info_ellipsized"
+                    style="@style/list_item_card_view_text_info_stat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:text="@string/connectible" />
 
             </LinearLayout>

@@ -4,14 +4,14 @@
     android:id="@+id/location_disabled"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue_primary">
+    android:background="@color/silabs_redtheme_primary_color">
 
     <TextView
         android:id="@+id/warning_bar_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/stolzl_medium"
         android:layout_marginHorizontal="12dp"
         tools:text="@string/location_disabled"
         android:textColor="@color/silabs_white"

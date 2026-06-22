@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@drawable/modal_bg"
     android:layout_height="match_parent">
 
     <com.siliconlabs.bledemo.home_screen.views.BluetoothEnableBar
@@ -48,97 +49,114 @@
         tools:text="> 50 dBm, connectible"
         tools:visibility="visible" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/rssi_label_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_SM"
-            android:visibility="visible"
-            android:layout_gravity="center"
-            android:paddingVertical="24dp"
-            android:textSize="@dimen/text_size_L"
-            android:textColor="@color/silabs_subtle_text"
-            android:text="@string/rssi_graph_scan_not_started_label" />
-
-        <HorizontalScrollView
-            android:id="@+id/rssi_label_with_devices"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:scrollbars="none"
-            android:visibility="gone" >
-
-            <!-- needed for properly displaying all labels of scanned devices -->
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rssi_legend_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-            </RelativeLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <com.siliconlabs.bledemo.common.views.HorizontalShadow
-        android:id="@+id/browser_shadow_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="75" >
+        android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/graph_card_horizontal_margin"
+        app:cardBackgroundColor="@color/silabs_white"
+        app:cardCornerRadius="@dimen/graph_card_corner_radius"
+        app:cardElevation="@dimen/graph_card_elevation"
+        android:layout_marginBottom="@dimen/matter_80dp"
+        app:cardUseCompatPadding="true">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/rssi_chart"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"/>
+            android:orientation="vertical"
+            android:paddingTop="@dimen/graph_card_padding_top"
+            android:paddingBottom="@dimen/graph_card_padding_bottom"
+            android:paddingHorizontal="@dimen/graph_card_padding_horizontal">
 
-    </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="4dp">
+                <TextView
+                    android:id="@+id/rssi_label_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_SM"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:paddingVertical="24dp"
+                    android:textSize="@dimen/text_size_L"
+                    android:textColor="@color/silabs_subtle_text"
+                    android:text="@string/rssi_graph_scan_not_started_label" />
 
-        <ImageView
-            android:layout_height="32dp"
-            android:layout_width="32dp"
-            android:id="@+id/rssi_graph_time_arrow_start"
-            android:visibility="invisible"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/ic_chevron_left"
-            app:tint="@color/silabs_black" />
+                <HorizontalScrollView
+                    android:id="@+id/rssi_label_with_devices"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/rssi_graph_time_arrow_end"
-            android:layout_height="32dp"
-            android:layout_width="32dp"
-            android:visibility="invisible"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_chevron_left"
-            app:tint="@color/silabs_black"
-            android:rotation="180" />
+                    <!-- needed for properly displaying all labels of scanned devices -->
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-    </RelativeLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rssi_legend_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </RelativeLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/rssi_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <ImageView
+                    android:layout_height="32dp"
+                    android:layout_width="32dp"
+                    android:id="@+id/rssi_graph_time_arrow_start"
+                    android:visibility="invisible"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/ic_chevron_left"
+                    app:tint="@color/silabs_black" />
+
+                <ImageView
+                    android:id="@+id/rssi_graph_time_arrow_end"
+                    android:layout_height="32dp"
+                    android:layout_width="32dp"
+                    android:visibility="invisible"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_chevron_left"
+                    app:tint="@color/silabs_black"
+                    android:rotation="180" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.siliconlabs.bledemo.common.views.MainActionButton
         android:id="@+id/rssi_graph_btn_scanning"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        app:cornerRadius="@dimen/matter_12dp"
         android:layout_width="wrap_content"
+        android:backgroundTint="@color/silabs_primary_color"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/extended_fab_margin"
