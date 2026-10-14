@@ -14,6 +14,7 @@ import com.siliconlabs.bledemo.databinding.ActivityThunderboardBaseBinding
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.fragments.StatusFragment
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.models.ThunderBoardDevice
 import com.siliconlabs.bledemo.features.demo.thunderboard_demos.base.utils.SensorChecker
+import com.siliconlabs.bledemo.home_screen.dialogs.SelectDeviceDialog
 import com.siliconlabs.bledemo.utils.GattQueue
 
 //import kotlinx.android.synthetic.main.activity_thunderboard_base.*
@@ -43,7 +44,9 @@ abstract class ThunderboardActivity : BaseDemoActivity() {
 
     override fun onBluetoothServiceBound() {
         service?.also {
-            statusFragment.viewModel.thunderboardDevice.value = (ThunderBoardDevice(gatt?.device!!))
+            val preferredName = intent.getStringExtra(SelectDeviceDialog.DEVICE_NAME_EXTRA)
+            statusFragment.viewModel.thunderboardDevice.value =
+                ThunderBoardDevice(gatt?.device!!, preferredName)
             statusFragment.viewModel.state.postValue(BluetoothProfile.STATE_CONNECTED)
             it.registerGattCallback(gattCallback)
         }

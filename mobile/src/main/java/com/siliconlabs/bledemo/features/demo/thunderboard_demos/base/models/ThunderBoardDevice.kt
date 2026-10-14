@@ -5,8 +5,20 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothProfile
 
 @SuppressLint("MissingPermission")
-class ThunderBoardDevice(device: BluetoothDevice) {
-    var name: String = device.name
+class ThunderBoardDevice(
+    device: BluetoothDevice,
+    preferredName: String? = null,
+) {
+    /**
+     * Prefer the advertisement / scan-list display name when provided.
+     * [BluetoothDevice.getName] can return a stale placeholder (e.g. "Dev Kit #00000")
+     * while the scan record has the correct unique name.
+     */
+    var name: String = when {
+        !preferredName.isNullOrBlank() && preferredName != "N/A" -> preferredName
+        !device.name.isNullOrBlank() -> device.name
+        else -> device.address
+    }
     var batteryLevel = 0
     var powerSource = PowerSource.UNKNOWN
     var modelNumber: String? = null
