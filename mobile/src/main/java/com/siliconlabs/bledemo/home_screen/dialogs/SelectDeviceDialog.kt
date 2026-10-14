@@ -190,7 +190,10 @@ class SelectDeviceDialog(
         getIntent(connectType)?.let { intent ->
             boardType?.let { intent.putExtra(MODEL_TYPE_EXTRA, it) }
             powerSource?.let { intent.putExtra(POWER_SOURCE_EXTRA, it) }
-            currentDeviceInfo?.let { intent.putExtra(DEVICE_ADDRESS_EXTRA, it.device.address) }
+            currentDeviceInfo?.let {
+                intent.putExtra(DEVICE_ADDRESS_EXTRA, it.device.address)
+                intent.putExtra(DEVICE_NAME_EXTRA, it.name)
+            }
             startActivity(intent)
         }
         (activity as BaseActivity).dismissModalDialog()
@@ -714,6 +717,7 @@ class SelectDeviceDialog(
         const val MODEL_TYPE_EXTRA = "model_type"
         const val POWER_SOURCE_EXTRA = "power_source"
         const val DEVICE_ADDRESS_EXTRA = "device_address"
+        const val DEVICE_NAME_EXTRA = "device_name"
 
         fun newDialog(
             connectType: GattConnectType?,

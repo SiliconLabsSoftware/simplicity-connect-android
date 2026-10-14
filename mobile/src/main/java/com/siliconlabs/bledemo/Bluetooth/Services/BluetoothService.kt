@@ -643,7 +643,17 @@ class BluetoothService : LocalService<BluetoothService>() {
         handler.removeCallbacks(scanTimeoutRunnable)
         bluetoothAdapter?.let {
             if (useBLE) {
-                it.bluetoothLeScanner?.stopScan(bleScannerCallback as ScanCallback?)
+                // Only stop a scan that was actually started. Some OEM Bluetooth stacks
+                // NPE inside BluetoothLeScanner.stopScan() when given a null callback.
+                bleScannerCallback?.let { callback ->
+                    try {
+                        it.bluetoothLeScanner?.stopScan(callback)
+                    } catch (e: IllegalStateException) {
+                        Timber.w(e, "stopScan failed: Bluetooth adapter not turned on")
+                    } catch (e: IllegalArgumentException) {
+                        Timber.w(e, "stopScan failed: callback not registered")
+                    }
+                }
                 bleScannerCallback = null // Clear BLE scanner callback after stopping scan
             } else {
                 if (it.isDiscovering) it.cancelDiscovery()

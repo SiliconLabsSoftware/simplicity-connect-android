@@ -67,7 +67,9 @@ class BlinkyActivity : BaseDemoActivity() {
         if (isDeviceThunderboard) {
             statusFragment = (supportFragmentManager.findFragmentById(R.id
                     .status_fragment) as StatusFragment).apply {
-                viewModel.thunderboardDevice.value = ThunderBoardDevice(gatt?.device!!)
+                val preferredName = intent.getStringExtra(SelectDeviceDialog.DEVICE_NAME_EXTRA)
+                viewModel.thunderboardDevice.value =
+                    ThunderBoardDevice(gatt?.device!!, preferredName)
                 viewModel.state.postValue(BluetoothProfile.STATE_CONNECTED)
             }
             findViewById<LinearLayout>(R.id.thunderboard_fragment_container).visibility = View.VISIBLE

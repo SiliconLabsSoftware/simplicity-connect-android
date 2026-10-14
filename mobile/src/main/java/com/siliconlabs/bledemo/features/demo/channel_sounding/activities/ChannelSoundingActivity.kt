@@ -328,7 +328,7 @@ class ChannelSoundingActivity : BaseDemoActivity(),
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.BAKLAVA)
     private fun initViews() {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.BAKLAVA) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
             requestAllPermissions()
         }
         registerReceiver()
