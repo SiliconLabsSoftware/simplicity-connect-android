@@ -76,7 +76,8 @@ import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
-class DemoFragment : BaseServiceDependentMainMenuFragment(), DemoAdapter.OnDemoItemClickListener,
+class DemoFragment : BaseServiceDependentMainMenuFragment(),
+    DemoAdapter.OnDemoItemClickListener,
     DialogInterface.OnDismissListener {
 
     private val binding by viewBinding(FragmentDemoBinding::bind)
